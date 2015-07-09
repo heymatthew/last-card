@@ -30,7 +30,14 @@ RSpec.describe StartGame do
       end
 
       it "has no errors" do
-        expect { service.call }.to_not change { service.errors.size }
+        expect { service.call }
+          .to_not change { service.errors.size }
+      end
+
+      it "is no longer #pending" do
+        expect { service.call }
+          .to change { game.pending }
+          .from(true).to(false)
       end
     end
   end
