@@ -7,6 +7,7 @@ class StartGame
   end
 
   def call
-    @errors.any?
+    @errors.push "game not ready to start" unless @game.ready?
+    @errors.none?
   end
 end
