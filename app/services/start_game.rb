@@ -7,7 +7,9 @@ class StartGame
   end
 
   def call
-    assert_game_ready && remove_pending
+    assert_game_ready &&
+      remove_pending &&
+      give_players_cards
 
     @errors.none?
   end
@@ -26,6 +28,19 @@ class StartGame
         @game.pending = false
       else
         @errors.push "game already started"
+      end
+    end
+  end
+
+  def give_players_cards
+    # FIXME card should come from deck
+    @game.players.map do |player|
+      5.times do
+        Action.create(
+          game:   @game,
+          player: player,
+          card:   Card.new,
+        )
       end
     end
   end

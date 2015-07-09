@@ -61,6 +61,9 @@ RSpec.describe StartGame do
       end
 
       it "deals cards to players" do
+        expect { service.call }
+          .to change { Action.all.count }
+          .from(0).to(10) # 2 players, 10 cards
       end
     end
   end
