@@ -40,5 +40,23 @@ RSpec.describe StartGame do
           .from(true).to(false)
       end
     end
+
+    context "more than once" do
+      let(:second_service) { StartGame.new(game) }
+
+      before do
+        game.players << player1
+        game.players << player2
+        expect(service.call).to be true
+      end
+
+      it "bails" do
+        expect(second_service.call).to be false
+      end
+
+      it "gives errors" do
+        expect { service.call }.to change { service.errors.size }.by(1)
+      end
+    end
   end
 end
