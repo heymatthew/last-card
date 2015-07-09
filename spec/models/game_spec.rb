@@ -19,7 +19,7 @@ RSpec.describe Game, type: :model do
       game.players << player2
     end
 
-    it "is #ready? to start" do
+    it "to be #ready?" do
       expect(game).to be_ready
     end
   end
