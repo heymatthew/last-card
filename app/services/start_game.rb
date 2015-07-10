@@ -40,6 +40,7 @@ class StartGame
           game:   @game,
           player: player,
           card:   Card.new,
+          affect: Action::PICKUP,
         )
       end
     end

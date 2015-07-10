@@ -11,14 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709203737) do
+ActiveRecord::Schema.define(version: 20150710003637) do
 
   create_table "actions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "game_id"
+    t.integer  "affect"
   end
 
+  add_index "actions", ["affect"], name: "index_actions_on_affect"
   add_index "actions", ["game_id"], name: "index_actions_on_game_id"
 
   create_table "cards", force: :cascade do |t|
