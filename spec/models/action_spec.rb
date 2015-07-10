@@ -19,10 +19,19 @@ end
 
 RSpec.describe Action, type: :model do
   context "when initializing" do
-    let(:card) { Card.create!(rank: "queen", suit: "hearts") }
-    let(:game) { Game.create! }
+    let(:card)   { Card.create!(rank: "queen", suit: "hearts") }
+    let(:game)   { Game.create!   }
+    let(:affect) { Action::PICKUP }
     let(:player) { Player.create! }
-    let(:action) { Action.new(card: card, player: player, game: game) }
+
+    let(:action) do
+      Action.new(
+        card:   card,
+        player: player,
+        game:   game,
+        affect: affect,
+      )
+    end
 
     context "with a player and a card" do
       it "is #valid?" do
@@ -46,6 +55,11 @@ RSpec.describe Action, type: :model do
 
     context "without a game" do
       let(:game) { nil }
+      it_behaves_like "an invalid Action"
+    end
+
+    context "without an affect" do
+      let(:affect) { nil }
       it_behaves_like "an invalid Action"
     end
 
