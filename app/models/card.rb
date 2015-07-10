@@ -7,15 +7,9 @@ class Card < ActiveRecord::Base
 
   validates :rank,
     presence: true,
-    inclusion: {
-      in: RANKS,
-      message: "%{value} is not a valid rank",
-    }
+    inclusion: { in: RANKS }
 
   validates :suit,
     presence: true,
-    inclusion: {
-      in: SUITS,
-      message: "%{value} is not a valid suit",
-    }
+    inclusion: { in: SUITS }
 end
