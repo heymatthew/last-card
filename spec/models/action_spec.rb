@@ -18,21 +18,20 @@ RSpec.shared_examples "an invalid Action" do
 end
 
 RSpec.describe Action, type: :model do
+  let(:card)   { Card.create!(rank: "queen", suit: "hearts") }
+  let(:game)   { Game.create!   }
+  let(:affect) { Action::PICKUP }
+  let(:player) { Player.create! }
+  let(:action) do
+    Action.new(
+      card:   card,
+      player: player,
+      game:   game,
+      affect: affect,
+    )
+  end
+
   context "when initializing" do
-    let(:card)   { Card.create!(rank: "queen", suit: "hearts") }
-    let(:game)   { Game.create!   }
-    let(:affect) { Action::PICKUP }
-    let(:player) { Player.create! }
-
-    let(:action) do
-      Action.new(
-        card:   card,
-        player: player,
-        game:   game,
-        affect: affect,
-      )
-    end
-
     context "with a player and a card" do
       it "is #valid?" do
         expect(action).to be_valid
@@ -66,6 +65,19 @@ RSpec.describe Action, type: :model do
     context "without a card" do
       let(:card) { nil }
       it_behaves_like "an invalid Action"
+    end
+  end
+
+  context "multiple actions" do
+    it "can save references to the same card" do
+      2.times do
+        Action.create!(
+          card:   card,
+          player: player,
+          game:   game,
+          affect: affect,
+        )
+      end
     end
   end
 end
