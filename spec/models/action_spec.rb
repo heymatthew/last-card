@@ -18,7 +18,9 @@ RSpec.shared_examples "an invalid Action" do
 end
 
 RSpec.describe Action, type: :model do
-  let(:card)   { Card.create!(rank: "queen", suit: "hearts") }
+  fixtures :cards
+
+  let(:card)   { Card.first     }
   let(:game)   { Game.create!   }
   let(:affect) { Action::PICKUP }
   let(:player) { Player.create! }

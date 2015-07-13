@@ -34,12 +34,12 @@ class StartGame
 
   def give_players_cards
     # FIXME card should come from deck
-    @game.players.map do |player|
+    @game.players.each do |player|
       5.times do
         Action.create(
           game:   @game,
           player: player,
-          card:   Card.new,
+          card:   Card.first,
           affect: Action::PICKUP,
         )
       end

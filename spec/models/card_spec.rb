@@ -15,15 +15,18 @@ RSpec.shared_examples "an invalid Card" do
 end
 
 RSpec.describe Card, type: :model do
+  #let(:card) { Card.first } TODO ????
   let(:suit) { "hearts" }
   let(:rank) { "queen" }
   let(:card) { Card.new(rank: rank, suit: suit) }
 
   context "when comparing to cards of matching suit and rank" do
-    let(:matching_card) { Card.new(suit: suit, rank: rank) }
+    let(:matching_card) {
+      Card.new(suit: card.suit, rank: card.rank)
+    }
 
-    it "can be saved" do
-      card.save!
+    it "can be tested" do
+      expect(matching_card.object_id).to_not eq card.object_id
     end
 
     it "shows both cards are equal" do
@@ -45,17 +48,6 @@ RSpec.describe Card, type: :model do
   end
 
   context "when initializing" do
-
-    context "with correct suit and rank" do
-      it "is #valid?" do
-        expect(card).to be_valid
-      end
-
-      it "can save" do
-        card.save!
-      end
-    end
-
     context "without parameters" do
       let(:card) { Card.new }
       it_behaves_like "an invalid Card"
