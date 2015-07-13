@@ -1,0 +1,5 @@
+<% Card.deck.each do |card| %>
+<%= card.rank %> of <%= card.suit %>:
+  suit: <%= card.suit %>
+  rank: <%= card.rank %>
+<% end %>
