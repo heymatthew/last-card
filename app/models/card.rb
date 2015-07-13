@@ -1,5 +1,5 @@
 class Card < ActiveRecord::Base
-  belongs_to :action
+  has_many :actions
 
   # TODO notes, Ruby makes these available as constants!
   # TODO what does freeze do?

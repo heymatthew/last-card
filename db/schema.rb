@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150712211959) do
+ActiveRecord::Schema.define(version: 20150713235115) do
 
   create_table "actions", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -19,21 +19,21 @@ ActiveRecord::Schema.define(version: 20150712211959) do
     t.integer  "game_id"
     t.integer  "player_id"
     t.integer  "affect"
+    t.integer  "card_id"
   end
 
   add_index "actions", ["affect"], name: "index_actions_on_affect"
+  add_index "actions", ["card_id"], name: "index_actions_on_card_id"
   add_index "actions", ["game_id"], name: "index_actions_on_game_id"
   add_index "actions", ["player_id"], name: "index_actions_on_player_id"
 
   create_table "cards", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "action_id"
-    t.string   "suit"
-    t.string   "rank"
+    t.string   "suit",       null: false
+    t.string   "rank",       null: false
   end
 
-  add_index "cards", ["action_id"], name: "index_cards_on_action_id"
   add_index "cards", ["rank", "suit"], name: "index_cards_on_rank_and_suit", unique: true
   add_index "cards", ["rank"], name: "index_cards_on_rank"
   add_index "cards", ["suit"], name: "index_cards_on_suit"
