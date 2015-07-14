@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714024420) do
+ActiveRecord::Schema.define(version: 20150714031432) do
 
   create_table "actions", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -42,19 +42,24 @@ ActiveRecord::Schema.define(version: 20150714024420) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.boolean  "pending",    default: true
-    t.integer  "action_id"
   end
 
-  add_index "games", ["action_id"], name: "index_games_on_action_id"
+  create_table "games_players", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "player_id"
+    t.integer  "game_id"
+  end
+
+  add_index "games_players", ["game_id"], name: "index_games_players_on_game_id"
+  add_index "games_players", ["player_id"], name: "index_games_players_on_player_id"
 
   create_table "players", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "game_id"
-    t.integer  "action_id"
   end
 
-  add_index "players", ["action_id"], name: "index_players_on_action_id"
   add_index "players", ["game_id"], name: "index_players_on_game_id"
 
 end
