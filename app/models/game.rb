@@ -5,4 +5,8 @@ class Game < ActiveRecord::Base
   def ready?
     players.size >= 2
   end
+
+  def started?
+    !pending
+  end
 end

@@ -26,5 +26,13 @@ RSpec.describe Game, type: :model do
     it "to be #ready?" do
       expect(game).to be_ready
     end
+
+    context("after game started") do
+      before { game.pending = false }
+
+      it "has #started?" do
+        expect(game).to be_started
+      end
+    end
   end
 end
