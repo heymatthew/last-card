@@ -1,20 +1,9 @@
 require 'rails_helper'
+require_relative 'shared_examples'
 
 RSpec.shared_examples "an invalid Action" do
-  # FIXME generalise as "an invalid ActiveRecord"
-  # problem: let wont pass into it_behaves_like blocks
-  # possibly let(:model) something something
-  context "once saved" do
-    it "is not #valid?" do
-      expect(action).to_not be_valid
-    end
-
-    it "has errors" do
-      expect { action.valid? }
-        .to change { action.errors.size }
-        .from(0)
-    end
-  end
+  let(:model) { action }
+  include_examples "an invalid ActiveRecord"
 end
 
 RSpec.describe Action, type: :model do
