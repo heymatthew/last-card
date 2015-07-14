@@ -1,17 +1,9 @@
 require 'rails_helper'
+require_relative 'shared_examples'
 
 RSpec.shared_examples "an invalid Card" do
-  context "once saved" do
-    it "is not #valid?" do
-      expect(card).to_not be_valid
-    end
-
-    it "has errors" do
-      expect { card.valid? }
-        .to change { card.errors.size }
-        .from(0)
-    end
-  end
+  let(:model) { card }
+  include_examples "an invalid ActiveRecord"
 end
 
 RSpec.describe Card, type: :model do
