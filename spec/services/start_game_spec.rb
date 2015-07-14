@@ -13,8 +13,8 @@ RSpec.shared_examples "a service with errors" do
 end
 
 RSpec.describe StartGame do
-  let(:player1) { Player.create! }
-  let(:player2) { Player.create! }
+  let(:player1) { Player.create!(nick: "batman")   }
+  let(:player2) { Player.create!(nick: "tothemax") }
   let(:game)    { Game.create! }
   let(:service) { StartGame.new(game) }
 

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   let(:game) { Game.create! }
-  let(:player1) { Player.create! }
-  let(:player2) { Player.create! }
+  let(:player1) { Player.create!(nick: "batman") }
+  let(:player2) { Player.create!(nick: "tothemax") }
 
   context("when fewer than 2 players") do
     before do
