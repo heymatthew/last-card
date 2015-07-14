@@ -22,8 +22,7 @@ class Card < ActiveRecord::Base
     presence: true,
     inclusion: { in: SUITS }
 
-  # TODO is there a better way to enforce uniqueness?
-  validates_uniqueness_of :suit, :scope => :rank
+  validates :suit, uniqueness: {scope: :rank}
 
   def self.deck
     Card::RANKS.product(Card::SUITS).map do |rank, suit|
