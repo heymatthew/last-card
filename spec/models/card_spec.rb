@@ -15,7 +15,6 @@ RSpec.shared_examples "an invalid Card" do
 end
 
 RSpec.describe Card, type: :model do
-  #let(:card) { Card.first } TODO ????
   let(:suit) { "hearts" }
   let(:rank) { "queen" }
   let(:card) { Card.new(rank: rank, suit: suit) }
