@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713235115) do
+ActiveRecord::Schema.define(version: 20150714024420) do
 
   create_table "actions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "game_id"
-    t.integer  "player_id"
-    t.integer  "affect"
-    t.integer  "card_id"
+    t.integer  "game_id",    null: false
+    t.integer  "player_id",  null: false
+    t.integer  "affect",     null: false
+    t.integer  "card_id",    null: false
   end
 
   add_index "actions", ["affect"], name: "index_actions_on_affect"
