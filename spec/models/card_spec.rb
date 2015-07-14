@@ -20,33 +20,6 @@ RSpec.describe Card, type: :model do
   let(:rank) { "queen" }
   let(:card) { Card.new(rank: rank, suit: suit) }
 
-  context "when comparing to cards of matching suit and rank" do
-    let(:matching_card) {
-      Card.new(suit: card.suit, rank: card.rank)
-    }
-
-    it "can be tested" do
-      expect(matching_card.object_id).to_not eq card.object_id
-    end
-
-    it "shows both cards are equal" do
-      expect(matching_card == card).to be true
-    end
-
-    it "gives both cards the same hash" do
-      expect(matching_card.hash).to eq card.hash
-    end
-  end
-
-  context "cards with different suit and rank" do
-    let(:card1) { Card.new(suit: Card::SUITS.first, rank: Card::RANKS.first) }
-    let(:card2) { Card.new(suit: Card::SUITS.last, rank: Card::RANKS.last) }
-
-    it "shows both cards are different" do
-      expect(card1 == card2).to be false
-    end
-  end
-
   context "when initializing" do
     context "without parameters" do
       let(:card) { Card.new }
