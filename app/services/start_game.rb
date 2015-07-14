@@ -36,7 +36,7 @@ class StartGame
     # FIXME card should come from deck
     @game.players.each do |player|
       5.times do
-        Action.create(
+        Action.create!(
           game:   @game,
           player: player,
           card:   Card.first,
@@ -44,5 +44,7 @@ class StartGame
         )
       end
     end
+  rescue ActiveRecord::RecordInvalid => e
+    @errors.push "problem creating record - #{e}"
   end
 end
