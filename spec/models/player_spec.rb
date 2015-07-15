@@ -6,7 +6,6 @@ RSpec.shared_examples "an invalid Player" do
   include_examples "an invalid ActiveRecord"
 end
 
-
 RSpec.describe Player, type: :model do
   let(:nick)   { "flubber123" }
   let(:player) { Player.new(nick: nick) }
