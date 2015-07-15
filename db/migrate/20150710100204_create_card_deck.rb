@@ -1,7 +1,9 @@
 class CreateCardDeck < ActiveRecord::Migration
   def up
     Card.destroy_all
-    Card.deck.each { |card| card.save! }
+    Card::RANKS.product(Card::SUITS).map do |rank, suit|
+      Card.create!(rank: rank, suit: suit)
+    end
   end
 
   def down

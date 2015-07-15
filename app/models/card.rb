@@ -8,9 +8,7 @@ class Card < ActiveRecord::Base
   validates :suit, inclusion: { in: SUITS }
   validates :suit, uniqueness: {scope: :rank}
 
-  def self.deck
-    Card::RANKS.product(Card::SUITS).map do |rank, suit|
-      Card.new(rank: rank, suit: suit)
-    end
-  end
+  # TODO is there a better way to do this?
+  # Card.deck returns Card.all
+  self.singleton_class.send(:alias_method, :deck, :all)
 end

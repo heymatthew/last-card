@@ -11,7 +11,7 @@ RSpec.describe Card, type: :model do
   let(:rank) { "queen" }
   let(:card) { Card.new(rank: rank, suit: suit) }
 
-  context "when initializing" do
+  context "initializing" do
     context "without parameters" do
       let(:card) { Card.new }
       it_behaves_like "an invalid Card"
