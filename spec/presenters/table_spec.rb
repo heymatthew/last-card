@@ -66,6 +66,27 @@ RSpec.describe Table do
       it "does not change pile" do
         expect { pickup }.to_not change { table.pile.size }
       end
+
+      it "removes cards from the deck" do
+        expect { pickup }.to change { table.deck.size }.by(-1)
+      end
+
+      it "adds cards to player's hand" do
+        expect { pickup }.to change { table.hands.values.flatten.size }.by(1)
+      end
+
+      context "after action" do
+        before { pickup }
+
+        it "removed picked up card from deck" do
+          expect(table.deck).to_not include card
+        end
+
+        it "added the pickup to players hand" do
+          hand = table.hands[player.nick]
+          expect(hand).to include card
+        end
+      end
     end
   end
 end
