@@ -13,6 +13,10 @@ RSpec.shared_examples "a service with errors" do
 end
 
 RSpec.describe StartGame do
+  before do
+    srand 1 # predictable seed for predictable shuffles
+  end
+
   let(:player1) { Player.create!(nick: "batman")   }
   let(:player2) { Player.create!(nick: "tothemax") }
   let(:game)    { Game.create! }
@@ -62,15 +66,20 @@ RSpec.describe StartGame do
 
       it "deals cards to players" do
         expect { service.call }
-          .to change { Action.all.count }
-          .from(0).to(10) # 2 players, 10 cards
+          .to change { Action.pickups.count - Action.plays.count }
+          .from(0).to(10) # 10 cards in players hands
+      end
+
+      it "plays the first card on the deck" do
+        expect { service.call }
+          .to change { Action.plays.size }
+          .from(0).to(1)
       end
 
       it "does not repeat delt cards to players" do
-        srand 1 # predictable seed
         expect { service.call }
-          .to change { Action.all.map(&:card).uniq.size }
-          .from(0).to(10) # 10 unique cards
+          .to change { Action.pickups.map(&:card).uniq.size }
+          .from(0).to(11) # 11 unique cards, 1 will be played
       end
     end
   end
