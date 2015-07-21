@@ -65,6 +65,13 @@ RSpec.describe StartGame do
           .to change { Action.all.count }
           .from(0).to(10) # 2 players, 10 cards
       end
+
+      it "does not repeat delt cards to players" do
+        srand 1 # predictable seed
+        expect { service.call }
+          .to change { Action.all.map(&:card).uniq.size }
+          .from(0).to(10) # 10 unique cards
+      end
     end
   end
 end
