@@ -13,9 +13,8 @@ RSpec.shared_examples "a service with errors" do
 end
 
 RSpec.describe StartGame do
-  before do
-    srand 1 # predictable seed for predictable shuffles
-  end
+  # predictable seed for predictable shuffles
+  before { srand 1 }
 
   let(:player1) { Player.create!(nick: "batman")   }
   let(:player2) { Player.create!(nick: "tothemax") }
