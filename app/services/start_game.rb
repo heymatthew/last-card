@@ -43,8 +43,7 @@ class StartGame
     # each player picks up 5 cards
     @game.players.each do |player|
       @deck.pop(5).each do |card|
-        Action.create!(
-          game:   @game,
+        @game.actions.create!(
           player: player,
           card:   card,
           affect: Action::PICKUP,
