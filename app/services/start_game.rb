@@ -11,6 +11,7 @@ class StartGame
       remove_pending &&
       shuffle_deck &&
       give_players_cards &&
+      play_first_card &&
       save_game
 
     @errors.none?
@@ -50,6 +51,22 @@ class StartGame
         )
       end
     end
+  rescue ActiveRecord::RecordInvalid => e
+    @errors.push "cannot give player card: #{e}"
+  end
+
+  def play_first_card
+    first_card = @deck.pop
+    dealer = @game.players.first
+
+    [ Action::PICKUP, Action::PLAY ].each do |action_affect|
+      @game.actions.create!(
+        player: dealer,
+        card:   first_card,
+        affect: action_affect,
+      )
+    end
+
   rescue ActiveRecord::RecordInvalid => e
     @errors.push "cannot give player card: #{e}"
   end
