@@ -97,7 +97,7 @@ RSpec.describe Table do
       # card now comes from a players hand
       let(:card) { hand.first }
 
-      def pickup
+      def play
         game.actions.create!(
           affect: Action::PLAY,
           player: player,
@@ -106,23 +106,23 @@ RSpec.describe Table do
       end
 
       it "removes cards from player's hand" do
-        expect { pickup }.to change { table.hands[player.nick].size }.by(-1)
+        expect { play }.to change { table.hands[player.nick].size }.by(-1)
       end
 
       it "only removes from one of the players hands" do
-        expect { pickup }.to change { table.hands.values.flatten.size }.by(-1)
+        expect { play }.to change { table.hands.values.flatten.size }.by(-1)
       end
 
       it "adds cards to the pile" do
-        expect { pickup }.to change { table.pile.size }.by(+1)
+        expect { play }.to change { table.pile.size }.by(+1)
       end
 
       it "does not change the deck" do
-        expect { pickup }.to_not change { table.deck.size }
+        expect { play }.to_not change { table.deck.size }
       end
 
       context "after action" do
-        before { pickup }
+        before { play }
 
         it "removed card from players hand" do
           expect(hand).to_not include card
