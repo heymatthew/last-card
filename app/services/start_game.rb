@@ -51,8 +51,6 @@ class StartGame
         )
       end
     end
-  rescue ActiveRecord::RecordInvalid => e
-    @errors.push "cannot give player card: #{e}"
   end
 
   def play_first_card
@@ -66,9 +64,6 @@ class StartGame
         affect: action_affect,
       )
     end
-
-  rescue ActiveRecord::RecordInvalid => e
-    @errors.push "cannot give player card: #{e}"
   end
 
   def save_game
