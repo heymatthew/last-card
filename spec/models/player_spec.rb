@@ -40,4 +40,31 @@ RSpec.describe Player, type: :model do
     before { Player.create!(nick: nick) }
     it_behaves_like "an invalid Player"
   end
+
+  context "when interacting with the game" do
+    let(:game) { Game.create! }
+    let(:card) { Card.deck.first }
+
+    before { player.save }
+
+    context "picking up" do
+      it "adds to player pickups" do
+        expect { player.pickup(game,card) }.to change { player.pickups.count }.by(1)
+      end
+
+      it "does not change player plays" do
+        expect { player.pickup(game,card) }.not_to change { player.plays.count }
+      end
+    end
+
+    context "playing" do
+      it "adds to player plays" do
+        expect { player.play(game,card) }.to change { player.plays.count }.by(1)
+      end
+
+      it "to not change player pickups" do
+        expect { player.play(game,card) }.not_to change { player.pickups.count }
+      end
+    end
+  end
 end
