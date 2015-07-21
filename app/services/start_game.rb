@@ -9,7 +9,9 @@ class StartGame
   def call
     assert_game_ready &&
       remove_pending &&
-      give_players_cards
+      shuffle_deck &&
+      give_players_cards &&
+      save_game
 
     @errors.none?
   end
@@ -32,19 +34,28 @@ class StartGame
     end
   end
 
+  def shuffle_deck
+    @deck = Card.deck.shuffle
+  end
+
   def give_players_cards
-    # FIXME card should come from deck
+    # each player picks up 5 cards
     @game.players.each do |player|
-      5.times do
+      @deck.pop(5).each do |card|
         Action.create!(
           game:   @game,
           player: player,
-          card:   Card.first,
+          card:   card,
           affect: Action::PICKUP,
         )
       end
     end
   rescue ActiveRecord::RecordInvalid => e
-    @errors.push "problem creating record - #{e}"
+    @errors.push "cannot give player card: #{e}"
+  end
+
+  def save_game
+    @game.save or
+      @errors.push "cannot save game: #{e}"
   end
 end
