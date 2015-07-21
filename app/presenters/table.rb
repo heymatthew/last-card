@@ -34,6 +34,7 @@ class Table
   end
 
   def calculate_deck
-    @deck = Card.deck - @pile
+    cards_in_play = @pile + @hands.values.flatten
+    @deck = Card.deck - cards_in_play
   end
 end
