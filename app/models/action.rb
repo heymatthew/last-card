@@ -12,4 +12,7 @@ class Action < ActiveRecord::Base
   validates :affect,
     presence: true,
     inclusion: { in: [ PICKUP, PLAY ] }
+
+  scope :pickups, -> { where(affect: PICKUP) }
+  scope :plays,   -> { where(affect: PLAY) }
 end
