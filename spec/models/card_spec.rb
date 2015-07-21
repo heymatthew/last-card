@@ -37,4 +37,19 @@ RSpec.describe Card, type: :model do
       it_behaves_like "an invalid Card"
     end
   end
+
+  describe "#to_s" do
+    context "for face cards" do
+      it "uses sentence case on suit and rank" do
+        expect(card.to_s).to eq "Queen of Hearts"
+      end
+    end
+
+    context "for pips" do
+      let(:rank) { 2 }
+      it "only upcases the rank" do
+        expect(card.to_s).to eq "2 of Hearts"
+      end
+    end
+  end
 end

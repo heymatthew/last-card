@@ -11,4 +11,8 @@ class Card < ActiveRecord::Base
   # TODO is there a better way to do this?
   # Card.deck returns Card.all
   self.singleton_class.send(:alias_method, :deck, :all)
+
+  def to_s
+    "#{rank.capitalize} of #{suit.capitalize}"
+  end
 end
