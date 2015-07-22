@@ -8,9 +8,9 @@ class Card < ActiveRecord::Base
   validates :suit, inclusion:  { in: SUITS }
   validates :suit, uniqueness: { scope: :rank }
 
-  # TODO is there a better way to do this?
-  # Card.deck returns Card.all
-  self.singleton_class.send(:alias_method, :deck, :all)
+  def self.deck
+    self.all
+  end
 
   def to_s
     "#{rank.capitalize} of #{suit.capitalize}"
