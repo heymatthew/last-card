@@ -70,7 +70,16 @@ RSpec.describe PlayCard do
       it_behaves_like "they update game state"
     end
 
-    context "cards of same suit" # TODO
+    context "cards of same suit" do
+      # grab a card of the right rank from the deck
+      let(:card) do
+        top_suit = round.pile.last.suit
+        round.deck.find { |card| card.suit == top_suit }
+      end
+
+      it_behaves_like "they update game state"
+    end
+
   end
 
   # TODO game over
