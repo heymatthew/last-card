@@ -1,6 +1,20 @@
 require 'rails_helper'
 require_relative 'shared_examples'
 
+RSpec.shared_examples "they update game state" do
+  describe "when called" do
+    it "add card to pile" do
+      expect { service.call }.to change { round.pile.last }.to card
+    end
+
+    it "removes played card from players hand" do
+      expect(hand).to include(card)
+      service.call
+      expect(hand).to_not include(card)
+    end
+  end
+end
+
 RSpec.describe PlayCard do
   let(:player1) { Player.create!(nickname: "megatron") }
   let(:player2) { Player.create!(nickname: "optimus") }
@@ -42,25 +56,18 @@ RSpec.describe PlayCard do
       it_behaves_like "a service with errors"
     end
 
+    # make sure the player has a known good card
+    # pick up a card of the right type from the deck
+    before { player1.pickup!(game, card) }
+
     context "cards of same rank" do
-      # TODO
+      # grab a card of the right rank from the deck
       let(:card) do
         top_rank = round.pile.last.rank
         round.deck.find { |card| card.rank == top_rank }
       end
 
-      # add a known
-      before { player1.pickup!(game, card) }
-
-      it "adds card to pile" do
-        expect { service.call }.to change { round.pile.last }.to card
-      end
-
-      it "removes card from players hand" do
-        expect(hand).to include(card)
-        service.call
-        expect(hand).to_not include(card)
-      end
+      it_behaves_like "they update game state"
     end
 
     context "cards of same suit" # TODO
