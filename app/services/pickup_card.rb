@@ -7,7 +7,6 @@ class PickupCard
     @errors = []
   end
 
-  # TODO check game over
   def call
     assert_game_in_play &&
       assert_cards_available &&
