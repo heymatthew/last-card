@@ -48,22 +48,26 @@ RSpec.describe Player, type: :model do
     before { player.save }
 
     context "picking up" do
+      subject { player.pickup!(game,card) }
+
       it "adds to player pickups" do
-        expect { player.pickup(game,card) }.to change { player.pickups.count }.by(1)
+        expect { subject }.to change { player.pickups.count }.by(1)
       end
 
       it "does not change player plays" do
-        expect { player.pickup(game,card) }.not_to change { player.plays.count }
+        expect { subject }.not_to change { player.plays.count }
       end
     end
 
     context "playing" do
+      subject{ player.play!(game, card) }
+
       it "adds to player plays" do
-        expect { player.play(game,card) }.to change { player.plays.count }.by(1)
+        expect { subject }.to change { player.plays.count }.by(1)
       end
 
       it "to not change player pickups" do
-        expect { player.play(game,card) }.not_to change { player.pickups.count }
+        expect { subject }.not_to change { player.pickups.count }
       end
     end
   end

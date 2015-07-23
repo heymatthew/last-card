@@ -58,27 +58,24 @@ RSpec.describe Table do
     end
 
     context "when player picks up" do
-      let(:card)   { table.deck.first }
+      let(:card) { table.deck.first }
+
+      subject { player.pickup!(game,card) }
 
       it "does not change pile" do
-        expect { player.pickup(game,card) }
-          .to_not change { table.pile.size }
+        expect { subject }.to_not change { table.pile.size }
       end
 
       it "removes cards from the deck" do
-        expect { player.pickup(game,card) }
-          .to change { table.deck.size }
-          .by(-1)
+        expect { subject }.to change { table.deck.size }.by(-1)
       end
 
       it "adds cards to player's hand" do
-        expect { player.pickup(game,card) }
-          .to change { table.hands.values.flatten.size }
-          .by(1)
+        expect { subject }.to change { table.hands.values.flatten.size }.by(1)
       end
 
       context "after action" do
-        before { player.pickup(game,card) }
+        before { player.pickup!(game,card) }
 
         it "removed picked up card from deck" do
           expect(table.deck).to_not include card
@@ -94,28 +91,28 @@ RSpec.describe Table do
       # card now comes from a players hand
       let(:card) { hand.first }
 
+      subject { player.play!(game ,card) }
+
       it "removes cards from player's hand" do
-        expect { player.play(game,card) }
-          .to change { table.hands[player.nick].size }
-          .by(-1)
+        expect { subject }.to change { table.hands[player.nick].size }.by(-1)
       end
 
       it "only removes from one of the players hands" do
-        expect { player.play(game,card) }
-          .to change { table.hands.values.flatten.size }
-          .by(-1)
+        expect { subject }.to change { table.hands.values.flatten.size }.by(-1)
       end
 
+      # rename table to round !! fool
+      # PlayCard.new(table, Oplayer, card).call
       it "adds cards to the pile" do
-        expect { player.play(game,card) }.to change { table.pile.size }.by(+1)
+        expect { subject }.to change { table.pile.size }.by(+1)
       end
 
       it "does not change the deck" do
-        expect { player.play(game,card) }.to_not change { table.deck.size }
+        expect { subject }.to_not change { table.deck.size }
       end
 
       context "after action" do
-        before { player.play(game,card) }
+        before { player.play!(game,card) }
 
         it "removed card from players hand" do
           expect(hand).to_not include card
