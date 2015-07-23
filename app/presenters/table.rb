@@ -29,7 +29,7 @@ class Table
     @pile = []
 
     if @game.started?
-      @pile = @game.actions.play.map(&:card)
+      @pile = @game.plays.map(&:card)
     end
   end
 

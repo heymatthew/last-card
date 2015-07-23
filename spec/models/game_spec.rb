@@ -35,4 +35,32 @@ RSpec.describe Game, type: :model do
       end
     end
   end
+
+  context("after action") do
+    let(:card) { Card.find_by(rank: "queen", suit: "hearts") }
+
+    describe("player#play") do
+      subject { player1.play(game, card) }
+
+      it "shows up in game#plays" do
+        expect { subject }.to change { game.plays.size }.by(1)
+      end
+
+      it "doesn't affect game#pickups" do
+        expect { subject }.to_not change { game.pickups }
+      end
+    end
+
+    describe("player#pickup") do
+      subject { player1.pickup(game, card) }
+
+      it "shows up in game#pickups" do
+        expect { subject }.to change { game.pickups.size }.by(1)
+      end
+
+      it "doesn't affect game#plays" do
+        expect { subject }.to_not change { game.plays }
+      end
+    end
+  end
 end
