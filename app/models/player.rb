@@ -3,9 +3,9 @@ class Player < ActiveRecord::Base
   has_many :actions
 
   # TODO email registration and cookie setting
-  validates :nick,
+  validates :nickname,
     uniqueness: { message: "already taken, please select another" },
-    format: { with: /\A\w+\z/, message: "expecting single word alpha numericy nicks sozlol" }
+    format: { with: /\A\w+\z/, message: "expecting single word alpha numericy nickname~~ sozlol" }
 
   def pickups
     actions.pickup

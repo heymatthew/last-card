@@ -16,8 +16,8 @@ RSpec.describe Table do
   let(:game) { Game.create! }
 
   before do
-    game.players.create!(nick: "tintin")
-    game.players.create!(nick: "snowy")
+    game.players.create!(nickname: "tintin")
+    game.players.create!(nickname: "snowy")
   end
 
   def table
@@ -25,7 +25,7 @@ RSpec.describe Table do
   end
 
   def hand
-    table.hands[player.nick]
+    table.hands[player.nickname]
   end
 
   context "before game start" do
@@ -94,7 +94,7 @@ RSpec.describe Table do
       subject { player.play!(game ,card) }
 
       it "removes cards from player's hand" do
-        expect { subject }.to change { table.hands[player.nick].size }.by(-1)
+        expect { subject }.to change { table.hands[player.nickname].size }.by(-1)
       end
 
       it "only removes from one of the players hands" do
