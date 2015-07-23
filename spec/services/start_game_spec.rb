@@ -1,16 +1,5 @@
 require 'rails_helper'
-
-RSpec.shared_examples "a service with errors" do
-  context "when called" do
-    it "bails" do
-      expect(service.call).to be false
-    end
-
-    it "gives errors" do
-      expect { service.call }.to change { service.errors.size }.by(1)
-    end
-  end
-end
+require_relative 'shared_examples'
 
 RSpec.describe StartGame do
   # predictable seed for predictable shuffles
