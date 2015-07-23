@@ -56,7 +56,6 @@ class StartGame
   end
 
   def save_game
-    @game.save or
-      @errors.push "cannot save game: #{e}"
+    @game.save!
   end
 end
