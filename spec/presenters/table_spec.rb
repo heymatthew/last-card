@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+# TODO this is MIA, use this fool!
 RSpec.shared_examples "full deck in play" do
   context "the game" do
     let(:full_deck) { Card.deck }
@@ -124,6 +125,45 @@ RSpec.describe Table do
 
         it "put the card on the top of the pile" do
           expect(table.pile.last).to eq card
+        end
+      end
+    end
+
+    context "when deck is ready for reshuffle" do
+      let(:played_card) { hand.first }
+      let(:last_table)  { table }
+
+      before do
+        # Player plays a card
+        player.play!(game, played_card)
+
+        # Player picks up all cards
+        last_table.deck.each do |card|
+          player.pickup!(game, card)
+        end
+      end
+
+      context "after the next play" # TODO flesh this out
+
+      # todo rename table to round
+      # todo describe?
+      describe "the pile" do
+        it "gets emptied of all but 1 card" do
+          expect(table.pile.size).to be 1
+        end
+
+        it "keeps the last card played on the top" do
+          expect(table.pile.last).to eq last_table.pile.last
+        end
+      end
+
+      describe "the deck" do
+        it "shuffles in cards from the pile" do
+          expect(table.deck.size).to be 1
+        end
+
+        it "contains the first card played by the dealer" do
+          expect(table.deck).to include last_table.pile.first
         end
       end
     end
