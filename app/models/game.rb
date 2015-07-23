@@ -9,4 +9,12 @@ class Game < ActiveRecord::Base
   def started?
     !pending
   end
+
+  def plays
+    actions.play
+  end
+
+  def pickups
+    actions.pickup
+  end
 end
