@@ -29,8 +29,28 @@ class Table
     @pile = []
 
     if @game.started?
-      @pile = @game.plays.map(&:card)
+      shuffles = @game.pickups.count / Card.deck.size
+
+      if shuffles.zero?
+        # pile = played cards
+        @pile = @game.plays.map(&:card)
+      else
+        # based on the last card that triggered the shuffle
+        shuffle_trigger = @game.pickups[ Card.deck.size * shuffles - 1 ]
+        shuffle_time = shuffle_trigger.created_at
+
+        # pile = previous top card + played cards since
+        @pile = [previous_pile_top(shuffle_time)].concat played_since_shuffle(shuffle_time)
+      end
     end
+  end
+
+  def previous_pile_top(shuffle_time)
+    @game.plays.where("created_at < ?", shuffle_time).last.card
+  end
+
+  def played_since_shuffle(shuffle_time)
+    @game.plays.where("created_at > ?", shuffle_time).map(&:card)
   end
 
   def calculate_deck
