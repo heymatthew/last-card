@@ -7,37 +7,37 @@ RSpec.shared_examples "an invalid Player" do
 end
 
 RSpec.describe Player, type: :model do
-  let(:nick)   { "flubber123" }
-  let(:player) { Player.new(nick: nick) }
+  let(:nickname) { "flubber123" }
+  let(:player)   { Player.new(nickname: nickname) }
 
-  context "with alphanumeric nick" do
+  context "with alphanumeric nickname" do
     it "is #valid?" do
       expect(player).to be_valid
     end
   end
 
   context "with space in name" do
-    let(:nick) { "1337 haxor" }
+    let(:nickname) { "1337 haxor" }
     it_behaves_like "an invalid Player"
   end
 
   context "with punctuation in the name" do
-    let(:nick) { "haxor!" }
+    let(:nickname) { "haxor!" }
     it_behaves_like "an invalid Player"
   end
 
   context "dropping a newline at the start" do
-    let(:nick) { "\nhaxor" }
+    let(:nickname) { "\nhaxor" }
     it_behaves_like "an invalid Player"
   end
 
   context "dropping a newline at the end" do
-    let(:nick) { "haxor\n" }
+    let(:nickname) { "haxor\n" }
     it_behaves_like "an invalid Player"
   end
 
-  context "when there is contentsion over a nick" do
-    before { Player.create!(nick: nick) }
+  context "when there is contentsion over a nickname" do
+    before { Player.create!(nickname: nickname) }
     it_behaves_like "an invalid Player"
   end
 

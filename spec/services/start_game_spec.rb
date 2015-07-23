@@ -16,8 +16,8 @@ RSpec.describe StartGame do
   # predictable seed for predictable shuffles
   before { srand 1 }
 
-  let(:player1) { Player.create!(nick: "batman")   }
-  let(:player2) { Player.create!(nick: "tothemax") }
+  let(:player1) { Player.create!(nickname: "batman")   }
+  let(:player2) { Player.create!(nickname: "tothemax") }
   let(:game)    { Game.create! }
   let(:service) { StartGame.new(game) }
 

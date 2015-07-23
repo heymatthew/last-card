@@ -20,7 +20,7 @@ class Table
       @game.players.each do |player|
         pickups = player.pickups.map(&:card)
         plays   = player.plays.map(&:card)
-        @hands[player.nick] = pickups - plays
+        @hands[player.nickname] = pickups - plays
       end
     end
   end

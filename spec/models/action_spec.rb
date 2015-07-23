@@ -12,7 +12,7 @@ RSpec.describe Action, type: :model do
   let(:card)   { Card.first     }
   let(:game)   { Game.create!   }
   let(:affect) { Action::PICKUP }
-  let(:player) { Player.create!(nick: "mctesterson") }
+  let(:player) { Player.create!(nickname: "mctesterson") }
   let(:action) do
     Action.new(
       card:   card,
