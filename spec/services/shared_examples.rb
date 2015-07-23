@@ -6,7 +6,7 @@ RSpec.shared_examples "a service with errors" do
     end
 
     it "gives errors" do
-      expect { service.call }.to change { service.errors.size }.by(1)
+      expect { service.call }.to change { service.errors.size }.from(0)
     end
   end
 end
