@@ -82,5 +82,5 @@ RSpec.describe PlayCard do
 
   end
 
-  # TODO game over
+  context "when game is over" # TODO
 end

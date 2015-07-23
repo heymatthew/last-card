@@ -188,7 +188,5 @@ RSpec.describe Round do
     end
   end
 
-  context "when the game ends" do
-    # TODO flesh out examples
-  end
+  context "when the game ends" # TODO
 end
