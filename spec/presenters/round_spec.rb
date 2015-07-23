@@ -93,7 +93,6 @@ RSpec.describe Round do
         expect { subject }.to change { round.hands.values.flatten.size }.by(-1)
       end
 
-      # TODO PlayCard.new(round, Oplayer, card).call
       it "adds cards to the pile" do
         expect { subject }.to change { round.pile.size }.by(+1)
       end
