@@ -5,7 +5,7 @@ RSpec.describe Game, type: :model do
   let(:player1) { Player.create!(nickname: "batman") }
   let(:player2) { Player.create!(nickname: "tothemax") }
 
-  context("when fewer than 2 players") do
+  context "when fewer than 2 players" do
     before do
       game.players << player1
       game.save
@@ -16,7 +16,7 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  context("with 2 players") do
+  context "with 2 players" do
     before do
       game.players << player1
       game.players << player2
@@ -27,7 +27,7 @@ RSpec.describe Game, type: :model do
       expect(game).to be_ready
     end
 
-    context("after game started") do
+    context "after game started" do
       before { game.pending = false }
 
       it "has #started?" do
@@ -36,10 +36,10 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  context("after action") do
+  context "after action" do
     let(:card) { Card.find_by(rank: "queen", suit: "hearts") }
 
-    describe("player#play") do
+    describe "player#play" do
       subject { player1.play!(game, card) }
 
       it "shows up in game#plays" do
@@ -51,7 +51,7 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    describe("player#pickup") do
+    describe "player#pickup" do
       subject { player1.pickup!(game, card) }
 
       it "shows up in game#pickups" do
