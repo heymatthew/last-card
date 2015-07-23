@@ -40,7 +40,7 @@ RSpec.describe Game, type: :model do
     let(:card) { Card.find_by(rank: "queen", suit: "hearts") }
 
     describe("player#play") do
-      subject { player1.play(game, card) }
+      subject { player1.play!(game, card) }
 
       it "shows up in game#plays" do
         expect { subject }.to change { game.plays.size }.by(1)
@@ -52,7 +52,7 @@ RSpec.describe Game, type: :model do
     end
 
     describe("player#pickup") do
-      subject { player1.pickup(game, card) }
+      subject { player1.pickup!(game, card) }
 
       it "shows up in game#pickups" do
         expect { subject }.to change { game.pickups.size }.by(1)
