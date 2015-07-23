@@ -37,14 +37,33 @@ RSpec.describe PlayCard do
       StartGame.new(game).call or fail "untestable"
     end
 
-    context "playing a card with wrong rank and suit" do
+    context "cards of wrong rank and suit" do
       let(:card) { bad_card }
       it_behaves_like "a service with errors"
     end
 
-    context "playing a card of the same rank" # TODO
+    context "cards of same rank" do
+      # TODO
+      let(:card) do
+        top_rank = round.pile.last.rank
+        round.deck.find { |card| card.rank == top_rank }
+      end
 
-    context "playing a card of the same suit" # TODO
+      # add a known
+      before { player1.pickup!(game, card) }
+
+      it "adds card to pile" do
+        expect { service.call }.to change { round.pile.last }.to card
+      end
+
+      it "removes card from players hand" do
+        expect(hand).to include(card)
+        service.call
+        expect(hand).to_not include(card)
+      end
+    end
+
+    context "cards of same suit" # TODO
   end
 
   # TODO game over
