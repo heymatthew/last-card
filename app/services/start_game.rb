@@ -40,14 +40,9 @@ class StartGame
   end
 
   def give_players_cards
-    # each player picks up 5 cards
     @game.players.each do |player|
       @deck.pop(5).each do |card|
-        @game.actions.create!(
-          player: player,
-          card:   card,
-          affect: Action::PICKUP,
-        )
+        player.pickup(@game, card)
       end
     end
   end
@@ -56,13 +51,8 @@ class StartGame
     first_card = @deck.pop
     dealer = @game.players.first
 
-    [ Action::PICKUP, Action::PLAY ].each do |action_affect|
-      @game.actions.create!(
-        player: dealer,
-        card:   first_card,
-        affect: action_affect,
-      )
-    end
+    dealer.pickup(@game, first_card)
+    dealer.play(@game, first_card)
   end
 
   def save_game
