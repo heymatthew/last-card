@@ -65,19 +65,19 @@ RSpec.describe StartGame do
 
       it "deals cards to players" do
         expect { service.call }
-          .to change { Action.pickups.count - Action.plays.count }
+          .to change { Action.pickup.count - Action.play.count }
           .from(0).to(10) # 10 cards in players hands
       end
 
       it "plays the first card on the deck" do
         expect { service.call }
-          .to change { Action.plays.size }
+          .to change { Action.play.size }
           .from(0).to(1)
       end
 
       it "does not repeat delt cards to players" do
         expect { service.call }
-          .to change { Action.pickups.map(&:card).uniq.size }
+          .to change { Action.pickup.map(&:card).uniq.size }
           .from(0).to(11) # 11 unique cards, 1 will be played
       end
     end

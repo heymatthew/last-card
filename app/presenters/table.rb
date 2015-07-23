@@ -18,8 +18,8 @@ class Table
 
     if @game.started?
       @game.players.each do |player|
-        pickups = player.actions.pickups.map(&:card)
-        plays   = player.actions.plays.map(&:card)
+        pickups = player.pickups.map(&:card)
+        plays   = player.plays.map(&:card)
         @hands[player.nick] = pickups - plays
       end
     end
@@ -29,7 +29,7 @@ class Table
     @pile = []
 
     if @game.started?
-      @pile = @game.actions.plays.map(&:card)
+      @pile = @game.actions.play.map(&:card)
     end
   end
 

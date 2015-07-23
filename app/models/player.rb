@@ -8,11 +8,11 @@ class Player < ActiveRecord::Base
     format: { with: /\A\w+\z/, message: "expecting single word alpha numericy nicks sozlol" }
 
   def pickups
-    actions.pickups
+    actions.pickup
   end
 
   def plays
-    actions.plays
+    actions.play
   end
 
   def pickup(game, card)
