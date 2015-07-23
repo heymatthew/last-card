@@ -1,4 +1,6 @@
 class Round
+  attr_reader :game
+
   attr_reader :hands
   attr_reader :deck
   attr_reader :pile
