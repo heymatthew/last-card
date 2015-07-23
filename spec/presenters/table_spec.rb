@@ -1,14 +1,5 @@
 require 'rails_helper'
 
-# TODO this is MIA, use this fool!
-RSpec.shared_examples "full deck in play" do
-  context "the game" do
-    let(:full_deck) { Card.deck }
-    it "has 52 cards total"
-    it "does not repeat cards in game"
-  end
-end
-
 RSpec.describe Table do
   # predictable seed for predictable shuffles
   before { srand 1 }
@@ -130,12 +121,13 @@ RSpec.describe Table do
     end
 
     context "when deck is ready for reshuffle" do
-      let(:played_card) { hand.first }
+      let(:top_card)    { hand.first }
       let(:last_table)  { table }
+      # TODO rename table to round
 
       before do
         # Player plays a card
-        player.play!(game, played_card)
+        player.play!(game, top_card)
 
         # Player picks up all cards
         last_table.deck.each do |card|
@@ -143,10 +135,6 @@ RSpec.describe Table do
         end
       end
 
-      context "after the next play" # TODO flesh this out
-
-      # todo rename table to round
-      # todo describe?
       describe "the pile" do
         it "gets emptied of all but 1 card" do
           expect(table.pile.size).to be 1
@@ -166,6 +154,44 @@ RSpec.describe Table do
           expect(table.deck).to include last_table.pile.first
         end
       end
+
+      context "the next play" do
+        let(:next_played_card) { hand.last }
+
+        before { player.play!(game, next_played_card) }
+
+        describe "the pile" do
+          it "has 2 cards" do
+            expect(table.pile.size).to be 2
+          end
+
+          it "still has the last play from before shuffle" do
+            expect(table.pile.first).to eq last_table.pile.last
+          end
+
+          it "now shows the played card on top of the pile" do
+            expect(table.pile.last).to eq next_played_card
+          end
+        end
+
+        describe "the deck" do
+          it "still only has cards from previous pile" do
+            expect(table.deck.size).to be 1
+          end
+
+          it "contains the first card played by the dealer" do
+            expect(table.deck).to include last_table.pile.first
+          end
+
+          it "does not contain the card just played" do
+            expect(table.deck).to_not include next_played_card
+          end
+        end
+      end
     end
+  end
+
+  context "when the game ends" do
+    # TODO flesh out examples
   end
 end
