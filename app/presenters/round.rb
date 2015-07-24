@@ -58,7 +58,10 @@ class Round
   end
 
   def calculate_deck
-    cards_in_play = @pile + @hands.values.flatten
     @deck = Card.deck - cards_in_play
+  end
+
+  def cards_in_play
+    @pile + @hands.values.flatten
   end
 end
