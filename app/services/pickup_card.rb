@@ -17,6 +17,7 @@ class PickupCard
 
   private
 
+  # TODO remove tap
   def assert_game_in_play
     @round.game.started?.tap do |started|
       @errors.push "game not started" unless started

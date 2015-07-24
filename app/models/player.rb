@@ -1,4 +1,7 @@
 class Player < ActiveRecord::Base
+  # FIXME Don't use this
+  # belongs to game
+  # belongs to user
   has_and_belongs_to_many :games
   has_many :actions
 
@@ -7,6 +10,7 @@ class Player < ActiveRecord::Base
     uniqueness: { message: "already taken, please select another" },
     format: { with: /\A\w+\z/, message: "expecting single word alpha numericy nickname~~ sozlol" }
 
+  # TODO this should all be in player
   def pickups
     actions.pickup
   end

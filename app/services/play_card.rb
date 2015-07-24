@@ -10,6 +10,7 @@ class PlayCard
     @errors = []
   end
 
+  # TODO lock game
   def call
     assert_game_in_play &&
       assert_legal_move &&
@@ -32,6 +33,7 @@ class PlayCard
     good_rank = @card.rank == top_card.rank
     good_suit = @card.suit == top_card.suit
 
+    # TODO only push errors if invalid card ~~
     @errors.push "cannot play card, expecting suit #{top_card.suit}" unless good_suit
     @errors.push "cannot play card, expecting rank #{top_card.suit}" unless good_rank
 
