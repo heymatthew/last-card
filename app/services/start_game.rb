@@ -25,13 +25,14 @@ class StartGame
     end
   end
 
+  # TODO make this read better, don't use tap
   def remove_pending
-    @game.pending.tap do |pending|
-      if pending
-        @game.pending = false
-      else
-        @errors.push "game already started"
-      end
+    if !@game.pending
+      @errors.push "game already started"
+      false
+    else
+      @game.pending = false
+      true
     end
   end
 
