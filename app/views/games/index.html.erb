@@ -1,0 +1,8 @@
+Hey
+<ul>
+  <% @games.each do |game| %>
+    <li>
+      <%= link_to "Join game #{game.id}", game_path(game) %>
+    </li>
+  <% end -%>
+</ul>
