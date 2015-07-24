@@ -5,6 +5,7 @@ class Round
   attr_reader :deck
   attr_reader :pile
 
+  # TODO make hands/deck/pile lazy
   def initialize(game)
     @game = game
 
@@ -48,6 +49,7 @@ class Round
   end
 
   def previous_pile_top(shuffle_time)
+    # TODO use ids instead of times
     @game.plays.where("created_at < ?", shuffle_time).last.card
   end
 

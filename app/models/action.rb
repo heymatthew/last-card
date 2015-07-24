@@ -3,8 +3,12 @@ class Action < ActiveRecord::Base
   belongs_to :player
   belongs_to :game
 
+  # store as strings plz
   PICKUP = 0
   PLAY = 1
+
+  # FIXME Either have one action per turn with multiple cards played
+  # OR merge card into this class
 
   validates :card,   presence: true
   validates :player, presence: true

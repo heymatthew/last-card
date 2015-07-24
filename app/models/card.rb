@@ -1,3 +1,4 @@
+# FIXME move to Action.rb
 class Card < ActiveRecord::Base
   has_many :actions, :dependent => :delete_all
 
