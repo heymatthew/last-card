@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   let(:game) { Game.create! }
-  let(:player1) { Player.create!(nickname: "batman") }
-  let(:player2) { Player.create!(nickname: "tothemax") }
+  let(:user1) { User.create!(nickname: "batman") }
+  let(:user2) { User.create!(nickname: "tothemax") }
 
-  context "when fewer than 2 players" do
+  context "when fewer than 2 users" do
     before do
-      game.players << player1
+      game.users << user1
       game.save
     end
 
@@ -16,10 +16,10 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  context "with 2 players" do
+  context "with 2 users" do
     before do
-      game.players << player1
-      game.players << player2
+      game.users << user1
+      game.users << user2
       game.save
     end
 
@@ -39,8 +39,8 @@ RSpec.describe Game, type: :model do
   context "after action" do
     let(:card) { Card.find_by(rank: "queen", suit: "hearts") }
 
-    describe "player#play" do
-      subject { player1.play!(game, card) }
+    describe "user#play" do
+      subject { user1.play!(game, card) }
 
       it "shows up in game#plays" do
         expect { subject }.to change { game.plays.size }.by(1)
@@ -51,8 +51,8 @@ RSpec.describe Game, type: :model do
       end
     end
 
-    describe "player#pickup" do
-      subject { player1.pickup!(game, card) }
+    describe "user#pickup" do
+      subject { user1.pickup!(game, card) }
 
       it "shows up in game#pickups" do
         expect { subject }.to change { game.pickups.size }.by(1)

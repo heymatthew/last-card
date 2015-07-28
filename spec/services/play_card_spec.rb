@@ -7,7 +7,7 @@ RSpec.shared_examples "they update game state" do
       expect { service.call }.to change { round.pile.last }.to card
     end
 
-    it "removes played card from players hand" do
+    it "removes played card from user's hand" do
       expect(hand).to include(card)
       service.call
       expect(hand).to_not include(card)
@@ -16,8 +16,8 @@ RSpec.shared_examples "they update game state" do
 end
 
 RSpec.describe PlayCard do
-  let(:player1) { Player.create!(nickname: "megatron") }
-  let(:player2) { Player.create!(nickname: "optimus") }
+  let(:user1) { User.create!(nickname: "megatron") }
+  let(:user2) { User.create!(nickname: "optimus") }
   let(:game)    { Game.create! }
 
   def round
@@ -25,7 +25,7 @@ RSpec.describe PlayCard do
   end
 
   def hand
-    round.hands[player1.nickname]
+    round.hands[user1.nickname]
   end
 
   let(:good_card) { hand.first }
@@ -35,7 +35,7 @@ RSpec.describe PlayCard do
   let(:bad_card)  { Card.find_by(rank: bad_ranks.last, suit: bad_suits) }
 
   let(:card)    { Card.first }
-  let(:service) { PlayCard.new(player1, round, card) }
+  let(:service) { PlayCard.new(user1, round, card) }
 
   context "before the game has started" do
     it_behaves_like "a service with errors"
@@ -45,8 +45,8 @@ RSpec.describe PlayCard do
 
   context "after the game has started" do
     before do
-      game.players << player1
-      game.players << player2
+      game.users << user1
+      game.users << user2
       game.save!
       StartGame.new(game).call or fail "untestable"
     end
@@ -56,9 +56,9 @@ RSpec.describe PlayCard do
       it_behaves_like "a service with errors"
     end
 
-    # make sure the player has a known good card
+    # make sure the user has a known good card
     # pick up a card of the right type from the deck
-    before { player1.pickup!(game, card) }
+    before { user1.pickup!(game, card) }
 
     context "cards of same rank" do
       # grab a card of the right rank from the deck

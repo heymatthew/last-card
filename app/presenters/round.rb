@@ -20,10 +20,10 @@ class Round
     @hands = {}
 
     if @game.started?
-      @game.players.each do |player|
-        pickups = player.pickups.map(&:card)
-        plays   = player.plays.map(&:card)
-        @hands[player.nickname] = pickups - plays
+      @game.users.each do |user|
+        pickups = user.pickups.map(&:card)
+        plays   = user.plays.map(&:card)
+        @hands[user.nickname] = pickups - plays
       end
     end
   end

@@ -1,8 +1,8 @@
 class PickupCard
   attr_reader :errors
 
-  def initialize(player, round)
-    @player = player
+  def initialize(user, round)
+    @user = user
     @round  = round
     @errors = []
   end
@@ -33,6 +33,6 @@ class PickupCard
   def pickup_card
     card = @round.deck.sample
     game = @round.game
-    @player.pickup!(game, card)
+    @user.pickup!(game, card)
   end
 end
