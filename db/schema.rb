@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150723011259) do
+ActiveRecord::Schema.define(version: 20150727204616) do
 
   create_table "actions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "game_id",    null: false
-    t.integer  "player_id",  null: false
+    t.integer  "user_id",    null: false
     t.integer  "affect",     null: false
     t.integer  "card_id",    null: false
   end
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20150723011259) do
   add_index "actions", ["affect"], name: "index_actions_on_affect"
   add_index "actions", ["card_id"], name: "index_actions_on_card_id"
   add_index "actions", ["game_id"], name: "index_actions_on_game_id"
-  add_index "actions", ["player_id"], name: "index_actions_on_player_id"
+  add_index "actions", ["user_id"], name: "index_actions_on_user_id"
 
   create_table "cards", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -44,24 +44,24 @@ ActiveRecord::Schema.define(version: 20150723011259) do
     t.boolean  "pending",    default: true
   end
 
-  create_table "games_players", force: :cascade do |t|
+  create_table "players", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "player_id"
+    t.integer  "user_id"
     t.integer  "game_id"
   end
 
-  add_index "games_players", ["game_id"], name: "index_games_players_on_game_id"
-  add_index "games_players", ["player_id"], name: "index_games_players_on_player_id"
+  add_index "players", ["game_id"], name: "index_players_on_game_id"
+  add_index "players", ["user_id"], name: "index_players_on_user_id"
 
-  create_table "players", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "game_id"
     t.string   "nickname"
   end
 
-  add_index "players", ["game_id"], name: "index_players_on_game_id"
-  add_index "players", ["nickname"], name: "index_players_on_nickname", unique: true
+  add_index "users", ["game_id"], name: "index_users_on_game_id"
+  add_index "users", ["nickname"], name: "index_users_on_nickname", unique: true
 
 end

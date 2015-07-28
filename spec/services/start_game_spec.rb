@@ -5,25 +5,25 @@ RSpec.describe StartGame do
   # predictable seed for predictable shuffles
   before { srand 1 }
 
-  let(:player1) { Player.create!(nickname: "batman")   }
-  let(:player2) { Player.create!(nickname: "tothemax") }
+  let(:user1) { User.create!(nickname: "batman")   }
+  let(:user2) { User.create!(nickname: "tothemax") }
   let(:game)    { Game.create! }
   let(:service) { StartGame.new(game) }
 
   context "when called" do
-    context "before players have joined" do
+    context "before users have joined" do
       it_behaves_like "a service with errors"
     end
 
     context "and game not #ready?" do
-      before { game.players << player1 }
+      before { game.users << user1 }
       it_behaves_like "a service with errors"
     end
 
     context "more than once" do
       before do
-        game.players << player1
-        game.players << player2
+        game.users << user1
+        game.users << user2
         second_service = StartGame.new(game)
         expect(second_service.call).to be true
       end
@@ -33,8 +33,8 @@ RSpec.describe StartGame do
 
     context "and game is #ready?" do
       before do
-        game.players << player1
-        game.players << player2
+        game.users << user1
+        game.users << user2
       end
 
       it "runs" do
@@ -52,10 +52,10 @@ RSpec.describe StartGame do
           .from(true).to(false)
       end
 
-      it "deals cards to players" do
+      it "deals cards to users" do
         expect { service.call }
           .to change { Action.pickup.count - Action.play.count }
-          .from(0).to(10) # 10 cards in players hands
+          .from(0).to(10) # 10 cards in users hands
       end
 
       it "plays the first card on the deck" do
@@ -64,7 +64,7 @@ RSpec.describe StartGame do
           .from(0).to(1)
       end
 
-      it "does not repeat delt cards to players" do
+      it "does not repeat delt cards to users" do
         expect { service.call }
           .to change { Action.pickup.map(&:card).uniq.size }
           .from(0).to(11) # 11 unique cards, 1 will be played
