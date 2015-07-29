@@ -5,7 +5,6 @@ RSpec.shared_examples "a playable service" do
   describe "when called" do
     it "succeeds" do
       expect(service.call).to eq true
-      throw 'fluuasdf'
     end
 
     it "add card to pile" do

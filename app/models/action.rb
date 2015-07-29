@@ -1,8 +1,11 @@
 class Action < ActiveRecord::Base
+  PICKUP, PLAY = %w(pickup play)
+
   belongs_to :card
   belongs_to :player
 
-  PICKUP, PLAY = %w(pickup play)
+  scope :pickup, -> { where(effect: PICKUP) }
+  scope :play,   -> { where(effect: PLAY) }
 
   # FIXME Either have one action per turn with multiple cards played
   # OR merge card into this class
@@ -12,7 +15,4 @@ class Action < ActiveRecord::Base
   validates :effect,
     presence: true,
     inclusion: { in: [ PICKUP, PLAY ] }
-
-  scope :pickup, -> { where(effect: PICKUP) }
-  scope :play,   -> { where(effect: PLAY) }
 end
