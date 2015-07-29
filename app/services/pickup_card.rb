@@ -15,7 +15,6 @@ class PickupCard
 
   private
 
-  # TODO Remove tap
   def assert_cards_available
     return true if @round.deck.any?
     @errors.push "no cards in deck"

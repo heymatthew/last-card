@@ -20,20 +20,19 @@ class StartGame
   private
 
   def assert_game_ready
-    @game.ready?.tap do |ready|
-      @errors.push "game not ready to start" if !ready
-    end
+    return true if @game.ready?
+    @errors.push "game not ready to start"
+    false
   end
 
-  # TODO make this read better, don't use tap
   def remove_pending
-    if !@game.pending
-      @errors.push "game already started"
-      false
-    else
+    if @game.pending
       @game.pending = false
-      true
+      return true
     end
+
+    @errors.push "game already started"
+    false
   end
 
   def shuffle_deck
