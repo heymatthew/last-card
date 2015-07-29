@@ -5,17 +5,19 @@ RSpec.describe PickupCard do
   # predictable seed for predictable shuffles
   before { srand 1 }
 
-  let(:user1)   { User.create!(nickname: "megatron") }
-  let(:user2)   { User.create!(nickname: "optimus") }
-  let(:game)    { Game.create! }
-  let(:service) { PickupCard.new(user1, round) }
+  let(:game)     { Game.create! }
+  let(:optimus)  { User.create!(nickname: "optimus") }
+  let(:megatron) { User.create!(nickname: "megatron") }
+  let(:player1)  { optimus.players.build }
+  let(:player2)  { megatron.players.build }
+  let(:service)  { PickupCard.new(player1, round) }
 
   def round
     Round.new(game)
   end
 
   def hand
-    round.hands[user1.nickname]
+    round.hands[player1.nickname]
   end
 
   context "before a game has started" do
@@ -27,7 +29,7 @@ RSpec.describe PickupCard do
   context "when there are no cards in the deck" do
     before do
       round.deck.each do |card|
-        user2.play!(game, card)
+        #player2.play!(card)
       end
     end
 
@@ -36,8 +38,8 @@ RSpec.describe PickupCard do
 
   context "after the game has started" do
     before do
-      game.users << user1
-      game.users << user2
+      game.players << player1
+      game.players << player2
       game.save!
       StartGame.new(game).call or fail "untestable"
     end
@@ -46,7 +48,7 @@ RSpec.describe PickupCard do
       expect(service.call).to be true
     end
 
-    it "adds cards to the user's hand" do
+    it "adds cards to the player's hand" do
       expect { service.call }.to change { hand.size }.by(1)
     end
 

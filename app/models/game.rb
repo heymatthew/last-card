@@ -1,10 +1,9 @@
 class Game < ActiveRecord::Base
-  has_many :players
+  has_many :players, :dependent => :destroy
   has_many :users, through: :players
-  has_many :actions, :dependent => :destroy
-  # TODO refactor
-  # has_many :players
-  # has_many_through :players
+  has_many :actions, through: :players
+
+  has_one :nickname, through: :user
 
   def ready?
     users.size >= 2

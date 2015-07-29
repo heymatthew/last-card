@@ -40,35 +40,4 @@ RSpec.describe User, type: :model do
     before { User.create!(nickname: nickname) }
     it_behaves_like "an invalid User"
   end
-
-  context "when interacting with the game" do
-    let(:game) { Game.create! }
-    let(:card) { Card.deck.first }
-
-    before { user.save }
-
-    context "picking up" do
-      subject { user.pickup!(game,card) }
-
-      it "adds to user pickups" do
-        expect { subject }.to change { user.pickups.count }.by(1)
-      end
-
-      it "does not change user plays" do
-        expect { subject }.not_to change { user.plays.count }
-      end
-    end
-
-    context "playing" do
-      subject{ user.play!(game, card) }
-
-      it "adds to user plays" do
-        expect { subject }.to change { user.plays.count }.by(1)
-      end
-
-      it "to not change user pickups" do
-        expect { subject }.not_to change { user.pickups.count }
-      end
-    end
-  end
 end

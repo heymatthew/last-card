@@ -41,19 +41,19 @@ class StartGame
   end
 
   def give_players_cards
-    @game.users.each do |user|
+    @game.players.each do |player|
       @deck.pop(5).each do |card|
-        user.pickup!(@game, card)
+        player.pickup!(card)
       end
     end
   end
 
   def play_first_card
     first_card = @deck.pop
-    dealer = @game.users.first
+    dealer = @game.players.first
 
-    dealer.pickup!(@game, first_card)
-    dealer.play!(@game, first_card)
+    dealer.pickup!(first_card)
+    dealer.play!(first_card)
   end
 
   def save_game

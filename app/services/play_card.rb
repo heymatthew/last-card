@@ -3,8 +3,8 @@ require 'rails_helper'
 class PlayCard
   attr_reader :errors
 
-  def initialize(user, round, card)
-    @user   = user
+  def initialize(player, round, card)
+    @player = player
     @round  = round
     @card   = card
     @errors = []
@@ -41,6 +41,6 @@ class PlayCard
   end
 
   def play_card
-    @user.play!(@round.game, @card)
+    @player.play!(@card)
   end
 end

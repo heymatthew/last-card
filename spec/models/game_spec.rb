@@ -2,13 +2,16 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   let(:game) { Game.create! }
-  let(:user1) { User.create!(nickname: "batman") }
-  let(:user2) { User.create!(nickname: "tothemax") }
+  let(:user) { User.create!(nickname: "batman") }
+  let(:player1) { user.players.build }
+  let(:player2) { user.players.build }
 
-  context "when fewer than 2 users" do
+  # TODO validation against players joining a game twice
+
+  context "when fewer than 2 players" do
     before do
-      game.users << user1
-      game.save
+      game.players << player1
+      game.save!
     end
 
     it "is not #ready? to start" do
@@ -16,11 +19,11 @@ RSpec.describe Game, type: :model do
     end
   end
 
-  context "with 2 users" do
+  context "with 2 players" do
     before do
-      game.users << user1
-      game.users << user2
-      game.save
+      game.players << player1
+      game.players << player2
+      game.save!
     end
 
     it "to be #ready?" do
@@ -33,33 +36,33 @@ RSpec.describe Game, type: :model do
       it "has #started?" do
         expect(game).to be_started
       end
-    end
-  end
 
-  context "after action" do
-    let(:card) { Card.find_by(rank: "queen", suit: "hearts") }
+      context "after action" do
+        let(:card) { Card.find_by(rank: "queen", suit: "hearts") }
 
-    describe "user#play" do
-      subject { user1.play!(game, card) }
+        describe "player#play" do
+          subject { player1.play!(card) }
 
-      it "shows up in game#plays" do
-        expect { subject }.to change { game.plays.size }.by(1)
-      end
+          it "shows up in game#plays" do
+            expect { subject }.to change { game.plays.size }.by(1)
+          end
 
-      it "doesn't affect game#pickups" do
-        expect { subject }.to_not change { game.pickups }
-      end
-    end
+          it "doesn't affect game#pickups" do
+            expect { subject }.to_not change { game.pickups }
+          end
+        end
 
-    describe "user#pickup" do
-      subject { user1.pickup!(game, card) }
+        describe "player#pickup" do
+          subject { player1.pickup!(card) }
 
-      it "shows up in game#pickups" do
-        expect { subject }.to change { game.pickups.size }.by(1)
-      end
+          it "shows up in game#pickups" do
+            expect { subject }.to change { game.pickups.size }.by(1)
+          end
 
-      it "doesn't affect game#plays" do
-        expect { subject }.to_not change { game.plays }
+          it "doesn't affect game#plays" do
+            expect { subject }.to_not change { game.plays }
+          end
+        end
       end
     end
   end

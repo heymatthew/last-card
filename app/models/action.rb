@@ -1,7 +1,6 @@
 class Action < ActiveRecord::Base
   belongs_to :card
-  belongs_to :user # TODO link to player
-  belongs_to :game
+  belongs_to :player
 
   # TODO store as strings plz
   PICKUP = 0
@@ -11,9 +10,7 @@ class Action < ActiveRecord::Base
   # OR merge card into this class
 
   validates :card, presence: true
-  validates :user, presence: true  # TODO link to player
-  validates :game, presence: true
-
+  validates :player, presence: true
   validates :affect,
     presence: true,
     inclusion: { in: [ PICKUP, PLAY ] }

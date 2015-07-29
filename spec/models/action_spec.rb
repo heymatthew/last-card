@@ -13,17 +13,18 @@ RSpec.describe Action, type: :model do
   let(:game)   { Game.create!   }
   let(:affect) { Action::PICKUP }
   let(:user)   { User.create!(nickname: "mctesterson") }
+  let(:player) { user.players.create!(game: game) }
+
   let(:action) do
     Action.new(
-      card:   card,
-      user:   user,
-      game:   game,
+      card: card,
+      player: player,
       affect: affect,
     )
   end
 
   context "when initializing" do
-    context "with a user and a card" do
+    context "with a player and a card" do
       it "is #valid?" do
         expect(action).to be_valid
       end
@@ -38,13 +39,8 @@ RSpec.describe Action, type: :model do
       it_behaves_like "an invalid Action"
     end
 
-    context "without a user" do
-      let(:user) { nil }
-      it_behaves_like "an invalid Action"
-    end
-
-    context "without a game" do
-      let(:game) { nil }
+    context "without a player" do
+      let(:player) { nil }
       it_behaves_like "an invalid Action"
     end
 
@@ -64,8 +60,7 @@ RSpec.describe Action, type: :model do
       2.times do
         Action.create!(
           card:   card,
-          user:   user,
-          game:   game,
+          player: player,
           affect: affect,
         )
       end
