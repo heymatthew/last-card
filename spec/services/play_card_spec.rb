@@ -1,16 +1,21 @@
 require 'rails_helper'
 require_relative 'shared_examples'
 
-RSpec.shared_examples "they update game state" do
+RSpec.shared_examples "a playable service" do
   describe "when called" do
+    it "succeeds" do
+      expect(service.call).to eq true
+      throw 'fluuasdf'
+    end
+
     it "add card to pile" do
       expect { service.call }.to change { round.pile.last }.to card
     end
 
     it "removes played card from player's hand" do
-      expect(hand).to include(card)
+      expect(hand.map(&:to_s)).to include(card.to_s)
       service.call
-      expect(hand).to_not include(card)
+      expect(hand.map(&:to_s)).to_not include(card.to_s)
     end
   end
 end
@@ -49,35 +54,38 @@ RSpec.describe PlayCard do
       StartGame.new(game).call or fail "untestable"
     end
 
-    context "cards of wrong rank and suit" do
+    context "a card that doesn't share rank or suit with pile top" do
       let(:card) { bad_card }
       it_behaves_like "a service with errors"
     end
 
-    # make sure the player has a known good card
-    # pick up a card of the right type from the deck
-    before { player1.pickup!(card) }
+    let(:top_suit) { round.pile.last.suit }
+    let(:top_rank) { round.pile.last.rank }
 
-    context "cards of same rank" do
-      # grab a card of the right rank from the deck
-      let(:card) do
-        top_rank = round.pile.last.rank
-        round.deck.find { |card| card.rank == top_rank }
-      end
+    let(:is_top_suit) { ->(card) { card.suit == top_suit } }
+    let(:is_top_rank) { ->(card) { card.rank == top_rank } }
 
-      it_behaves_like "they update game state"
+    context "a card of same rank as pile top" do
+      # make sure the player has a known good card
+      # wrong suit, but right rank
+      let(:card) { round.deck.reject(&is_top_suit).find(&is_top_rank) }
+
+      # pick up a card of the right type from the deck
+      before { player1.pickup!(card) }
+
+      it_behaves_like "a playable service"
     end
 
-    context "cards of same suit" do
-      # grab a card of the right rank from the deck
-      let(:card) do
-        top_suit = round.pile.last.suit
-        round.deck.find { |card| card.suit == top_suit }
-      end
+    context "a card of same suit as pile top" do
+      # make sure hte player has a known good card
+      # wrong rank, right suit
+      let(:card) { round.deck.reject(&is_top_suit).find(&is_top_rank) }
 
-      it_behaves_like "they update game state"
+      # pick up a card of the right type from the deck
+      before { player1.pickup!(card) }
+
+      it_behaves_like "a playable service"
     end
-
   end
 
   context "when game is over" # TODO
