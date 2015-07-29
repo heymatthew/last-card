@@ -8,8 +8,8 @@ RSpec.describe PickupCard do
   let(:game)     { Game.create! }
   let(:optimus)  { User.create!(nickname: "optimus") }
   let(:megatron) { User.create!(nickname: "megatron") }
-  let(:player1)  { optimus.players.build }
-  let(:player2)  { megatron.players.build }
+  let(:player1)  { optimus.players.create!(game: game) }
+  let(:player2)  { megatron.players.create!(game: game) }
   let(:service)  { PickupCard.new(player1, round) }
 
   def round
@@ -20,21 +20,7 @@ RSpec.describe PickupCard do
     round.hands[player1.nickname]
   end
 
-  context "before a game has started" do
-    it_behaves_like "a service with errors"
-  end
-
   context "when game is over" # TODO
-
-  context "when there are no cards in the deck" do
-    before do
-      round.deck.each do |card|
-        #player2.play!(card)
-      end
-    end
-
-    it_behaves_like "a service with errors"
-  end
 
   context "after the game has started" do
     before do
@@ -58,6 +44,16 @@ RSpec.describe PickupCard do
 
     it "does not change the pile" do
       expect { service.call }.to_not change { round.pile }
+    end
+
+    context "when there are no cards in the deck" do
+      before do
+        round.deck.each do |card|
+          player2.pickup!(card)
+        end
+      end
+
+      it_behaves_like "a service with errors"
     end
   end
 end

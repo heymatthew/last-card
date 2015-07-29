@@ -1,6 +1,4 @@
 class Round
-  attr_reader :game
-
   def initialize(game)
     @game = game
   end
