@@ -26,11 +26,10 @@ class PlayCard
     good_rank = @card.rank == top_card.rank
     good_suit = @card.suit == top_card.suit
 
-    # TODO only push errors if invalid card ~~
-    @errors.push "cannot play card, expecting suit #{top_card.suit}" unless good_suit
-    @errors.push "cannot play card, expecting rank #{top_card.suit}" unless good_rank
+    return true if good_rank || good_suit
 
-    good_rank || good_suit
+    @errors.push "cannot play card, #{@card.to_s} on #{top_card.to_s}"
+    false
   end
 
   def play_card
