@@ -10,9 +10,10 @@ class PlayCard
     @errors = []
   end
 
-  # TODO lock game
   def call
-    assert_legal_move && play_card
+    @round.game.with_lock do
+      assert_legal_move && play_card
+    end
 
     @errors.none?
   end

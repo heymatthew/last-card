@@ -8,7 +8,9 @@ class PickupCard
   end
 
   def call
-    assert_cards_available && pickup_card
+    @round.game.with_lock do
+      assert_cards_available && pickup_card
+    end
 
     @errors.none?
   end
