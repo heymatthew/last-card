@@ -4,8 +4,8 @@ RSpec.describe Round do
   # predictable seed for predictable shuffles
   before { srand 1 }
 
-  let(:user) { game.users.first }
-  let(:game) { Game.create! }
+  let(:player) { game.players.first }
+  let(:game)   { Game.create! }
 
   before do
     game.users.create!(nickname: "tintin")
@@ -17,7 +17,7 @@ RSpec.describe Round do
   end
 
   def hand
-    round.hands[user.nickname]
+    round.hands[player.nickname]
   end
 
   context "before game start" do
@@ -38,7 +38,7 @@ RSpec.describe Round do
     before { StartGame.new(game).call or fail "untestable" }
 
     context "when game starts" do
-      it "gives each user 5 cards" do
+      it "gives each player 5 cards" do
         round.hands.values.each do |hand|
           expect(hand.size).to be 5
         end
@@ -49,10 +49,10 @@ RSpec.describe Round do
       end
     end
 
-    context "when user picks up" do
+    context "when player picks up" do
       let(:card) { round.deck.first }
 
-      subject { user.pickup!(game,card) }
+      subject { player.pickup!(card) }
 
       it "does not change pile" do
         expect { subject }.to_not change { round.pile.size }
@@ -62,34 +62,34 @@ RSpec.describe Round do
         expect { subject }.to change { round.deck.size }.by(-1)
       end
 
-      it "adds cards to user's hand" do
+      it "adds cards to player's hand" do
         expect { subject }.to change { round.hands.values.flatten.size }.by(1)
       end
 
       context "after action" do
-        before { user.pickup!(game,card) }
+        before { player.pickup!(card) }
 
         it "removed picked up card from deck" do
           expect(round.deck).to_not include card
         end
 
-        it "added the pickup to user's hand" do
+        it "added the pickup to player's hand" do
           expect(hand).to include card
         end
       end
     end
 
     context "when card is played" do
-      # card now comes from a user's hand
+      # card now comes from a player's hand
       let(:card) { hand.first }
 
-      subject { user.play!(game ,card) }
+      subject { player.play!(card) }
 
-      it "removes cards from user's hand" do
-        expect { subject }.to change { round.hands[user.nickname].size }.by(-1)
+      it "removes cards from player's hand" do
+        expect { subject }.to change { round.hands[player.nickname].size }.by(-1)
       end
 
-      it "only removes from one of the user's hands" do
+      it "only removes from one of the player's hands" do
         expect { subject }.to change { round.hands.values.flatten.size }.by(-1)
       end
 
@@ -102,9 +102,9 @@ RSpec.describe Round do
       end
 
       context "after action" do
-        before { user.play!(game,card) }
+        before { player.play!(card) }
 
-        it "removed card from user's hand" do
+        it "removed card from player's hand" do
           expect(hand).to_not include card
         end
 
@@ -123,12 +123,12 @@ RSpec.describe Round do
       let(:last_round)  { round }
 
       before do
-        # User plays a card
-        user.play!(game, top_card)
+        # player plays a card
+        player.play!(top_card)
 
-        # user picks up all cards
+        # player picks up all cards
         last_round.deck.each do |card|
-          user.pickup!(game, card)
+          player.pickup!(card)
         end
       end
 
@@ -155,7 +155,7 @@ RSpec.describe Round do
       context "the next play" do
         let(:next_played_card) { hand.last }
 
-        before { user.play!(game, next_played_card) }
+        before { player.play!(next_played_card) }
 
         describe "the pile" do
           it "has 2 cards" do

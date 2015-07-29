@@ -20,10 +20,10 @@ class Round
     @hands = {}
 
     if @game.started?
-      @game.users.each do |user|
-        pickups = user.pickups.map(&:card)
-        plays   = user.plays.map(&:card)
-        @hands[user.nickname] = pickups - plays
+      @game.players.each do |player|
+        pickups = player.pickups.map(&:card)
+        plays = player.plays.map(&:card)
+        @hands[player.nickname] = pickups - plays
       end
     end
   end
@@ -50,11 +50,11 @@ class Round
 
   def previous_pile_top(shuffle_time)
     # TODO use ids instead of times
-    @game.plays.where("created_at < ?", shuffle_time).last.card
+    @game.plays.where("actions.created_at < ?", shuffle_time).last.card
   end
 
   def played_since_shuffle(shuffle_time)
-    @game.plays.where("created_at > ?", shuffle_time).map(&:card)
+    @game.plays.where("actions.created_at > ?", shuffle_time).map(&:card)
   end
 
   def calculate_deck
