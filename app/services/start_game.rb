@@ -7,12 +7,14 @@ class StartGame
   end
 
   def call
-    assert_game_ready &&
-      remove_pending &&
-      shuffle_deck &&
-      give_players_cards &&
-      play_first_card &&
-      save_game
+    @game.with_lock do
+      assert_game_ready &&
+        remove_pending &&
+        shuffle_deck &&
+        give_players_cards &&
+        play_first_card &&
+        save_game
+    end
 
     @errors.none?
   end
