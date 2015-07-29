@@ -11,18 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150728223210) do
+ActiveRecord::Schema.define(version: 20150729032606) do
 
   create_table "actions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "affect",     null: false
     t.integer  "card_id",    null: false
     t.integer  "player_id"
+    t.string   "effect"
   end
 
-  add_index "actions", ["affect"], name: "index_actions_on_affect"
   add_index "actions", ["card_id"], name: "index_actions_on_card_id"
+  add_index "actions", ["effect"], name: "index_actions_on_effect"
   add_index "actions", ["player_id"], name: "index_actions_on_player_id"
 
   create_table "cards", force: :cascade do |t|
