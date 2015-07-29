@@ -43,19 +43,17 @@ class Round
 
     # Find the card that triggered the shuffle
     shuffle_trigger = @game.pickups[ Card.deck.size * shuffle_count - 1 ]
-    shuffle_time = shuffle_trigger.created_at
 
     # Pile will be previous pile's top card + played cards since then
-    previous_top_card(shuffle_time).concat played_since_shuffle(shuffle_time)
+    previous_top_card(shuffle_trigger.id).concat played_since_shuffle(shuffle_trigger.id)
   end
 
-  def previous_top_card(shuffle_time)
-    # TODO use ids instead of times
-    [ @game.plays.where("actions.created_at < ?", shuffle_time).last.card ]
+  def previous_top_card(trigger_id)
+    [ @game.plays.where("actions.id < ?", trigger_id).last.card ]
   end
 
-  def played_since_shuffle(shuffle_time)
-    @game.plays.where("actions.created_at > ?", shuffle_time).map(&:card)
+  def played_since_shuffle(trigger_id)
+    @game.plays.where("actions.id > ?", trigger_id).map(&:card)
   end
 
 
