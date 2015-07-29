@@ -11,7 +11,7 @@ RSpec.describe Action, type: :model do
 
   let(:card)   { Card.first     }
   let(:game)   { Game.create!   }
-  let(:affect) { Action::PICKUP }
+  let(:effect) { Action::PICKUP }
   let(:user)   { User.create!(nickname: "mctesterson") }
   let(:player) { user.players.create!(game: game) }
 
@@ -19,7 +19,7 @@ RSpec.describe Action, type: :model do
     Action.new(
       card: card,
       player: player,
-      affect: affect,
+      effect: effect,
     )
   end
 
@@ -44,8 +44,8 @@ RSpec.describe Action, type: :model do
       it_behaves_like "an invalid Action"
     end
 
-    context "without an affect" do
-      let(:affect) { nil }
+    context "without an effect" do
+      let(:effect) { nil }
       it_behaves_like "an invalid Action"
     end
 
@@ -61,7 +61,7 @@ RSpec.describe Action, type: :model do
         Action.create!(
           card:   card,
           player: player,
-          affect: affect,
+          effect: effect,
         )
       end
     end

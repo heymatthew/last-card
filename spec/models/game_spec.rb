@@ -47,7 +47,7 @@ RSpec.describe Game, type: :model do
             expect { subject }.to change { game.plays.size }.by(1)
           end
 
-          it "doesn't affect game#pickups" do
+          it "doesn't change game#pickups" do
             expect { subject }.to_not change { game.pickups }
           end
         end
@@ -59,7 +59,7 @@ RSpec.describe Game, type: :model do
             expect { subject }.to change { game.pickups.size }.by(1)
           end
 
-          it "doesn't affect game#plays" do
+          it "doesn't change game#plays" do
             expect { subject }.to_not change { game.plays }
           end
         end

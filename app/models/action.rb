@@ -2,19 +2,17 @@ class Action < ActiveRecord::Base
   belongs_to :card
   belongs_to :player
 
-  # TODO store as strings plz
-  PICKUP = 0
-  PLAY = 1
+  PICKUP, PLAY = %w(pickup play)
 
   # FIXME Either have one action per turn with multiple cards played
   # OR merge card into this class
 
   validates :card, presence: true
   validates :player, presence: true
-  validates :affect,
+  validates :effect,
     presence: true,
     inclusion: { in: [ PICKUP, PLAY ] }
 
-  scope :pickup, -> { where(affect: PICKUP) }
-  scope :play,   -> { where(affect: PLAY) }
+  scope :pickup, -> { where(effect: PICKUP) }
+  scope :play,   -> { where(effect: PLAY) }
 end
