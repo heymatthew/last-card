@@ -8,26 +8,18 @@ class PickupCard
   end
 
   def call
-    assert_game_in_play &&
-      assert_cards_available &&
-      pickup_card
+    assert_cards_available && pickup_card
 
     @errors.none?
   end
 
   private
 
-  # TODO remove tap
-  def assert_game_in_play
-    @round.game.started?.tap do |started|
-      @errors.push "game not started" unless started
-    end
-  end
-
+  # TODO Remove tap
   def assert_cards_available
-    @round.deck.any?.tap do |deck_has_cards|
-      @errors.push "no cards in deck" unless deck_has_cards
-    end
+    return true if @round.deck.any?
+    @errors.push "no cards in deck"
+    false
   end
 
   def pickup_card

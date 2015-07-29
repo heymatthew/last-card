@@ -39,10 +39,6 @@ RSpec.describe PlayCard do
   let(:card)    { Card.first }
   let(:service) { PlayCard.new(player1, round, card) }
 
-  context "before the game has started" do
-    it_behaves_like "a service with errors"
-  end
-
   context "when game is over" # TODO
 
   context "after the game has started" do

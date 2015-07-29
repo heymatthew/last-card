@@ -12,20 +12,12 @@ class PlayCard
 
   # TODO lock game
   def call
-    assert_game_in_play &&
-      assert_legal_move &&
-      play_card
+    assert_legal_move && play_card
 
     @errors.none?
   end
 
   private
-
-  def assert_game_in_play
-    @round.game.started?.tap do |started|
-      @errors.push "game not started" unless started
-    end
-  end
 
   # TODO ace has different behaviour
   def assert_legal_move
