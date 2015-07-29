@@ -1,24 +1,14 @@
 class Round
   attr_reader :game
 
-  attr_reader :hands
-  attr_reader :deck
-  attr_reader :pile
-
-  # TODO make hands/deck/pile lazy
   def initialize(game)
     @game = game
-
-    calculate_hands
-    calculate_pile
-    calculate_deck
   end
 
-  private
+  def hands
+    return @hands if @hands.present?
 
-  def calculate_hands
     @hands = {}
-
     if @game.started?
       @game.players.each do |player|
         pickups = player.pickups.map(&:card)
@@ -26,42 +16,52 @@ class Round
         @hands[player.nickname] = pickups - plays
       end
     end
+
+    @hands
   end
 
-  def calculate_pile
-    @pile = []
+  def deck
+    return @deck if @deck.present?
+    @deck = Card.deck - cards_in_play
+  end
+
+  def pile
+    return @pile if @pile.present?
 
     if @game.started?
-      shuffles = @game.pickups.count / Card.deck.size
-
-      if shuffles.zero?
-        # pile = played cards
-        @pile = @game.plays.map(&:card)
-      else
-        # based on the last card that triggered the shuffle
-        shuffle_trigger = @game.pickups[ Card.deck.size * shuffles - 1 ]
-        shuffle_time = shuffle_trigger.created_at
-
-        # pile = previous top card + played cards since
-        @pile = [previous_pile_top(shuffle_time)].concat played_since_shuffle(shuffle_time)
-      end
+      @pile = calculate_shuffled_pile
+    else
+      @pile = []
     end
   end
 
-  def previous_pile_top(shuffle_time)
+  private
+
+  def calculate_shuffled_pile
+    shuffle_count = @game.pickups.count / Card.deck.size
+
+    # Just return played cards if we've not shuffled yet
+    return @game.plays.map(&:card) if shuffle_count.zero?
+
+    # Find the card that triggered the shuffle
+    shuffle_trigger = @game.pickups[ Card.deck.size * shuffle_count - 1 ]
+    shuffle_time = shuffle_trigger.created_at
+
+    # Pile will be previous pile's top card + played cards since then
+    previous_top_card(shuffle_time).concat played_since_shuffle(shuffle_time)
+  end
+
+  def previous_top_card(shuffle_time)
     # TODO use ids instead of times
-    @game.plays.where("actions.created_at < ?", shuffle_time).last.card
+    [ @game.plays.where("actions.created_at < ?", shuffle_time).last.card ]
   end
 
   def played_since_shuffle(shuffle_time)
     @game.plays.where("actions.created_at > ?", shuffle_time).map(&:card)
   end
 
-  def calculate_deck
-    @deck = Card.deck - cards_in_play
-  end
 
   def cards_in_play
-    @pile + @hands.values.flatten
+    pile + hands.values.flatten
   end
 end
