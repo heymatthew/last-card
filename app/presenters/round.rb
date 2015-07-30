@@ -51,7 +51,8 @@ class Round
   end
 
   def previous_top_card(pickup_trigger_id)
-    [ @game.plays.where("actions.id < ?", pickup_trigger_id).last.card ]
+    last_play = @game.plays.where("actions.id < ?", pickup_trigger_id).last
+    [ last_play.card ]
   end
 
   def played_since_shuffle(pickup_trigger_id)
