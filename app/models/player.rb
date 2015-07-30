@@ -19,16 +19,10 @@ class Player < ActiveRecord::Base
   end
 
   def pickup!(card)
-    actions.create!(
-      effect: Action::PICKUP,
-      card: card,
-    )
+    actions.create!(effect: Action::PICKUP, card: card)
   end
 
   def play!(card)
-    actions.create!(
-      effect: Action::PLAY,
-      card: card,
-    )
+    actions.create!(effect: Action::PLAY, card: card)
   end
 end
