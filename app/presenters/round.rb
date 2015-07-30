@@ -50,12 +50,12 @@ class Round
     previous_top_card(shuffle_trigger.id).concat played_since_shuffle(shuffle_trigger.id)
   end
 
-  def previous_top_card(trigger_id)
-    [ @game.plays.where("actions.id < ?", trigger_id).last.card ]
+  def previous_top_card(pickup_trigger_id)
+    [ @game.plays.where("actions.id < ?", pickup_trigger_id).last.card ]
   end
 
-  def played_since_shuffle(trigger_id)
-    @game.plays.where("actions.id > ?", trigger_id).map(&:card)
+  def played_since_shuffle(pickup_trigger_id)
+    @game.plays.where("actions.id > ?", pickup_trigger_id).map(&:card)
   end
 
 
