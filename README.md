@@ -14,23 +14,24 @@ that, but on computers. Awesome!
   ![Test Coverage](https://codeclimate.com/github/theflimflam/last-card/badges/coverage.svg)
 ](https://codeclimate.com/github/theflimflam/last-card/coverage)
 
-* TODO RubyGems badgets
-
 Installation steps
-========================================
+----------------------------------------
 
 * TODO brew package
 * TODO deb package + ppa
-* TODO arch linux package??
-* TODO gentoo portage thing
+* TODO arch Linux package??
+* TODO Gentoo portage thing
 
 Build Instructions
-========================================
+----------------------------------------
 
-TODO
+1. Clone this repo `git clone https://github.com/theflimflam/last-card`
+2. Grab dependencies `bundle install`
+3. Run tests with `rake`
+4. Start server with `rails s -p 80`
 
 Contributing
-========================================
+----------------------------------------
 
 If you've got a feature you'd like to see implemented
 
@@ -44,7 +45,7 @@ If you've got a feature you'd like to see implemented
   [1]: https://github.com/theflimflam/last-card/issues
 
 Licence
-========================================
+----------------------------------------
 
 Copyright (c) 2015 Powershop, distributed under the
 [MIT&nbsp;licence][2]. Please see LICENCE file
@@ -53,7 +54,7 @@ for details.
   [2]: https://en.wikipedia.org/wiki/MIT_License
 
 Kudos and thanks
-========================================
+----------------------------------------
 
 Anyone who follows the contribution steps will find their name here :). You
 could be first!
