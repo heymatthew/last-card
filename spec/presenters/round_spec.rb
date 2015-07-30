@@ -137,6 +137,17 @@ RSpec.describe Round do
           expect(round.pile.size).to be 1
         end
 
+        # TODO options concept
+        # TODO concepts for rules
+        # TODO concept for shuffle rule
+        #  - When am I going to shuffle
+        #  - Abstract this from the round service
+        #  - Make the round service take advantage of this shuffle rule
+        #  - Move these integration tests to work against the rule rather than the round
+        #
+        # Because the shuffle rules are mission critical to the game
+        # we should be using unit tests on them to be more sure of their correctness
+        # Integration tests cannot cover edge cases of the application :)
         it "keeps the last card played on the top" do
           expect(round.pile.last).to eq last_round.pile.last
         end
