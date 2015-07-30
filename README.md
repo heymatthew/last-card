@@ -57,7 +57,6 @@ for details.
 Kudos and thanks
 ----------------------------------------
 
-Anyone who follows the contribution steps will find their name here :). You
-could be first!
+Anyone who follows the contribution steps will find their name here!
 
-<3
+You could be first! &#9829; x 1000!
