@@ -2,7 +2,7 @@ Last Card!
 ========================================
 
 Card is a popular card game played in New Zealand in schools. This is like
-that, but on computers. Awesome!
+that, but on computers. Awesome aye!
 
 [
   ![Travis CI](https://travis-ci.org/theflimflam/last-card.svg?branch=master)
@@ -14,7 +14,7 @@ that, but on computers. Awesome!
   ![Test Coverage](https://codeclimate.com/github/theflimflam/last-card/badges/coverage.svg)
 ](https://codeclimate.com/github/theflimflam/last-card/coverage)
 
-Installation steps
+&#9829; Installation steps
 ----------------------------------------
 
 * TODO brew package
@@ -22,7 +22,7 @@ Installation steps
 * TODO arch Linux package??
 * TODO Gentoo portage thing
 
-Build Instructions
+&#9830; Build Instructions
 ----------------------------------------
 
 1. Clone this repo `git clone https://github.com/theflimflam/last-card`
@@ -30,7 +30,7 @@ Build Instructions
 3. Run tests with `rake`
 4. Start server with `rails s -p 80`
 
-Contributing
+&#9827; Contributing
 ----------------------------------------
 
 If you've got a feature you'd like to see implemented
@@ -45,7 +45,7 @@ If you've got a feature you'd like to see implemented
 
   [1]: https://github.com/theflimflam/last-card/issues
 
-Licence
+&#9824; Licence
 ----------------------------------------
 
 Copyright (c) 2015 Powershop, distributed under the
@@ -54,9 +54,9 @@ for details.
 
   [2]: https://en.wikipedia.org/wiki/MIT_License
 
-Kudos and thanks
+Kudos and thanks &#9829; &#9829; &#9829;
 ----------------------------------------
 
 Anyone who follows the contribution steps will find their name here!
 
-You could be first! &#9829; x 1000!
+You could be first!
