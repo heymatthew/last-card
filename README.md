@@ -4,6 +4,8 @@ Last Card!
 Card is a popular card game played in New Zealand in schools. This is like
 that, but on computers. Awesome!
 
+![Travis CI](https://travis-ci.org/theflimflam/last-card.svg?branch=master)
+
 * TODO Travis CI Badge
 * TODO Code Climate Badge
 * TODO RubyGems badgets
