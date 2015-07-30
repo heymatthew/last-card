@@ -36,11 +36,12 @@ Contributing
 If you've got a feature you'd like to see implemented
 
 1. [Open an issue][1] or find an existing one
-2. If you're keen, fork last-card and have a go at implementing it
-3. Reference the ticket in your commit messages, and file a pull request
+2. If you're keen, fork last-card and have a go at implementing changes related to that issue
+3. Reference the ticket in your commit messages
 4. Make sure your tests pass!
+5. ...then file a pull request
 4. You may be asked to change your patches before they're accepted
-5. Collect internet points
+5. Collect internet points :)
 
   [1]: https://github.com/theflimflam/last-card/issues
 
