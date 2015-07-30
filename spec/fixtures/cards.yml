@@ -1,5 +1,0 @@
-<% Card::RANKS.product(Card::SUITS).each do |rank, suit| %>
-<%= rank %> of <%= suit %>:
-  suit: <%= suit %>
-  rank: <%= rank %>
-<% end %>

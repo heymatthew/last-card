@@ -38,7 +38,7 @@ RSpec.describe Game, type: :model do
       end
 
       context "after action" do
-        let(:card) { Card.find_by(rank: "queen", suit: "hearts") }
+        let(:card) { Card.new("queen", "hearts") }
 
         describe "player#play" do
           subject { player1.play!(card) }

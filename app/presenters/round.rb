@@ -22,7 +22,7 @@ class Round
 
   def deck
     return @deck if @deck.present?
-    @deck = Card.deck - cards_in_play
+    @deck = Card::DECK - cards_in_play
   end
 
   def pile
@@ -38,13 +38,13 @@ class Round
   private
 
   def calculate_shuffled_pile
-    shuffle_count = @game.pickups.count / Card.deck.size
+    shuffle_count = @game.pickups.count / Card::DECK.size
 
     # Just return played cards if we've not shuffled yet
     return @game.plays.map(&:card) if shuffle_count.zero?
 
     # Find the card that triggered the shuffle
-    shuffle_trigger = @game.pickups[ Card.deck.size * shuffle_count - 1 ]
+    shuffle_trigger = @game.pickups[ Card::DECK.size * shuffle_count - 1 ]
 
     # Pile will be previous pile's top card + played cards since then
     previous_top_card(shuffle_trigger.id).concat played_since_shuffle(shuffle_trigger.id)

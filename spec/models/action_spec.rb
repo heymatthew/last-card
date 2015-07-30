@@ -7,17 +7,17 @@ RSpec.shared_examples "an invalid Action" do
 end
 
 RSpec.describe Action, type: :model do
-  fixtures :cards
-
-  let(:card)   { Card.first     }
-  let(:game)   { Game.create!   }
-  let(:effect) { Action::PICKUP }
+  let(:rank)   { Card::RANKS.first }
+  let(:suit)   { Card::SUITS.first }
+  let(:game)   { Game.create!     }
+  let(:effect) { Action::PICKUP   }
   let(:user)   { User.create!(nickname: "mctesterson") }
   let(:player) { user.players.create!(game: game) }
 
   let(:action) do
     Action.new(
-      card: card,
+      card_suit: suit,
+      card_rank: rank,
       player: player,
       effect: effect,
     )
@@ -49,8 +49,23 @@ RSpec.describe Action, type: :model do
       it_behaves_like "an invalid Action"
     end
 
-    context "without a card" do
-      let(:card) { nil }
+    context "without a rank" do
+      let(:rank) { nil }
+      it_behaves_like "an invalid Action"
+    end
+
+    context "without a suit" do
+      let(:suit) { nil }
+      it_behaves_like "an invalid Action"
+    end
+
+    context "with invalid suit" do
+      let(:suit) { "dude bro party massacre 3" }
+      it_behaves_like "an invalid Action"
+    end
+
+    context "with invalid rank" do
+      let(:rank) { "kung fury" }
       it_behaves_like "an invalid Action"
     end
   end
@@ -59,7 +74,8 @@ RSpec.describe Action, type: :model do
     it "can save references to the same card" do
       2.times do
         Action.create!(
-          card:   card,
+          card_suit: suit,
+          card_rank: rank,
           player: player,
           effect: effect,
         )
