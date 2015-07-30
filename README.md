@@ -10,6 +10,9 @@ that, but on computers. Awesome!
 [
   ![Code Climate Score](https://d3s6mut3hikguw.cloudfront.net/github/theflimflam/last-card/badges/gpa.svg) 
 ](https://codeclimate.com/github/theflimflam/last-card)
+[
+  ![Test Coverage](https://codeclimate.com/github/theflimflam/last-card/badges/coverage.svg)
+](https://codeclimate.com/github/theflimflam/last-card/coverage)
 
 * TODO RubyGems badgets
 
