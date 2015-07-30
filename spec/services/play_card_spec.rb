@@ -36,9 +36,9 @@ RSpec.describe PlayCard do
 
   let(:good_card) { hand.first }
   let(:top_card)  { round.pile.last }
-  let(:bad_suits) { Card::SUITS - [top_card.suit] }
-  let(:bad_ranks) { Card::RANKS - [top_card.rank] }
-  let(:bad_card)  { Card.find_by(rank: bad_ranks.last, suit: bad_suits) }
+  let(:bad_suits) { CardDeck::SUITS - [top_card.suit] }
+  let(:bad_ranks) { CardDeck::RANKS - [top_card.rank] }
+  let(:bad_card)  { Card.new(bad_ranks.last, bad_suits.last) }
 
   let(:card)    { Card.first }
   let(:service) { PlayCard.new(player1, round, card) }

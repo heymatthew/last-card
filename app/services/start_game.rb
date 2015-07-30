@@ -38,7 +38,7 @@ class StartGame
   end
 
   def shuffle_deck
-    @deck = Card.deck.shuffle
+    @deck = Card::DECK.shuffle
   end
 
   def give_players_cards
