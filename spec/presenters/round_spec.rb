@@ -113,7 +113,7 @@ RSpec.describe Round do
         end
 
         it "put the card on the top of the pile" do
-          expect(round.pile.last).to eq card
+          expect(round.pile.top).to eq card
         end
       end
     end
@@ -149,7 +149,7 @@ RSpec.describe Round do
         # we should be using unit tests on them to be more sure of their correctness
         # Integration tests cannot cover edge cases of the application :)
         it "keeps the last card played on the top" do
-          expect(round.pile.last).to eq last_round.pile.last
+          expect(round.pile.top).to eq last_round.pile.top
         end
       end
 
@@ -174,11 +174,11 @@ RSpec.describe Round do
           end
 
           it "still has the last play from before shuffle" do
-            expect(round.pile.first).to eq last_round.pile.last
+            expect(round.pile.first).to eq last_round.pile.top
           end
 
           it "now shows the played card on top of the pile" do
-            expect(round.pile.last).to eq next_played_card
+            expect(round.pile.top).to eq next_played_card
           end
         end
 

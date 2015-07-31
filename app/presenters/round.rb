@@ -29,9 +29,9 @@ class Round
     return @pile if @pile.present?
 
     if @game.started?
-      @pile = calculate_shuffled_pile
+      @pile = Pile.new(calculate_shuffled_pile)
     else
-      @pile = []
+      @pile = Pile.new([])
     end
   end
 
