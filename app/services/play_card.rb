@@ -22,13 +22,13 @@ class PlayCard
 
   # TODO ace has different behaviour
   def assert_legal_move
-    top_card = @round.pile.last
-    good_rank = @card.rank == top_card.rank
-    good_suit = @card.suit == top_card.suit
+    top = @round.pile.top
+    good_rank = @card.rank == top.rank
+    good_suit = @card.suit == top.suit
 
     return true if good_rank || good_suit
 
-    @errors.push "cannot play card, #{@card.to_s} on #{top_card.to_s}"
+    @errors.push "cannot play card, #{@card.to_s} on #{top.to_s}"
     false
   end
 

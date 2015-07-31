@@ -8,7 +8,7 @@ RSpec.shared_examples "a playable service" do
     end
 
     it "add card to pile" do
-      expect { service.call }.to change { round.pile.last }.to card
+      expect { service.call }.to change { round.pile.top }.to card
     end
 
     it "removes played card from player's hand" do
@@ -35,7 +35,7 @@ RSpec.describe PlayCard do
   end
 
   let(:good_card) { hand.first }
-  let(:top_card)  { round.pile.last }
+  let(:top_card)  { round.pile.top }
   let(:bad_suits) { Card::SUITS - [top_card.suit] }
   let(:bad_ranks) { Card::RANKS - [top_card.rank] }
   let(:bad_card)  { Card.new(bad_ranks.last, bad_suits.last) }
@@ -58,8 +58,8 @@ RSpec.describe PlayCard do
       it_behaves_like "a service with errors"
     end
 
-    let(:top_suit) { round.pile.last.suit }
-    let(:top_rank) { round.pile.last.rank }
+    let(:top_suit) { round.pile.top.suit }
+    let(:top_rank) { round.pile.top.rank }
 
     let(:is_top_suit) { ->(card) { card.suit == top_suit } }
     let(:is_top_rank) { ->(card) { card.rank == top_rank } }
