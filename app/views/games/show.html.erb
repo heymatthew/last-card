@@ -1,0 +1,19 @@
+<% if not @game.started? %>
+  <h2>Game has not started!!</h2>
+<% end %>
+<div>
+  Players: <%= @game.players.map(&:nickname).to_sentence %>
+</div>
+
+<div>
+  <b>Hands</b>:
+  <% @round.hands.each do |nickname, hand| %>
+    <li>
+      <%= nickname %> has <%= hand.to_sentence %>
+    </li>
+  <% end %>
+</div>
+
+<div><b>Pile Top</b>: <%= @round.pile.last %></div>
+
+<div><b>Deck</b> (<%= @round.deck.size %> cards)</div>

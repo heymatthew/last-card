@@ -1,4 +1,5 @@
-Hey
+<h2>Loby</h2>
+Games ready to start:
 <ul>
   <% @games.each do |game| %>
     <li>
@@ -6,3 +7,5 @@ Hey
     </li>
   <% end -%>
 </ul>
+
+Or perhaps <%= link_to "start a new game", new_game_path %>
