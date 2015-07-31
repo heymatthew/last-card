@@ -13,7 +13,7 @@ class Round
       @game.players.each do |player|
         pickups = player.pickups.map(&:card)
         plays = player.plays.map(&:card)
-        @hands[player.nickname] = pickups - plays
+        @hands[player.nickname] = Hand.new(pickups - plays)
       end
     end
 
