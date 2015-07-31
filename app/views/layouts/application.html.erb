@@ -3,9 +3,6 @@
 <head>
   <title>LastCard</title>
 
-  <%= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.4/semantic.min.js' %>
-  <%= css_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.4/semantic.min.css' %>
-
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -20,6 +17,8 @@
       <%= link_to "Loby", games_path %>
       <%= link_to "About", about_path %>
     </nav>
+
+    <hr>
 
     <%= yield %>
   </div>
