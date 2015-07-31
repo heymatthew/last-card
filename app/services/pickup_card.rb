@@ -24,7 +24,7 @@ class PickupCard
   end
 
   def pickup_card
-    card = @round.deck.sample
+    card = @round.deck.pickup
     @player.pickup!(card)
   end
 end
