@@ -22,7 +22,9 @@ class Round
 
   def deck
     return @deck if @deck.present?
-    @deck = Card::DECK - cards_in_play
+
+    deck_cards = Card::DECK - cards_in_play
+    @deck = Deck.new(deck_cards)
   end
 
   def pile
