@@ -18,6 +18,12 @@ RSpec.shared_examples "has no pickups" do
   end
 end
 
+RSpec.shared_examples "is playable" do
+  it "is #playable_on? other card" do
+    expect(next_card).to be_playable_on(current_card)
+  end
+end
+
 RSpec.describe Card, type: :model do
   let(:suit) { "hearts" }
   let(:rank) { "queen" }
@@ -83,5 +89,36 @@ RSpec.describe Card, type: :model do
 
     # TODO need to allow this to be played on all other suits
     # TODO player sets the suit
+  end
+
+  context "checking playability against other cards" do
+    let(:suit) { "hearts" }
+    let(:rank) { "queen" }
+    let(:current_card) { Card.new(rank, suit) }
+
+    let(:next_suit) { "5" }
+    let(:next_rank) { "dimonds" }
+    let(:next_card) { Card.new(next_rank, next_suit) }
+
+    it "is not #playable_on? other card of different rank and suit" do
+      expect(next_card).to_not be_playable_on(current_card)
+    end
+
+    context "given card is the same suit" do
+      let(:next_suit) { suit }
+      include_examples "is playable"
+    end
+
+    context "given card is the same rank" do
+      let(:next_rank) { rank }
+      include_examples "is playable"
+    end
+
+    context "given card is an ace" do
+      let(:next_rank) { 'ace' }
+      include_examples "is playable"
+    end
+
+    # TODO context "when card is played on an ace" (and player has set suit)
   end
 end
