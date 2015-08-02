@@ -37,7 +37,7 @@ RSpec.describe PlayCard do
   let(:good_card) { hand.first }
   let(:top_card)  { round.pile.top }
   let(:bad_suits) { Card::SUITS - [top_card.suit] }
-  let(:bad_ranks) { Card::RANKS - [top_card.rank] }
+  let(:bad_ranks) { Card::RANKS - [top_card.rank] - ['ace'] }
   let(:bad_card)  { Card.new(bad_ranks.last, bad_suits.last) }
 
   let(:card)    { Card.first }
@@ -53,36 +53,17 @@ RSpec.describe PlayCard do
       StartGame.new(game).call or fail "untestable"
     end
 
-    context "a card that doesn't share rank or suit with pile top" do
+    context "a card that is not #playable_on? top card" do
       let(:card) { bad_card }
       it_behaves_like "a service with errors"
     end
 
     let(:top_suit) { round.pile.top.suit }
-    let(:top_rank) { round.pile.top.rank }
+    let(:card) { Card.new("5", top_suit) }
 
-    let(:is_top_suit) { ->(card) { card.suit == top_suit } }
-    let(:is_top_rank) { ->(card) { card.rank == top_rank } }
-
-    context "a card of same rank as pile top" do
-      # make sure the player has a known good card
-      # wrong suit, but right rank
-      let(:card) { round.deck.reject(&is_top_suit).find(&is_top_rank) }
-
-      # pick up a card of the right type from the deck
+    context "a card that is #playable_on? the top card" do
+      # make sure player has it in their hand
       before { player1.pickup!(card) }
-
-      it_behaves_like "a playable service"
-    end
-
-    context "a card of same suit as pile top" do
-      # make sure hte player has a known good card
-      # wrong rank, right suit
-      let(:card) { round.deck.reject(&is_top_suit).find(&is_top_rank) }
-
-      # pick up a card of the right type from the deck
-      before { player1.pickup!(card) }
-
       it_behaves_like "a playable service"
     end
   end

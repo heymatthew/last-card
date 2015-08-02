@@ -20,16 +20,11 @@ class PlayCard
 
   private
 
-  # TODO ace has different behaviour
   def assert_legal_move
-    # TODO migrate behaviour into card
-    top = @round.pile.top
-    good_rank = @card.rank == top.rank
-    good_suit = @card.suit == top.suit
+    top_card = @round.pile.top
+    return true if @card.playable_on?(top_card)
 
-    return true if good_rank || good_suit
-
-    @errors.push "cannot play card, #{@card.to_s} on #{top.to_s}"
+    @errors.push "cannot play card, #{@card.to_s} on #{top_card}"
     false
   end
 
