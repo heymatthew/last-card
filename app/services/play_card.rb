@@ -22,6 +22,7 @@ class PlayCard
 
   # TODO ace has different behaviour
   def assert_legal_move
+    # TODO migrate behaviour into card
     top = @round.pile.top
     good_rank = @card.rank == top.rank
     good_suit = @card.suit == top.suit

@@ -39,6 +39,11 @@ class Round
 
   private
 
+  # FIXME 52 pickups is fine for the first shuffle
+  # But subsequent pickups will trigger from running through the deck height
+  # which will not be 52 the second time
+  # If the deck is size 20 after the first shuffle
+  # the second shuffle will be at 72 pickups!
   def calculate_shuffled_pile
     shuffle_count = @game.pickups.count / Card::DECK.size
 
