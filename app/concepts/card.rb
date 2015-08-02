@@ -32,4 +32,17 @@ class Card
   def to_s
     "#{rank.capitalize} of #{suit.capitalize}"
   end
+
+  def pickup
+    return 5 if rank == "5"
+    return 2 if rank == "2"
+  end
+
+  def blocky?
+    rank == "7"
+  end
+
+  def skippy?
+    rank == "10"
+  end
 end
