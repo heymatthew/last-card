@@ -16,6 +16,10 @@ RSpec.shared_examples "a playable service" do
       service.call
       expect(hand.map(&:to_s)).to_not include(card.to_s)
     end
+
+    it "increments the round" do
+      expect { service.call }.to change { game.round_counter }.by(1)
+    end
   end
 end
 
