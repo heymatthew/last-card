@@ -51,21 +51,23 @@ class Round
     return @game.plays.map(&:card) if shuffle_count.zero?
 
     # Find the card that triggered the shuffle
-    shuffle_trigger = @game.pickups[ Card::DECK.size * shuffle_count - 1 ]
+    @shuffle_trigger = @game.pickups[ Card::DECK.size * shuffle_count - 1 ]
 
     # Pile will be previous pile's top card + played cards since then
-    previous_top_card(shuffle_trigger.id).concat played_since_shuffle(shuffle_trigger.id)
+    previous_top_card.concat played_since_shuffle
   end
 
-  def previous_top_card(pickup_trigger_id)
-    last_play = @game.plays.where("actions.id < ?", pickup_trigger_id).last
-    [ last_play.card ]
+  def previous_top_card
+    [ plays_before_shuffle.last ]
   end
 
-  def played_since_shuffle(pickup_trigger_id)
-    @game.plays.where("actions.id > ?", pickup_trigger_id).map(&:card)
+  def plays_before_shuffle
+     @game.plays.where("actions.id < ?", @shuffle_trigger.id).map(&:card)
   end
 
+  def played_since_shuffle
+    @game.plays.where("actions.id > ?", @shuffle_trigger.id).map(&:card)
+  end
 
   def cards_in_play
     pile + hands.values.flatten
