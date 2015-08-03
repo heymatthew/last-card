@@ -25,4 +25,15 @@ class Game < ActiveRecord::Base
   def pickups
     actions.pickup
   end
+
+  validate :round_counter_is_positive
+
+  private
+
+  def round_counter_is_positive
+    if round_counter.class != Fixnum || round_counter < 0
+      errors.add(:round_counter, "positive integers only")
+      return false
+    end
+  end
 end
