@@ -66,4 +66,29 @@ RSpec.describe Game, type: :model do
       end
     end
   end
+
+  describe "game#round_counter" do
+    it "doesn't create invalid defaults" do
+      expect(game).to be_valid
+    end
+
+    it "defaults to 0" do
+      expect(game.round_counter).to be 0
+    end
+
+    it "guards against negative numbers" do
+      game.round_counter = -1
+      expect(game).to_not be_valid
+    end
+
+    it "allows positive integers" do
+      game.round_counter = 1
+      expect(game).to be_valid
+    end
+
+    it "allows large positive integers" do
+      game.round_counter = 9876
+      expect(game).to be_valid
+    end
+  end
 end
