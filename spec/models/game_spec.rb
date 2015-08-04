@@ -17,6 +17,12 @@ RSpec.describe Game, type: :model do
     it "is not #ready? to start" do
       expect(game).to_not be_ready
     end
+
+    describe "#current_turn" do
+      it "returns players" do
+        expect(game.current_turn).to be nil
+      end
+    end
   end
 
   context "with 2 players" do
@@ -62,6 +68,12 @@ RSpec.describe Game, type: :model do
           it "doesn't change game#plays" do
             expect { subject }.to_not change { game.plays }
           end
+        end
+      end
+
+      describe "#current_turn" do
+        it "returns players" do
+          expect(game.current_turn).to be_instance_of Player
         end
       end
     end
