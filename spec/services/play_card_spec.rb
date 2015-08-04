@@ -2,25 +2,6 @@ require 'rails_helper'
 require_relative 'shared_examples'
 
 RSpec.shared_examples "a playable service" do
-  describe "when called" do
-    it "succeeds" do
-      expect(service.call).to eq true
-    end
-
-    it "add card to pile" do
-      expect { service.call }.to change { round.pile.top }.to card
-    end
-
-    it "removes played card from player's hand" do
-      expect(hand.map(&:to_s)).to include(card.to_s)
-      service.call
-      expect(hand.map(&:to_s)).to_not include(card.to_s)
-    end
-
-    it "increments the round" do
-      expect { service.call }.to change { game.round_counter }.by(1)
-    end
-  end
 end
 
 RSpec.describe PlayCard do
@@ -68,7 +49,26 @@ RSpec.describe PlayCard do
     context "a card that is #playable_on? the top card" do
       # make sure player has it in their hand
       before { player1.pickup!(card) }
-      it_behaves_like "a playable service"
+
+      describe "when called" do
+        it "succeeds" do
+          expect(service.call).to eq true
+        end
+
+        it "add card to pile" do
+          expect { service.call }.to change { round.pile.top }.to card
+        end
+
+        it "removes played card from player's hand" do
+          expect(hand.map(&:to_s)).to include(card.to_s)
+          service.call
+          expect(hand.map(&:to_s)).to_not include(card.to_s)
+        end
+
+        it "increments the round" do
+          expect { service.call }.to change { game.round_counter }.by(1)
+        end
+      end
     end
   end
 
