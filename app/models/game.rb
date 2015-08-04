@@ -26,6 +26,13 @@ class Game < ActiveRecord::Base
     actions.pickup
   end
 
+  def current_turn
+    if started?
+      turn = round_counter % players.count
+      players[turn]
+    end
+  end
+
   validate :round_counter_is_positive
 
   private

@@ -68,6 +68,10 @@ RSpec.describe PlayCard do
         it "increments the round" do
           expect { service.call }.to change { game.round_counter }.by(1)
         end
+
+        it "advances turn to the next player" do
+          expect { service.call }.to change { game.current_turn }
+        end
       end
     end
   end
