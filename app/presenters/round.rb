@@ -1,14 +1,18 @@
 class Round < Struct.new(:game)
   def hands
-    @hands ||= calculate_hands
-  end
-
-  def deck
-    @deck ||= calculate_deck
+    @hands ||= calculate_hands if game.started?
   end
 
   def pile
-    @pile ||= calculate_shuffled_pile
+    @pile ||= calculate_shuffled_pile if game.started?
+  end
+
+  def deck
+    if game.started?
+      @deck ||= calculate_deck
+    else
+      Card::DECK
+    end
   end
 
   private
@@ -21,9 +25,7 @@ class Round < Struct.new(:game)
   def calculate_shuffled_pile
     shuffle_count = game.pickups.count / Card::DECK.size
 
-    if !game.started?
-      pile_cards = []
-    elsif shuffle_count.zero?
+    if shuffle_count.zero?
       # If we've not shuffled, just show all cards played
       pile_cards = game.plays.map(&:card)
     else
@@ -60,12 +62,10 @@ class Round < Struct.new(:game)
 
   def calculate_hands
     hands = {}
-    if game.started?
-      game.players.each do |player|
-        pickups = player.pickups.map(&:card)
-        plays = player.plays.map(&:card)
-        hands[player.nickname] = Hand.new(pickups - plays)
-      end
+    game.players.each do |player|
+      pickups = player.pickups.map(&:card)
+      plays = player.plays.map(&:card)
+      hands[player.nickname] = Hand.new(pickups - plays)
     end
     hands
   end
