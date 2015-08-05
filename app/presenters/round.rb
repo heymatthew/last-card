@@ -8,13 +8,7 @@ class Round < Struct.new(:game)
   end
 
   def pile
-    return @pile if @pile.present?
-
-    if game.started?
-      @pile = Pile.new(calculate_shuffled_pile)
-    else
-      @pile = Pile.new([])
-    end
+    @pile ||= calculate_shuffled_pile
   end
 
   private
@@ -27,14 +21,20 @@ class Round < Struct.new(:game)
   def calculate_shuffled_pile
     shuffle_count = game.pickups.count / Card::DECK.size
 
-    # Just return played cards if we've not shuffled yet
-    return game.plays.map(&:card) if shuffle_count.zero?
+    if !game.started?
+      pile_cards = []
+    elsif shuffle_count.zero?
+      # If we've not shuffled, just show all cards played
+      pile_cards = game.plays.map(&:card)
+    else
+      # Find the card that triggered the shuffle
+      @shuffle_trigger = game.pickups[ Card::DECK.size * shuffle_count - 1 ]
 
-    # Find the card that triggered the shuffle
-    @shuffle_trigger = game.pickups[ Card::DECK.size * shuffle_count - 1 ]
+      # Pile will be previous pile's top card + played cards since then
+      pile_cards = previous_top_card.concat played_since_shuffle
+    end
 
-    # Pile will be previous pile's top card + played cards since then
-    previous_top_card.concat played_since_shuffle
+    Pile.new(pile_cards)
   end
 
   def previous_top_card
