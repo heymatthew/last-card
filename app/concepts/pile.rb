@@ -4,16 +4,14 @@ class Pile < Array
   end
 
   def pickup_count
-    total_pickups = 0
-
-    # TODO tidy this up
-    cards = self.clone
-    while card = cards.pop
-      break unless card.pickup?
-      total_pickups += card.pickup_count
+    if pickup?
+      reverse
+        .take_while(&:pickup?)
+        .map(&:pickup_count)
+        .inject(:+)
+    else
+      0
     end
-
-    total_pickups
   end
 
   def pickup?
