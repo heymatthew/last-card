@@ -12,7 +12,7 @@ class PlayCard
 
   def call
     @round.game.with_lock do
-      assert_legal_move && play_card && increment_round
+      legal_move? && play_card && increment_round
     end
 
     @errors.none?
@@ -20,7 +20,8 @@ class PlayCard
 
   private
 
-  def assert_legal_move
+  # TODO push out to player_options class and use a validate method
+  def legal_move?
     top_card = @round.pile.top
     return true if @card.playable_on?(top_card)
 
