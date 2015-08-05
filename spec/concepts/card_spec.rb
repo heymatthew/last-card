@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.shared_examples "is not blocky" do
-  it "is not blocky" do
-    expect(card).to_not be_blocky
+RSpec.shared_examples "does not block" do
+  it "does not block" do
+    expect(card).to_not be_block
   end
 end
 
-RSpec.shared_examples "is not skippy" do
-  it "is not skippy" do
-    expect(card).to_not be_skippy
+RSpec.shared_examples "does not skip" do
+  it "does not skip" do
+    expect(card).to_not be_skip
   end
 end
 
@@ -48,24 +48,24 @@ RSpec.describe Card, type: :model do
   context "when card is not fancy" do
     let(:rank) { 'hearts' }
     include_examples "has no pickups"
-    include_examples "is not skippy"
-    include_examples "is not blocky"
+    include_examples "does not skip"
+    include_examples "does not block"
   end
 
   context "when card is a 10" do
     let(:rank) { '10' }
     include_examples "has no pickups"
-    include_examples "is not blocky"
+    include_examples "does not block"
 
     it "skips" do
-      expect(card).to be_skippy
+      expect(card).to be_skip
     end
   end
 
   context "when card is a 2" do
     let(:rank) { "2" }
-    include_examples "is not blocky"
-    include_examples "is not skippy"
+    include_examples "does not block"
+    include_examples "does not skip"
 
     it "makes you pickup" do
       expect(card.pickup_count).to be 2
@@ -75,8 +75,8 @@ RSpec.describe Card, type: :model do
 
   context "when card is a 5" do
     let(:rank) { "5" }
-    include_examples "is not blocky"
-    include_examples "is not skippy"
+    include_examples "does not block"
+    include_examples "does not skip"
 
     it "makes you pickup" do
       expect(card.pickup_count).to be 5
@@ -87,8 +87,8 @@ RSpec.describe Card, type: :model do
   context "when card is an ace" do
     let(:rank) { 'ace' }
     include_examples "has no pickups"
-    include_examples "is not blocky"
-    include_examples "is not skippy"
+    include_examples "does not block"
+    include_examples "does not skip"
 
     # TODO need to allow this to be played on all other suits
     # TODO player sets the suit

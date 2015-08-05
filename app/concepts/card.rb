@@ -43,11 +43,11 @@ class Card
     pickup_count > 0
   end
 
-  def blocky?
+  def block?
     rank == "7"
   end
 
-  def skippy?
+  def skip?
     rank == "10"
   end
 
