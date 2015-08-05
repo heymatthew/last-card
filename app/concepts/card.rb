@@ -33,9 +33,14 @@ class Card
     "#{rank.capitalize} of #{suit.capitalize}"
   end
 
-  def pickup
+  def pickup_count
     return 5 if rank == "5"
     return 2 if rank == "2"
+    0
+  end
+
+  def pickup?
+    pickup_count > 0
   end
 
   def blocky?
