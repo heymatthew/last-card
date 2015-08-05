@@ -100,7 +100,7 @@ RSpec.describe Card, type: :model do
     let(:current_card) { Card.new(rank, suit) }
 
     let(:next_suit) { "5" }
-    let(:next_rank) { "dimonds" }
+    let(:next_rank) { "diamonds" }
     let(:next_card) { Card.new(next_rank, next_suit) }
 
     it "is not #playable_on? other card of different rank and suit" do

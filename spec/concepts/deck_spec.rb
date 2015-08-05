@@ -4,7 +4,7 @@ RSpec.describe Deck do
   let(:cards) do
     [ Card.new('queen','hearts'),
       Card.new('ace','spades'),
-      Card.new('queen','dimonds') ]
+      Card.new('queen','diamonds') ]
   end
 
   let(:deck) { Deck.new(cards) }
