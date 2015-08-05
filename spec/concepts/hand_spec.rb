@@ -8,6 +8,12 @@ RSpec.shared_examples "chainable methods" do
   end
 end
 
+RSpec.shared_examples "subject returns no cards" do
+  it "returns no cards" do
+    expect(subject.size).to be 0
+  end
+end
+
 RSpec.describe Hand do
   let(:cards) do
     [ Card.new('queen','hearts'),
@@ -45,10 +51,7 @@ RSpec.describe Hand do
     # TODO when top card has been played as an ace
     context "when top card doesn't share suit or rank" do
       subject { hand.select_playable(Card.new('3', 'diamonds')) }
-
-      it "returns no playable cards" do
-        expect(subject.size).to be 0
-      end
+      include_examples "subject returns no cards"
     end
 
     context "when top card shares suit" do
@@ -72,6 +75,47 @@ RSpec.describe Hand do
 
       it "leaves out other cards" do
         expect(subject).to_not include Card.new('4', 'spades')
+      end
+    end
+  end
+
+  describe "#pickup_defence" do
+    let(:top_card) { Card.new('2', 'hearts') }
+    subject { hand.pickup_defence(top_card) }
+
+    context "when hand has no defence" do
+      include_examples "subject returns no cards"
+    end
+
+    context "when hand has pickup" do
+      let(:suit) { 'hearts' }
+      let(:card) { Card.new('5', suit) }
+
+      before { hand.push(card) }
+
+      it "offers up the pickup card" do
+        expect(subject).to include card
+      end
+
+      context "but they're of the wrong suit" do
+        let(:suit) { 'clubs' }
+        include_examples "subject returns no cards"
+      end
+    end
+
+    context "when hand has block" do
+      let(:suit) { 'hearts' }
+      let(:card) { Card.new('7', suit) }
+
+      before { hand.push(card) }
+
+      it "offers up the block card" do
+        expect(subject).to include card
+      end
+
+      context "but it's of the wrong suit" do
+        let(:suit) { 'clubs' }
+        include_examples "subject returns no cards"
       end
     end
   end
