@@ -15,6 +15,7 @@ RSpec.describe Pile do
 
   context "when no pickups on top of deck" do
     it "has 0 pickups" do
+      expect(pile).to_not be_pickup
       expect(pile.pickup_count).to be 0
     end
   end
@@ -23,6 +24,7 @@ RSpec.describe Pile do
     before { pile.push(Card.new("5", "dimonds")) }
 
     it "has 5 pickups" do
+      expect(pile).to be_pickup
       expect(pile.pickup_count).to be 5
     end
   end
@@ -34,6 +36,7 @@ RSpec.describe Pile do
     end
 
     it "has 7 pickups" do
+      expect(pile).to be_pickup
       expect(pile.pickup_count).to be 7
     end
   end

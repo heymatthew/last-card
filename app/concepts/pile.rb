@@ -15,4 +15,8 @@ class Pile < Array
 
     total_pickups
   end
+
+  def pickup?
+    top.pickup?
+  end
 end
