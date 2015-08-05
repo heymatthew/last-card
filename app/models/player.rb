@@ -6,9 +6,7 @@ class Player < ActiveRecord::Base
   validates :user, presence: true
   validates :game, presence: true
 
-  def nickname
-    user.nickname
-  end
+  delegate :nickname, to: :user
 
   def pickups
     actions.pickup
