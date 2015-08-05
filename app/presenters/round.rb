@@ -15,10 +15,7 @@ class Round < Struct.new(:game)
   end
 
   def deck
-    return @deck if @deck.present?
-
-    deck_cards = Card::DECK - cards_in_play
-    @deck = Deck.new(deck_cards)
+    @deck ||= calculate_deck
   end
 
   def pile
@@ -65,5 +62,10 @@ class Round < Struct.new(:game)
 
   def cards_in_play
     pile + hands.values.flatten
+  end
+
+  def calculate_deck
+    deck_cards = Card::DECK - cards_in_play
+    Deck.new(deck_cards)
   end
 end
