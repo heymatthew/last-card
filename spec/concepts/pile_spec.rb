@@ -21,7 +21,7 @@ RSpec.describe Pile do
   end
 
   context "when a 5 is on the top of the pile" do
-    before { pile.push(Card.new("5", "dimonds")) }
+    before { pile.push(Card.new("5", "diamonds")) }
 
     it "has 5 pickups" do
       expect(pile).to be_pickup
@@ -31,8 +31,8 @@ RSpec.describe Pile do
 
   context "when a 2 is played on a 5" do
     before do
-      pile.push(Card.new("5", "dimonds"))
-      pile.push(Card.new("2", "dimonds"))
+      pile.push(Card.new("5", "diamonds"))
+      pile.push(Card.new("2", "diamonds"))
     end
 
     it "has 7 pickups" do
