@@ -11,7 +11,7 @@ end
 RSpec.describe Hand do
   let(:cards) do
     [ Card.new('queen','hearts'),
-      Card.new('ace','spades'),
+      Card.new('4','spades'),
       Card.new('queen','spades') ]
   end
 
@@ -41,4 +41,38 @@ RSpec.describe Hand do
     end
   end
 
+  describe "#select_playable" do
+    # TODO when top card has been played as an ace
+    context "when top card doesn't share suit or rank" do
+      subject { hand.select_playable(Card.new('3', 'diamonds')) }
+
+      it "returns no playable cards" do
+        expect(subject.size).to be 0
+      end
+    end
+
+    context "when top card shares suit" do
+      subject { hand.select_playable(Card.new('3', 'spades')) }
+
+      it "returns spades" do
+        expect(subject).to include Card.new('4', 'spades')
+      end
+
+      it "leaves behind other suits" do
+        expect(subject).to_not include Card.new('queen', 'hearts')
+      end
+    end
+
+    context "when top card shares rank" do
+      subject { hand.select_playable(Card.new('queen', 'diamonds')) }
+
+      it "returns queens" do
+        expect(subject).to include Card.new('queen', 'spades')
+      end
+
+      it "leaves out other cards" do
+        expect(subject).to_not include Card.new('4', 'spades')
+      end
+    end
+  end
 end
