@@ -23,30 +23,6 @@ RSpec.describe Hand do
 
   let(:hand) { Hand.new(cards) }
 
-  context "when filtering on spades" do
-    subject { hand.filter_suit('spades') }
-
-    it_behaves_like "chainable methods"
-
-    it "only returns spades" do
-      expect(subject.first.suit).to eq 'spades'
-      suits = subject.map(&:suit)
-      expect(suits.uniq.count).to be 1
-    end
-  end
-
-  context "when filtering on queens" do
-    subject { hand.filter_rank('queen') }
-
-    it_behaves_like "chainable methods"
-
-    it "only returns queens" do
-      expect(subject.first.rank).to eq 'queen'
-      ranks = subject.map(&:rank)
-      expect(ranks.uniq.count).to be 1
-    end
-  end
-
   describe "#select_playable" do
     # TODO when top card has been played as an ace
     context "when top card doesn't share suit or rank" do
