@@ -1,17 +1,6 @@
 class Round < Struct.new(:game)
   def hands
-    return @hands if @hands.present?
-
-    @hands = {}
-    if game.started?
-      game.players.each do |player|
-        pickups = player.pickups.map(&:card)
-        plays = player.plays.map(&:card)
-        @hands[player.nickname] = Hand.new(pickups - plays)
-      end
-    end
-
-    @hands
+    @hands ||= calculate_hands
   end
 
   def deck
@@ -67,5 +56,17 @@ class Round < Struct.new(:game)
   def calculate_deck
     deck_cards = Card::DECK - cards_in_play
     Deck.new(deck_cards)
+  end
+
+  def calculate_hands
+    hands = {}
+    if game.started?
+      game.players.each do |player|
+        pickups = player.pickups.map(&:card)
+        plays = player.plays.map(&:card)
+        hands[player.nickname] = Hand.new(pickups - plays)
+      end
+    end
+    hands
   end
 end
