@@ -3,7 +3,7 @@ class Pile < Array
     last
   end
 
-  def pickups
+  def pickup_count
     0 if top.pickup.nil?
 
     pickup_count = 0
