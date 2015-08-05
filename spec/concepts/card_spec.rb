@@ -14,7 +14,8 @@ end
 
 RSpec.shared_examples "has no pickups" do
   it "has no pickups" do
-    expect(card.pickup).to be_nil
+    expect(card.pickup_count).to be 0
+    expect(card).to_not be_pickup
   end
 end
 
@@ -67,7 +68,8 @@ RSpec.describe Card, type: :model do
     include_examples "is not skippy"
 
     it "makes you pickup" do
-      expect(card.pickup).to be 2
+      expect(card.pickup_count).to be 2
+      expect(card).to be_pickup
     end
   end
 
@@ -77,7 +79,8 @@ RSpec.describe Card, type: :model do
     include_examples "is not skippy"
 
     it "makes you pickup" do
-      expect(card.pickup).to be 5
+      expect(card.pickup_count).to be 5
+      expect(card).to be_pickup
     end
   end
 
