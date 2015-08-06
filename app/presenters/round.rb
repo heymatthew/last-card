@@ -1,18 +1,17 @@
 class Round < Struct.new(:game)
   def hands
-    @hands ||= calculate_hands if game.started?
+    return {} unless game.started?
+    @hands ||= calculate_hands
   end
 
   def pile
-    @pile ||= calculate_shuffled_pile if game.started?
+    return empty_pile unless game.started?
+    @pile ||= calculate_shuffled_pile
   end
 
   def deck
-    if game.started?
-      @deck ||= calculate_deck
-    else
-      Card::DECK
-    end
+    return Card::DECK unless game.started?
+    @deck ||= calculate_deck
   end
 
   private
@@ -68,5 +67,9 @@ class Round < Struct.new(:game)
       hands[player.nickname] = Hand.new(pickups - plays)
     end
     hands
+  end
+
+  def empty_pile
+    Pile.new
   end
 end
