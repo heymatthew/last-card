@@ -4,6 +4,11 @@ RSpec.describe GamesController, type: :controller do
   render_views # needed for response.body tests
 
   context "GET new" do
+    before do
+      User.create!(nickname: "megatron")
+      User.create!(nickname: "optimus")
+    end
+
     it "creates a game after called" do
       expect { get :new }.to change { Game.all.count }.by 1
     end
@@ -33,8 +38,8 @@ RSpec.describe GamesController, type: :controller do
 
     context "a game in progress" do
       let(:game)     { Game.create! }
-      let(:megatron) { User.create(nickname: "megatron") }
-      let(:optimus)  { User.create(nickname: "optimus") }
+      let(:megatron) { User.create!(nickname: "megatron") }
+      let(:optimus)  { User.create!(nickname: "optimus") }
 
       before do
         game.players.create!(user: megatron)
