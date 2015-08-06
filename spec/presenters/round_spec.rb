@@ -26,11 +26,11 @@ RSpec.describe Round do
     end
 
     it "has no allocation to hands" do
-      expect(round.hands).to be_nil
+      expect(round.hands.keys).to be_empty
     end
 
     it "has no discard" do
-      expect(round.pile).to be_nil
+      expect(round.pile).to be_empty
     end
   end
 
