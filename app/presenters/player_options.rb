@@ -2,7 +2,7 @@ class PlayerOptions < Struct.new(:player, :round)
   def options
     if !round.game.started? || !players_turn?
       not_your_turn 
-    elsif top_card.pickup?
+    elsif need_to_defend
       strategy_defence
     else
       strategy_playable_cards
@@ -39,5 +39,13 @@ class PlayerOptions < Struct.new(:player, :round)
 
   def top_card
     round.pile.top
+  end
+
+  def need_to_defend
+    top_card.pickup? && last_action.effect == Action::PLAY
+  end
+
+  def last_action
+    round.game.actions.last
   end
 end

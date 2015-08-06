@@ -11,9 +11,11 @@ RSpec.describe PlayerOptions do
   let(:round)  { Round.new(game) }
 
   let(:player) { game.current_turn }
+  let(:oponent) { game.players.last }
 
-  let(:two_of_hearts)  { Card.new('2','hearts') }
-  let(:five_of_hearts) { Card.new('5','hearts') }
+  let(:pickup_two)   { Card.new('2','hearts') }
+  let(:pickup_five)  { Card.new('5','hearts') }
+  let(:vanilla_card) { Card.new('3','hearts') }
 
   subject { PlayerOptions.new(player, round) }
 
@@ -30,20 +32,28 @@ RSpec.describe PlayerOptions do
       game.update!(pending: false)
     end
 
-    context "when pile has pickup as top card" do
+    context "when pile shows pickup 5 on top" do
       before do
-        player.pickup!(two_of_hearts)
-        player.play!(five_of_hearts)
+        player.pickup!(pickup_two)
+        player.play!(pickup_five)
       end
 
       include_examples "subject has pickup option"
 
-      it "is reflected in the pickup option" do
-        expect(subject.options[Action::PICKUP]).to be > 1
+      it "player may need to pickup 5" do
+        expect(subject.options[Action::PICKUP]).to be 5
       end
 
-      it "allows the player to respond with a pickup" do
-        expect(subject.options[Action::PLAY]).to include two_of_hearts
+      it "player could respond with pickups in their hand" do
+        expect(subject.options[Action::PLAY]).to include pickup_two
+      end
+
+      context "after oponent already picked up" do
+        before { oponent.pickup!(vanilla_card) }
+
+        it "player doesn't need to pickup those cards" do
+          expect(subject.options[Action::PICKUP]).to be 1
+        end
       end
     end
   end
