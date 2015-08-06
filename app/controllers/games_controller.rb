@@ -8,12 +8,19 @@ class GamesController < ApplicationController
   # TODO player joins
   def show
     @game = Game.find(params[:id])
+    @player = @game.current_turn
+
     @round = Round.new(@game)
+    @options = GamePlan.new(@player, @round)
     @player = @user.players.where(game: @game).first # TODO change this plz
   end
 
   def new
-    redirect_to Game.create!
+    game = Game.create!
+    game.players.create!(user: User.first)
+    game.players.create!(user: User.last)
+    StartGame.new(game).call or fail "Mega fail"
+    redirect_to game
   end
 
   private
