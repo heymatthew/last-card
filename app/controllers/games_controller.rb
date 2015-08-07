@@ -11,7 +11,7 @@ class GamesController < ApplicationController
     @player = @game.current_turn
 
     @round = Round.new(@game)
-    @options = GamePlan.new(@player, @round)
+    @options = GamePlan.new(@player, @round).options
     @player = @user.players.where(game: @game).first # TODO change this plz
   end
 
