@@ -21,6 +21,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
+  gem 'mutant'
+  gem 'mutant-rspec'
   gem 'rspec-rails', '~> 3.0'
   gem 'codeclimate-test-reporter', require: nil
 
