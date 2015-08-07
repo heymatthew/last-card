@@ -1,4 +1,4 @@
-class PlayerOptions < Struct.new(:player, :round)
+class GamePlan < Struct.new(:player, :round)
   def options
     if !round.game.started? || !players_turn?
       not_your_turn 
