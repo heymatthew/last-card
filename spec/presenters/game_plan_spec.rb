@@ -4,7 +4,7 @@ RSpec.shared_examples "subject has pickup option" do
   end
 end
 
-RSpec.describe PlayerOptions do
+RSpec.describe GamePlan do
   let(:user1)  { User.create!(nickname: "Mc_Bane") }
   let(:user2)  { User.create!(nickname: "Rainier_Wolfcastle") }
   let(:game)   { Game.create! }
@@ -17,7 +17,7 @@ RSpec.describe PlayerOptions do
   let(:pickup_five)  { Card.new('5','hearts') }
   let(:vanilla_card) { Card.new('3','hearts') }
 
-  subject { PlayerOptions.new(player, round) }
+  subject { GamePlan.new(player, round) }
 
   context "before game has started" do
     it "returns no options" do
