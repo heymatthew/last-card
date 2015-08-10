@@ -5,7 +5,6 @@ class Game < ActiveRecord::Base
 
   has_many :users, through: :players
   has_many :actions, through: :players
-  has_one :nickname, through: :user
 
   # TODO should a user kill themselves
   # we should end the game
