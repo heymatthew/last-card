@@ -1,20 +1,13 @@
-class Card
-  attr_accessor :rank
-  attr_accessor :suit
-
+class Card < Struct.new(:rank, :suit)
   RANKS = %w( 2 3 4 5 6 7 8 9 10 jack queen king ace ).freeze
   SUITS = %w( hearts spades diamonds clubs ).freeze
-
-  def initialize(rank, suit)
-    @suit, @rank = suit, rank
-  end
 
   # Note, this goes below the initialize method
   # If not, ruby wont define new() correctly
   DECK = RANKS.product(SUITS).map { |rank, suit| Card.new(rank, suit) }.freeze
 
   def ==(that)
-    @suit == that.suit && @rank == that.rank
+    suit == that.suit && rank == that.rank
   end
 
   def eql?(that)
@@ -26,7 +19,7 @@ class Card
   end
 
   def hash
-    [@rank, @suit].hash
+    [rank, suit].hash
   end
 
   def to_s
