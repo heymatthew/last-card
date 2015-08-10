@@ -44,6 +44,11 @@ class Card < Struct.new(:rank, :suit)
     rank == "10"
   end
 
+  def valid?
+    RANKS.include?(rank) &&
+      SUITS.include?(suit)
+  end
+
   # TODO chosen_suit from that.rank == ace
   def playable_on?(that)
     return true if rank == 'ace'
