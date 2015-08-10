@@ -25,6 +25,18 @@ RSpec.shared_examples "is playable" do
   end
 end
 
+RSpec.shared_examples "card is not #valid?" do
+  it "is not #valid?" do
+    expect(card).to_not be_valid
+  end
+end
+
+RSpec.shared_examples "card is #valid?" do
+  it "is not #valid?" do
+    expect(card).to be_valid
+  end
+end
+
 RSpec.describe Card, type: :model do
   let(:suit) { "hearts" }
   let(:rank) { "queen" }
@@ -42,6 +54,22 @@ RSpec.describe Card, type: :model do
       it "only upcases the rank" do
         expect(card.to_s).to eq "2 of Hearts"
       end
+    end
+  end
+
+  describe "#valid?" do
+    context "with known good params" do
+      include_examples "card is #valid?"
+    end
+
+    context "with unknown rank" do
+      let(:rank) { "flub" }
+      include_examples "card is not #valid?"
+    end
+
+    context "with unknown suit" do
+      let(:suit) { "flub" }
+      include_examples "card is not #valid?"
     end
   end
 
