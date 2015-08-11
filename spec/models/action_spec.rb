@@ -1,9 +1,9 @@
 require 'rails_helper'
 require_relative 'shared_examples'
 
-RSpec.shared_examples "an invalid Action" do
+RSpec.shared_examples "invalid Action" do
   let(:model) { action }
-  include_examples "an invalid ActiveRecord"
+  include_examples "invalid ActiveModel"
 end
 
 RSpec.describe Action, type: :model do
@@ -36,37 +36,37 @@ RSpec.describe Action, type: :model do
 
     context "with no parameters" do
       let(:action) { Action.new }
-      it_behaves_like "an invalid Action"
+      include_examples "invalid Action"
     end
 
     context "without a player" do
       let(:player) { nil }
-      it_behaves_like "an invalid Action"
+      include_examples "invalid Action"
     end
 
     context "without an effect" do
       let(:effect) { nil }
-      it_behaves_like "an invalid Action"
+      include_examples "invalid Action"
     end
 
     context "without a rank" do
       let(:rank) { nil }
-      it_behaves_like "an invalid Action"
+      include_examples "invalid Action"
     end
 
     context "without a suit" do
       let(:suit) { nil }
-      it_behaves_like "an invalid Action"
+      include_examples "invalid Action"
     end
 
     context "with invalid suit" do
       let(:suit) { "dude bro party massacre 3" }
-      it_behaves_like "an invalid Action"
+      include_examples "invalid Action"
     end
 
     context "with invalid rank" do
       let(:rank) { "kung fury" }
-      it_behaves_like "an invalid Action"
+      include_examples "invalid Action"
     end
   end
 
