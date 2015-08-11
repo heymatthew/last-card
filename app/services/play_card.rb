@@ -10,7 +10,7 @@ class PlayCard
 
   def call
     @round.game.with_lock do
-      legal_move? && play_card && increment_round
+      legal_move? && play_card && increment_round!
     end
 
     @errors.none?
@@ -31,7 +31,8 @@ class PlayCard
     @player.play!(@card)
   end
 
-  def increment_round
+  def increment_round!
     @round.game.round_counter += 1
+    @round.game.save!
   end
 end
