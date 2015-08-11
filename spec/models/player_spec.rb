@@ -1,11 +1,6 @@
 require 'rails_helper'
 require_relative 'shared_examples'
 
-RSpec.shared_examples "an invalid Player" do
-  let(:model) { player }
-  include_examples "an invalid ActiveRecord"
-end
-
 RSpec.describe Player, type: :model do
   let(:user)     { User.create!(nickname: "flipper") }
   let(:game)     { Game.create! }
