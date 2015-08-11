@@ -23,7 +23,7 @@ class PlayCard
     top_card = @round.pile.top
     return true if @card.playable_on?(top_card)
 
-    @errors.push "cannot play card, #{@card.to_s} on #{top_card}"
+    @errors.push "cannot play card, #{@card} on #{top_card}"
     false
   end
 
