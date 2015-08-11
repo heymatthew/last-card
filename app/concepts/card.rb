@@ -6,18 +6,6 @@ class Card < Struct.new(:rank, :suit)
     suit == that.suit && rank == that.rank
   end
 
-  def eql?(that)
-    self == that
-  end
-
-  def eq?(that)
-    self == that
-  end
-
-  def hash
-    [rank, suit].hash
-  end
-
   def to_s
     "#{rank.capitalize} of #{suit.capitalize}"
   end
