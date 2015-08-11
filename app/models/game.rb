@@ -6,7 +6,10 @@ class Game < ActiveRecord::Base
   has_many :users, through: :players
   has_many :actions, through: :players
 
-  validate :round_counter_is_positive
+  validates :round_counter, numericality: {
+    only_integer: true,
+    greater_than_or_equal_to: 0,
+  }
 
   # TODO should a user kill themselves
   # we should end the game
@@ -30,14 +33,5 @@ class Game < ActiveRecord::Base
   def current_turn
     turn = round_counter % players.count
     players[turn]
-  end
-
-  private
-
-  def round_counter_is_positive
-    if round_counter.class != Fixnum || round_counter < 0
-      errors.add(:round_counter, "positive integers only")
-      return false
-    end
   end
 end
