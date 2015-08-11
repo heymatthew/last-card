@@ -82,9 +82,10 @@ RSpec.describe Game, type: :model do
       expect(game.round_counter).to be 0
     end
 
-    it "guards against negative numbers" do
+    # Sometimes when the game order changes
+    it "allows negative numbers" do
       game.round_counter = -1
-      expect(game).to_not be_valid
+      expect(game).to be_valid
     end
 
     it "allows positive integers" do

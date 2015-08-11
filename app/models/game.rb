@@ -6,10 +6,7 @@ class Game < ActiveRecord::Base
   has_many :users, through: :players
   has_many :actions, through: :players
 
-  validates :round_counter, numericality: {
-    only_integer: true,
-    greater_than_or_equal_to: 0,
-  }
+  validates :round_counter, numericality: { only_integer: true }
 
   # TODO should a user kill themselves
   # we should end the game
