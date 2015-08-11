@@ -10,4 +10,3 @@ RSpec.shared_examples "invalid ActiveModel" do
       .from(0)
   end
 end
-
