@@ -1,7 +1,7 @@
 class Game < ActiveRecord::Base
   MINIMUM_PLAYERS = 2
 
-  has_many :players, :dependent => :destroy
+  has_many :players, dependent: :destroy
 
   has_many :users, through: :players
   has_many :actions, through: :players
