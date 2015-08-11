@@ -1,9 +1,9 @@
 require 'rails_helper'
 require_relative 'shared_examples'
 
-RSpec.shared_examples "an invalid User" do
+RSpec.shared_examples "invalid User" do
   let(:model) { user }
-  include_examples "an invalid ActiveRecord"
+  include_examples "invalid ActiveModel"
 end
 
 RSpec.describe User, type: :model do
@@ -18,26 +18,26 @@ RSpec.describe User, type: :model do
 
   context "with space in name" do
     let(:nickname) { "1337 haxor" }
-    it_behaves_like "an invalid User"
+    include_examples "invalid User"
   end
 
   context "with punctuation in the name" do
     let(:nickname) { "haxor!" }
-    it_behaves_like "an invalid User"
+    include_examples "invalid User"
   end
 
   context "dropping a newline at the start" do
     let(:nickname) { "\nhaxor" }
-    it_behaves_like "an invalid User"
+    include_examples "invalid User"
   end
 
   context "dropping a newline at the end" do
     let(:nickname) { "haxor\n" }
-    it_behaves_like "an invalid User"
+    include_examples "invalid User"
   end
 
   context "when there is contentsion over a nickname" do
     before { User.create!(nickname: nickname) }
-    it_behaves_like "an invalid User"
+    include_examples "invalid User"
   end
 end
