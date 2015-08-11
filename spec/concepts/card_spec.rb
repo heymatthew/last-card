@@ -19,6 +19,12 @@ RSpec.shared_examples "has no pickups" do
   end
 end
 
+RSpec.shared_examples "is not wild" do
+  it "is not wild" do
+    expect(card).to_not be_wild
+  end
+end
+
 RSpec.shared_examples "is playable" do
   it "is #playable_on? other card" do
     expect(next_card).to be_playable_on(current_card)
@@ -78,12 +84,14 @@ RSpec.describe Card, type: :model do
     include_examples "has no pickups"
     include_examples "does not skip"
     include_examples "does not block"
+    include_examples "is not wild"
   end
 
   context "when card is a 10" do
     let(:rank) { '10' }
     include_examples "has no pickups"
     include_examples "does not block"
+    include_examples "is not wild"
 
     it "skips" do
       expect(card).to be_skip
@@ -94,6 +102,7 @@ RSpec.describe Card, type: :model do
     let(:rank) { "2" }
     include_examples "does not block"
     include_examples "does not skip"
+    include_examples "is not wild"
 
     it "makes you pickup" do
       expect(card.pickup_count).to be 2
@@ -105,6 +114,7 @@ RSpec.describe Card, type: :model do
     let(:rank) { "5" }
     include_examples "does not block"
     include_examples "does not skip"
+    include_examples "is not wild"
 
     it "makes you pickup" do
       expect(card.pickup_count).to be 5
@@ -118,7 +128,10 @@ RSpec.describe Card, type: :model do
     include_examples "does not block"
     include_examples "does not skip"
 
-    # TODO need to allow this to be played on all other suits
+    it "goes wild!" do
+      expect(card).to be_wild
+    end
+
     # TODO player sets the suit
   end
 
