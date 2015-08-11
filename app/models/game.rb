@@ -6,6 +6,8 @@ class Game < ActiveRecord::Base
   has_many :users, through: :players
   has_many :actions, through: :players
 
+  validate :round_counter_is_positive
+
   # TODO should a user kill themselves
   # we should end the game
 
@@ -31,8 +33,6 @@ class Game < ActiveRecord::Base
       players[turn]
     end
   end
-
-  validate :round_counter_is_positive
 
   private
 
