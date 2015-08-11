@@ -17,12 +17,6 @@ RSpec.describe Game, type: :model do
     it "is not #ready? to start" do
       expect(game).to_not be_ready
     end
-
-    describe "#current_turn" do
-      it "returns players" do
-        expect(game.current_turn).to be nil
-      end
-    end
   end
 
   context "with 2 players" do

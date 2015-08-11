@@ -19,12 +19,6 @@ RSpec.describe GamePlan do
 
   subject { GamePlan.new(player, round) }
 
-  context "before game has started" do
-    it "returns no options" do
-      expect(subject.options).to be {}
-    end
-  end
-
   context "after game starts" do
     before do
       user1.players.create!(game: game)
