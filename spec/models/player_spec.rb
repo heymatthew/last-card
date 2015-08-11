@@ -6,7 +6,7 @@ RSpec.describe Player, type: :model do
   let(:game)     { Game.create! }
 
   let(:player) { user.players.create!(game: game) }
-  let(:card)   { Card::DECK.first }
+  let(:card)   { Deck::PLATONIC.first }
 
   context "when interacting with the game" do
     context "picking up" do
