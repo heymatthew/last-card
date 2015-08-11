@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 class PlayCard
   attr_reader :errors
 
