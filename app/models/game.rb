@@ -28,10 +28,8 @@ class Game < ActiveRecord::Base
   end
 
   def current_turn
-    if started?
-      turn = round_counter % players.count
-      players[turn]
-    end
+    turn = round_counter % players.count
+    players[turn]
   end
 
   private
