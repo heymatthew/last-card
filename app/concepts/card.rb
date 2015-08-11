@@ -2,10 +2,6 @@ class Card < Struct.new(:rank, :suit)
   RANKS = %w( 2 3 4 5 6 7 8 9 10 jack queen king ace ).freeze
   SUITS = %w( hearts spades diamonds clubs ).freeze
 
-  # Note, this goes below the initialize method
-  # If not, ruby wont define new() correctly
-  DECK = RANKS.product(SUITS).map { |rank, suit| Card.new(rank, suit) }.freeze
-
   def ==(that)
     suit == that.suit && rank == that.rank
   end
