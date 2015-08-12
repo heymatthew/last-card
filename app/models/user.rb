@@ -5,5 +5,5 @@ class User < ActiveRecord::Base
   # TODO email registration and cookie setting
   validates :nickname,
     uniqueness: { message: "already taken, please select another" },
-    format: { with: /\A\w+\z/, message: "expecting single word alpha numericy nickname~~ sozlol" }
+    format: { with: /\A\w+\z/, message: "should be single word alpha numericy nickname~~ sozlol" }
 end
