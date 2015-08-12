@@ -1,16 +1,13 @@
 class Round < Struct.new(:game)
   def hands
-    return {} unless game.started?
     @hands ||= calculate_hands
   end
 
   def pile
-    return empty_pile unless game.started?
     @pile ||= calculate_shuffled_pile
   end
 
   def deck
-    return Deck::PLATONIC unless game.started?
     @deck ||= calculate_deck
   end
 
@@ -60,6 +57,8 @@ class Round < Struct.new(:game)
   end
 
   def calculate_hands
+    return {} unless game.started?
+
     hands = {}
     game.players.each do |player|
       pickups = player.pickups.map(&:card)
