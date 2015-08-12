@@ -13,7 +13,7 @@ class StartGame
         shuffle_deck &&
         give_players_cards &&
         play_first_card &&
-        save_game
+        save_game!
     end
 
     @errors.none?
@@ -57,7 +57,7 @@ class StartGame
     dealer.play!(first_card)
   end
 
-  def save_game
+  def save_game!
     @game.save!
   end
 end
