@@ -8,12 +8,9 @@ class StartGame
 
   def call
     @game.with_lock do
-      assert_game_ready &&
-        remove_pending &&
-        shuffle_deck &&
-        give_players_cards &&
-        play_first_card &&
-        save_game!
+      flag_started!
+
+      shuffle_deck && divvy_up_cards! if errors.none?
     end
 
     @errors.none?
@@ -21,27 +18,34 @@ class StartGame
 
   private
 
-  def assert_game_ready
-    return true if @game.ready?
-    @errors.push "game not ready to start"
-    false
+  def check_game_ready
+    if @game.ready?
+      true
+    else
+      @errors.push "game not ready to start"
+      false
+    end
   end
 
-  def remove_pending
-    if @game.pending
-      @game.pending = false
-      return true
+  def flag_started!
+    if !@game.ready?
+      @errors.push "game not ready to start"
+    elsif !@game.pending
+      @errors.push "game already started"
+    else
+      return @game.update!(pending: false)
     end
-
-    @errors.push "game already started"
-    false
   end
 
   def shuffle_deck
     @deck = Deck::PLATONIC.shuffle
   end
 
-  def give_players_cards
+  def divvy_up_cards!
+    give_players_cards! && play_first_card!
+  end
+
+  def give_players_cards!
     @game.players.each do |player|
       @deck.pop(5).each do |card|
         player.pickup!(card)
@@ -49,15 +53,11 @@ class StartGame
     end
   end
 
-  def play_first_card
+  def play_first_card!
     first_card = @deck.pop
     dealer = @game.players.first
 
     dealer.pickup!(first_card)
     dealer.play!(first_card)
-  end
-
-  def save_game!
-    @game.save!
   end
 end
