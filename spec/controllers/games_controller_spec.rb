@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe GamesController, type: :controller do
   render_views # needed for response.body tests
 
-  context "GET new" do
+  describe "GET new" do
     before do
       User.create!(nickname: "megatron")
       User.create!(nickname: "optimus")
@@ -19,7 +19,7 @@ RSpec.describe GamesController, type: :controller do
     end
   end
 
-  context "GET show" do
+  describe "GET show" do
     def request_for(game_id)
       get :show, id: game_id
     end
@@ -50,6 +50,29 @@ RSpec.describe GamesController, type: :controller do
         request_for(game.id)
         expect(response).to render_template('show')
       end
+    end
+  end
+
+  describe "GET index" do
+    let(:game_pending) { Game.create! }
+    let(:game_in_play) { Game.create!(pending: false) }
+
+    before do
+      game_pending # observe to create
+      game_in_play # observe to create
+      get :index
+    end
+
+    it "shows games that are pending" do
+      expect(assigns(:games)).to include game_pending
+    end
+
+    it "does not show games that have started" do
+      expect(assigns(:games)).to_not include game_in_play
+    end
+
+    it "renders the index template" do
+      expect(response).to render_template('index')
     end
   end
 end
