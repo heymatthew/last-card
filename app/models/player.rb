@@ -1,7 +1,7 @@
 class Player < ActiveRecord::Base
   belongs_to :user
   belongs_to :game
-  has_many :actions
+  has_many :actions, dependent: :destroy
 
   validates :user, presence: true
   validates :game, presence: true
