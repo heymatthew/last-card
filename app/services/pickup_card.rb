@@ -9,18 +9,18 @@ class PickupCard
 
   def call
     @round.game.with_lock do
-      assert_cards_available && pickup_card
+      validate_cards_available
+      pickup_card if errors.none?
     end
 
-    @errors.none?
+    errors.none?
   end
 
   private
 
-  def assert_cards_available
-    return true if @round.deck.any?
-    @errors.push "no cards in deck"
-    false
+  # def validate_cards_available
+  def validate_cards_available
+    errors << "no cards in deck" if @round.deck.none?
   end
 
   def pickup_card
