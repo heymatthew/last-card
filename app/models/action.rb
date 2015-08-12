@@ -5,8 +5,9 @@ class Action < ActiveRecord::Base
 
   composed_of :card, class_name: "Card", mapping: [%w(card_rank rank), %w(card_suit suit)]
 
-  scope :pickup, -> { where(effect: PICKUP).order(:id) }
-  scope :play,   -> { where(effect: PLAY).order(:id) }
+  scope :pickup,   -> { where(effect: PICKUP) }
+  scope :play,     -> { where(effect: PLAY) }
+  scope :in_order, -> { order(:id) }
 
   validates :player, presence: true
   validates :effect,
