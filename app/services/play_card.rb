@@ -10,24 +10,25 @@ class PlayCard
 
   def call
     @round.game.with_lock do
-      legal_move? && play_card && increment_round!
+      check_legal_move
+
+      play_card! && increment_round! if errors.none?
     end
 
-    @errors.none?
+    errors.none?
   end
 
   private
 
   # TODO push out to player_options class and use a validate method
-  def legal_move?
+  def check_legal_move
     top_card = @round.pile.top
-    return true if @card.playable_on?(top_card)
-
-    @errors.push "cannot play card, #{@card} on #{top_card}"
-    false
+    if !@card.playable_on?(top_card)
+      errors.push "cannot play card, #{@card} on #{top_card}"
+    end
   end
 
-  def play_card
+  def play_card!
     @player.play!(@card)
   end
 
