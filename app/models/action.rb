@@ -1,5 +1,6 @@
 class Action < ActiveRecord::Base
-  PICKUP, PLAY = %w(pickup play)
+  PICKUP = 'pickup'
+  PLAY = 'play'
 
   belongs_to :player
 
@@ -10,9 +11,7 @@ class Action < ActiveRecord::Base
   scope :in_order, -> { order(:id) }
 
   validates :player, presence: true
-  validates :effect,
-    presence: true,
-    inclusion: { in: [ PICKUP, PLAY ] }
+  validates :effect, inclusion: { in: [ PICKUP, PLAY ] }
 
   validates :card_suit, inclusion: { in: Card::SUITS }
   validates :card_rank, inclusion: { in: Card::RANKS }
