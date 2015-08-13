@@ -1,4 +1,4 @@
-class PickupCard
+class PickupCards
   attr_reader :errors
 
   def initialize(player, round)
@@ -27,4 +27,6 @@ class PickupCard
     card = @round.deck.pickup
     @player.pickup!(card)
   end
+
+  # TODO increment round fool!
 end
