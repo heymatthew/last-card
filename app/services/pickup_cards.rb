@@ -1,4 +1,4 @@
-class PickupCards < Struct.new(:player, :round, :pickups)
+class PickupCards < Struct.new(:player, :round, :card_count)
   def call
     round.game.with_lock do
       validate_cards_available
@@ -15,7 +15,9 @@ class PickupCards < Struct.new(:player, :round, :pickups)
   private
 
   def validate_cards_available
-    errors << "no cards in deck" if round.deck.none?
+    # TODO this seems to imply the shuffle service needs to exist
+    # see also pickup_cards_spec -> context "pickup 5"
+    errors << "not enough cards in deck" if round.deck.size < card_count
   end
 
   def pickup_card

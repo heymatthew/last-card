@@ -10,7 +10,9 @@ RSpec.describe PickupCards do
   let(:megatron) { User.create!(nickname: "megatron") }
   let(:player1)  { optimus.players.create!(game: game) }
   let(:player2)  { megatron.players.create!(game: game) }
-  let(:service)  { PickupCards.new(player1, round) }
+
+  let(:card_count) { 1 }
+  let(:service)    { PickupCards.new(player1, round, card_count) }
 
   def round
     Round.new(game)
@@ -55,5 +57,25 @@ RSpec.describe PickupCards do
 
       it_behaves_like "a service with errors"
     end
+
+    # TODO does this belong here?
+    # TODO this seems to imply the shuffle service needs to exist
+    #context "pickup 5" do
+    #  subject { serice.call }
+    #
+    #  it "picks up 5 cards"
+    #
+    #  context "with deck of 2 cards" do
+    #    it "picks up 2 from deck, 3 from shuffled pile"
+    #
+    #    context "with a pile of 2 cards" do
+    #      it "picks up 2 from deck, 1 from shuffled pile"
+    #    end
+    #
+    #    context "with pile of 1 card" do
+    #      it "only picks up 2 cards"
+    #    end
+    #  end
+    #end
   end
 end
