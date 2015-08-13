@@ -1,10 +1,7 @@
 require 'rails_helper'
 require_relative 'shared_examples'
 
-RSpec.shared_examples "a playable service" do
-end
-
-RSpec.describe PlayCard do
+RSpec.describe PlayCards do
   let(:game)     { Game.create! }
   let(:optimus)  { User.create!(nickname: "optimus") }
   let(:megatron) { User.create!(nickname: "megatron") }
@@ -26,7 +23,7 @@ RSpec.describe PlayCard do
   let(:bad_card)  { Card.new(bad_ranks.last, bad_suits.last) }
 
   let(:card)    { Card.first }
-  let(:service) { PlayCard.new(player1, round, card) }
+  let(:service) { PlayCards.new(player1, round, card) }
 
   context "when game is over" # TODO
 

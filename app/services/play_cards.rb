@@ -1,4 +1,4 @@
-class PlayCard
+class PlayCards
   attr_reader :errors
 
   def initialize(player, round, card)
