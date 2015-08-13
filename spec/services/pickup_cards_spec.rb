@@ -1,7 +1,7 @@
 require 'rails_helper'
 require_relative 'shared_examples'
 
-RSpec.describe PickupCard do
+RSpec.describe PickupCards do
   # predictable seed for predictable shuffles
   before { srand 1 }
 
@@ -10,7 +10,7 @@ RSpec.describe PickupCard do
   let(:megatron) { User.create!(nickname: "megatron") }
   let(:player1)  { optimus.players.create!(game: game) }
   let(:player2)  { megatron.players.create!(game: game) }
-  let(:service)  { PickupCard.new(player1, round) }
+  let(:service)  { PickupCards.new(player1, round) }
 
   def round
     Round.new(game)
