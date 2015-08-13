@@ -1,14 +1,6 @@
-class PickupCards
-  attr_reader :errors
-
-  def initialize(player, round)
-    @player = player
-    @round  = round
-    @errors = []
-  end
-
+class PickupCards < Struct.new(:player, :round, :pickups)
   def call
-    @round.game.with_lock do
+    round.game.with_lock do
       validate_cards_available
       pickup_card if errors.none?
     end
@@ -16,16 +8,19 @@ class PickupCards
     errors.none?
   end
 
+  def errors
+    @errors ||= []
+  end
+
   private
 
-  # def validate_cards_available
   def validate_cards_available
-    errors << "no cards in deck" if @round.deck.none?
+    errors << "no cards in deck" if round.deck.none?
   end
 
   def pickup_card
-    card = @round.deck.pickup
-    @player.pickup!(card)
+    card = round.deck.pickup
+    player.pickup!(card)
   end
 
   # TODO increment round fool!
