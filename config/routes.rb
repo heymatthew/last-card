@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   root "games#index"
-  resources :games
-
   get 'about' => 'about#index'
 
+  resources :games do
+    resources :pickups
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
