@@ -2,6 +2,10 @@ class Card < Struct.new(:rank, :suit)
   RANKS = %w( 2 3 4 5 6 7 8 9 10 jack queen king ace ).freeze
   SUITS = %w( hearts spades diamonds clubs ).freeze
 
+  def self.from_hash(card)
+    Card.new(card[:rank], card[:suit])
+  end
+
   def ==(that)
     suit == that.suit && rank == that.rank
   end
