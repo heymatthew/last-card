@@ -22,8 +22,9 @@ RSpec.describe PlayCards do
   let(:bad_ranks) { Card::RANKS - [top_card.rank] - ['ace'] }
   let(:bad_card)  { Card.new(bad_ranks.last, bad_suits.last) }
 
-  let(:card)    { Card.first }
-  let(:service) { PlayCards.new(player1, round, card) }
+  let(:card)    { Deck::PLATONIC.first }
+  let(:cards)   { [card] }
+  let(:service) { PlayCards.new(player1, round, cards) }
 
   context "when game is over" # TODO
 
@@ -35,7 +36,7 @@ RSpec.describe PlayCards do
       StartGame.new(game).call or fail "untestable"
     end
 
-    context "a card that is not #playable_on? top card" do
+    context "playing a card not #playable_on? top card" do
       let(:card) { bad_card }
       it_behaves_like "a service with errors"
     end
@@ -43,7 +44,7 @@ RSpec.describe PlayCards do
     let(:top_suit) { round.pile.top.suit }
     let(:card) { Card.new("5", top_suit) }
 
-    context "a card that is #playable_on? the top card" do
+    context "playing a card that is playable" do
       # make sure player has it in their hand
       before { player1.pickup!(card) }
 
@@ -69,6 +70,22 @@ RSpec.describe PlayCards do
         it "advances turn to the next player" do
           expect { service.call }.to change { game.current_turn }
         end
+      end
+    end
+
+    context "when called without cards" do
+      let(:cards) { [] }
+      it_behaves_like "a service with errors"
+    end
+
+    context "when playing more than one card" do
+      context "of differing rank" do
+        let(:cards) do
+          [ Card.new("queen", "hearts"),
+            Card.new("2", "hearts") ]
+        end
+
+        it_behaves_like "a service with errors"
       end
     end
   end
