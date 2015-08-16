@@ -3,21 +3,7 @@
 <% end %>
 
 <h2>Currently <%= @player.nickname %>'s turn</h2>
-<div>
-  <% @round.hands.each do |nickname, hand| %>
-    <li>
-      <b><%= nickname %>'s hand</b>
-      <ul>
-        <% hand.each do |card| %>
-          <li><%= card %></li>
-        <% end %>
-      </ul>
-    </li>
-  <% end %>
+
+
+<div id="table" data-deck="<%= image_path "deck.svg" %>">
 </div>
-
-<div><b>Pile Top</b>: <%= @round.pile.top %></div>
-
-<div><b>Deck</b> (<%= @round.deck.size %> cards)</div>
-
-<pre style="background:orange"><%= @options.to_yaml %></pre>
