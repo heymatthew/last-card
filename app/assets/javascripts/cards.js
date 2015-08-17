@@ -33,7 +33,6 @@ $(document).ready(function() {
       .classed('hand', true)
   ;
 
-
   d3.json(document.location + '/rounds')
     .header('Content-Type', 'application/json')
     .get(function(error, roundData) {
@@ -41,21 +40,36 @@ $(document).ready(function() {
         return console.error(error);
       }
 
-      var handData = roundData.hands['megatron']; // FIXME placeholder
-      var handCards = hand.selectAll('.card').data(handData, cardKey);
-
-      handCards.enter()
-        .append('rect')
-        .attr('height', '150')
-        .attr('width', '100')
-        .attr('fill', randomColor)
-        .attr('y', '-20%')
-        .attr('transform', rotateCardTransform(handData.length))
-      ;
-
-      // Cards that have left hand...
-      //hand.transform('translate(50%,50%)');
-      console.log(handCards);
+      var cards = renderHand(roundData.hands['megatron']); // FIXME placeholder
+      console.log(cards);
     })
   ;
+
+  function renderHand(data) {
+    var handCards = hand.selectAll('.card').data(data, cardKey);
+
+    // Render pickups to hand
+    handCards.enter()
+      .append('rect')
+      .attr('y', '-20%')
+      .attr('fill', randomColor)
+      .transition()
+        .attr('transform', rotateCardTransform(data.length))
+          .delay(function(d, i) { return (data.length - i) / data.length * 200; })
+          .duration(100)
+          .ease('quad')
+    ;
+
+    // Setup
+    handCards
+      .attr('y', '-20%')
+      .attr('height', '150')
+      .attr('width', '100')
+    ;
+
+    d3.transition(handCards).ease
+    ;
+
+    return handCards;
+  }
 });
