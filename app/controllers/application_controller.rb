@@ -5,8 +5,11 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def setup_round
+  def setup_game
     @game = Game.find(params[:game_id])
+  end
+
+  def setup_round
     @round = Round.new(@game)
   end
 
