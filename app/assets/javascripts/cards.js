@@ -12,11 +12,9 @@ $(document).ready(function() {
 
   function rotateCardTransform(count) {
     var middle = parseFloat(count, 10) / 2;
-    console.log(parseFloat(count));
     var baseRotation = 20.0; // degrees
     return function rotateCard(card, i) {
       var angle = (middle - i) * baseRotation;
-      console.log(middle, i, middle - i, baseRotation, angle);
       return 'rotate(' + angle + ',50,100)';
     };
   }
@@ -40,31 +38,37 @@ $(document).ready(function() {
         return console.error(error);
       }
 
-      var cards = renderHand(roundData.hands['megatron']); // FIXME placeholder
-      console.log(cards);
+      renderHand(roundData.hands['megatron']); // FIXME placeholder
+      setTimeout(
+        function() { console.log('omg'); renderHand(roundData.hands['megatron'].reverse()); },
+        1000
+      );
     })
   ;
 
   function renderHand(data) {
+    console.log(data);
     var handCards = hand.selectAll('.card').data(data, cardKey);
 
     // Render pickups to hand
     handCards.enter()
+      .append('g').classed('card', true)
       .append('rect')
       .attr('y', '-20%')
       .attr('fill', randomColor)
-      .transition()
-        .attr('transform', rotateCardTransform(data.length))
-          .delay(function(d, i) { return (data.length - i) / data.length * 200; })
-          .duration(100)
-          .ease('quad')
     ;
 
-    // Setup
-    handCards
-      .attr('y', '-20%')
+    // Setup card dimensions
+    handCards.select('rect')
       .attr('height', '150')
       .attr('width', '100')
+    ;
+
+    handCards.transition()
+      .attr('transform', rotateCardTransform(data.length))
+        .delay(function(d, i) { return (data.length - i) / data.length * 100; })
+        .duration(200)
+        .ease('cubic')
     ;
 
     d3.transition(handCards).ease
