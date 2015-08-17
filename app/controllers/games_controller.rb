@@ -9,10 +9,8 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @player = @game.current_turn
-
     @round = Round.new(@game)
     @options = GamePlan.new(@player, @round).options
-    @player = @user.players.where(game: @game).first # TODO change this plz
   end
 
   def new

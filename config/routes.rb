@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'about' => 'about#index'
 
   resources :games do
+    resources :rounds
     resources :pickups
   end
 
