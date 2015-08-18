@@ -6,6 +6,51 @@ $(document).ready(function() {
   var CARD_WIDTH = 100;
   var SEED = new Date().getTime() * Math.random();
 
+  d3.json(document.location + '/rounds')
+    .header('Content-Type', 'application/json')
+    .get(initGame)
+  ;
+
+  function initGame(error, roundData) {
+    if(error) {
+      return console.error(error);
+    }
+
+    var cards = svg.selectAll('.card').data(roundData, keyedByCard);
+
+    // Render nerw cards with rectangles
+    cards.enter()
+      .append('g').classed('card', true)
+      .append('rect')
+        .attr('height', CARD_HEIGHT)
+        .attr('width', CARD_WIDTH)
+        .attr('fill', randomColor)
+    ;
+
+    cards.attr('transform', positionDeck(cards));
+
+    everythingFlysAround(cards);
+  }
+
+  function everythingFlysAround(cards) {
+    function render() {
+      transitionFlickOut(cards)
+        .attr('transform', positionHand(cards));
+
+      setTimeout(function() {
+        transitionFlickOut(cards)
+          .attr('transform', positionPile(cards));
+      },2000);
+
+      setTimeout(function() {
+        transitionFlickOut(cards)
+          .attr('transform', positionDeck(cards));
+      },4000);
+    }
+
+    render();
+    setInterval(render, 6000);
+  }
   function keyedByCard(card) {
     return [card.rank, card.suit].join(',');
   }
@@ -90,48 +135,4 @@ $(document).ready(function() {
     .attr('height', '100%')
     .attr('width', '100%')
   ;
-
-  d3.json(document.location + '/rounds')
-    .header('Content-Type', 'application/json')
-    .get(function initGame(error, roundData) {
-      if(error) {
-        return console.error(error);
-      }
-
-      var cards = svg.selectAll('.card').data(roundData, keyedByCard);
-
-      // Render nerw cards with rectangles
-      cards.enter()
-        .append('g').classed('card', true)
-        .append('rect')
-          .attr('height', CARD_HEIGHT)
-          .attr('width', CARD_WIDTH)
-          .attr('fill', randomColor)
-      ;
-
-      cards.attr('transform', positionDeck(cards));
-
-      everythingFlysAround(cards);
-    })
-  ;
-
-  function everythingFlysAround(cards) {
-    function render() {
-      transitionFlickOut(cards)
-        .attr('transform', positionHand(cards));
-
-      setTimeout(function() {
-        transitionFlickOut(cards)
-          .attr('transform', positionPile(cards));
-      },2000);
-
-      setTimeout(function() {
-        transitionFlickOut(cards)
-          .attr('transform', positionDeck(cards));
-      },4000);
-    }
-
-    render();
-    setInterval(render, 6000);
-  }
 });
