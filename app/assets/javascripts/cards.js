@@ -10,21 +10,7 @@ $(document).ready(function() {
     return [card.rank, card.suit].join(',');
   }
 
-  function filterInDeck(card) {
-    return card.position === 'deck';
-  }
-
-  function filterInPile(card) {
-    return card.position === 'pile';
-  }
-
-  function filterPlayer(nickname) {
-    return function(card) {
-      return card.position === nickname;
-    };
-  }
-
-  function rotateTransformCard(rotation) {
+  function createCardRotation(rotation) {
     return 'rotate(' +
       rotation + ',' +
       (CARD_WIDTH/2+10).toString() + ',' +
@@ -49,6 +35,17 @@ $(document).ready(function() {
     };
   }
 
+  function transitionFlickOut(cards) {
+    var animationTime = 750; // ms
+    var cardCount = cards[0].length;
+
+    return cards.transition()
+      .delay(staggeredDelay(animationTime, cardCount)) // stagger transitions over a second
+      .duration(animationTime)                         // transition over 1/2 a second
+      .ease('exp-in-out')                              // as if the user flicked it into the table
+    ;
+  }
+
   function positionDeck(cards) {
     var cardCount = cards[0].length;
     var random = seedRandom(SEED);
@@ -58,7 +55,7 @@ $(document).ready(function() {
       var angle = random() * 4 - 2;
       var position = 'translate(50,50)';
       var stack = 'translate(' + offset + ',' + offset + ')';
-      var slightRotation = rotateTransformCard(angle)
+      var slightRotation = createCardRotation(angle);
       var perspective = 'skewX(-10) skewY(10)';
       return [position, stack, slightRotation, perspective].join(' ');
     };
@@ -67,10 +64,10 @@ $(document).ready(function() {
   function positionPile() {
     var random = seedRandom(SEED);
 
-    return function(c, i) {
+    return function() {
       var rotation = random() * 180;
       var position = 'translate(800,'+ (CARD_HEIGHT) +')';
-      var rotate = rotateTransformCard(rotation);
+      var rotate = createCardRotation(rotation);
       return [position, rotate].join(' ');
     };
   }
@@ -96,7 +93,7 @@ $(document).ready(function() {
 
   d3.json(document.location + '/rounds')
     .header('Content-Type', 'application/json')
-    .get(function(error, roundData) {
+    .get(function initGame(error, roundData) {
       if(error) {
         return console.error(error);
       }
@@ -114,7 +111,7 @@ $(document).ready(function() {
 
       cards.attr('transform', positionDeck(cards));
 
-      //everythingFlysAround(cards);
+      everythingFlysAround(cards);
     })
   ;
 
@@ -136,16 +133,5 @@ $(document).ready(function() {
 
     render();
     setInterval(render, 6000);
-  }
-
-  function transitionFlickOut(cards) {
-    var animationTime = 750; // ms
-    var cardCount = cards[0].length;
-
-    return cards.transition()
-      .delay(staggeredDelay(animationTime, cardCount)) // stagger transitions over a second
-      .duration(animationTime)                         // transition over 1/2 a second
-      .ease('exp-in-out')                              // as if the user flicked it into the table
-    ;
   }
 });
