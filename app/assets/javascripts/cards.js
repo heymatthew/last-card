@@ -4,13 +4,32 @@
 $(document).ready(function() {
   var CARD_HEIGHT = 150;
   var CARD_WIDTH = 100;
+  var SEED = new Date().getTime() * Math.random();
 
   function keyedByCard(card) {
     return [card.rank, card.suit].join(',');
   }
 
-  function inDeck(card) {
-    return card.position == 'deck';
+  function filterInDeck(card) {
+    return card.position === 'deck';
+  }
+
+  function filterInPile(card) {
+    return card.position === 'pile';
+  }
+
+  function filterPlayer(nickname) {
+    return function(card) {
+      return card.position === nickname;
+    };
+  }
+
+  function rotateTransformCard(rotation) {
+    return 'rotate(' +
+      rotation + ',' +
+      (CARD_WIDTH/2+10).toString() + ',' +
+      (CARD_HEIGHT/2+10).toString() +
+    ')';
   }
 
   function randomColor() {
@@ -24,35 +43,43 @@ $(document).ready(function() {
     };
   }
 
-  function tuneDelays(msDelay, itemsCount) {
+  function staggeredDelay(msDelay, itemsCount) {
     return function myDelay(d, i) {
-      //return i / itemsCount * msDelay;
       return i / itemsCount * msDelay;
     };
   }
 
-  function positionDeck(cardCount) {
+  function positionDeck(cards) {
+    var cardCount = cards[0].length;
+    var random = seedRandom(SEED);
+
     return function(c, i) {
       var offset = cardCount + i;
+      var angle = random() * 4 - 2;
       var position = 'translate(50,50)';
       var stack = 'translate(' + offset + ',' + offset + ')';
-      var rotate = 'skewX(-10) skewY(10)';
-      return [position, stack, rotate].join(' ');
+      var slightRotation = rotateTransformCard(angle)
+      var perspective = 'skewX(-10) skewY(10)';
+      return [position, stack, slightRotation, perspective].join(' ');
     };
   }
 
-  function positionCardPile(c, i) {
-    var rotation = seedRandom(i)() * 180;
-    var position = 'translate(800,'+ (CARD_HEIGHT) +')';
-    var rotate = 'rotate(' +
-      rotation + ',' +
-      (CARD_WIDTH/2+10).toString() + ',' +
-      (CARD_HEIGHT/2+10).toString() +
-    ')';
-    return [position, rotate].join(' ');
+  function positionPile() {
+    var random = seedRandom(SEED);
+
+    return function(c, i) {
+      var rotation = random() * 180;
+      var position = 'translate(800,'+ (CARD_HEIGHT) +')';
+      var rotate = rotateTransformCard(rotation);
+      return [position, rotate].join(' ');
+    };
   }
 
-  function positionHand(middle, baseAngle) {
+  function positionHand(cards) {
+    var count = cards[0].length;
+    var middle = parseFloat(count, 10) / 2;
+    var baseAngle = 1/count * 45 - 90; // fan out in a V
+
     return function fanOutCard(card, i) {
       var angle = (i - middle) * baseAngle;
       var position = 'translate(500,700)';
@@ -85,71 +112,40 @@ $(document).ready(function() {
           .attr('fill', randomColor)
       ;
 
-      // Render deck...
-      renderDeck(cards);
-      renderHand(cards);
-      setTimeout( function() { renderPile(cards); }, 2000);
-      setTimeout( function() { renderDeck(cards); }, 4000);
+      cards.attr('transform', positionDeck(cards));
+
+      //everythingFlysAround(cards);
     })
   ;
 
-  function renderDeck(cards) {
+  function everythingFlysAround(cards) {
+    function render() {
+      transitionFlickOut(cards)
+        .attr('transform', positionHand(cards));
+
+      setTimeout(function() {
+        transitionFlickOut(cards)
+          .attr('transform', positionPile(cards));
+      },2000);
+
+      setTimeout(function() {
+        transitionFlickOut(cards)
+          .attr('transform', positionDeck(cards));
+      },4000);
+    }
+
+    render();
+    setInterval(render, 6000);
+  }
+
+  function transitionFlickOut(cards) {
+    var animationTime = 750; // ms
     var cardCount = cards[0].length;
-    cards.transition()
-      .delay(tuneDelays(1000, cardCount)) // stagger transitions over a second
-      .duration(1000)                           // transition each card for 1/4 of a second
-      .ease('exp-in-out')                       // as if the user flicked it into the table
-      .attr('transform', positionDeck(cardCount))
+
+    return cards.transition()
+      .delay(staggeredDelay(animationTime, cardCount)) // stagger transitions over a second
+      .duration(animationTime)                         // transition over 1/2 a second
+      .ease('exp-in-out')                              // as if the user flicked it into the table
     ;
   }
-
-  function renderPile(cards) {
-    cards.transition()
-      .delay(tuneDelays(1000, cards[0].length)) // stagger transitions over a second
-      .duration(1000)                           // transition each card for 1/4 of a second
-      .ease('exp-in-out')                       // as if the user flicked it into the table
-      .attr('transform', positionCardPile)      // to a position in the pile
-    ;
-  }
-
-  function renderHand(cards) {
-    var count = cards[0].length;
-    var middle = parseFloat(count, 10) / 2;
-    var baseAngle = 1/count * 45 - 90; // fan out in a V
-
-    cards.transition()
-      .delay(tuneDelays(1000, cards[0].length)) // stagger transitions over a second
-      .duration(1000)                           // transition each card for 1/4 of a second
-      .ease('exp-in-out')                       // as if the user flicked it into the table
-      .attr('transform', positionHand(middle, baseAngle)) // to a position in the hand
-    ;
-  }
-
-  //function renderHand(cards) {
-  //  // Render pickups to hand
-  //  handCards.enter()
-  //    .append('g').classed('card', true)
-  //    .append('rect')
-  //    .attr('y', '-20%')
-  //    .attr('fill', randomColor)
-  //  ;
-
-  //  // Setup card dimensions
-  //  handCards.select('rect')
-  //    .attr('height', '150')
-  //    .attr('width', '100')
-  //  ;
-
-  //  handCards.transition()
-  //    .attr('transform', rotateCardTransform(data.length))
-  //      .delay(function(d, i) { return (data.length - i) / data.length * 100; })
-  //      .duration(200)
-  //      .ease('cubic')
-  //  ;
-
-  //  d3.transition(handCards).ease
-  //  ;
-
-  //  return handCards;
-  //}
 });
