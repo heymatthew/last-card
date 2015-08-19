@@ -56,7 +56,7 @@ $(document).ready(function() {
     return [card.rank, card.suit].join(',');
   }
 
-  function createCardRotation(rotation) {
+  function rotateCardTransform(rotation) {
     return 'rotate(' +
       rotation + ',' +
       (CARD_WIDTH/2+10).toString() + ',' +
@@ -99,9 +99,10 @@ $(document).ready(function() {
     return function(c, i) {
       var offset = cardCount + i;
       var angle = random() * 4 - 2;
+
       var position = 'translate(50,50)';
       var stack = 'translate(' + offset + ',' + offset + ')';
-      var slightRotation = createCardRotation(angle);
+      var slightRotation = rotateCardTransform(angle);
       var perspective = 'skewX(-10) skewY(10)';
       return [position, stack, slightRotation, perspective].join(' ');
     };
@@ -113,7 +114,7 @@ $(document).ready(function() {
     return function() {
       var rotation = random() * 180;
       var position = 'translate(800,'+ (CARD_HEIGHT) +')';
-      var rotate = createCardRotation(rotation);
+      var rotate = rotateCardTransform(rotation);
       return [position, rotate].join(' ');
     };
   }
