@@ -5,6 +5,7 @@ $(document).ready(function() {
   var CARD_HEIGHT = 150;
   var CARD_WIDTH = 100;
   var SEED = new Date().getTime() * Math.random();
+  var TRANSITION_TIME = 750; // ms
 
   d3.json(document.location + '/rounds')
     .header('Content-Type', 'application/json')
@@ -76,18 +77,18 @@ $(document).ready(function() {
 
   function staggeredDelay(msDelay, itemsCount) {
     return function myDelay(d, i) {
-      return i / itemsCount * msDelay;
+      var depth = (itemsCount - i) / itemsCount;
+      return depth * msDelay;
     };
   }
 
   function transitionFlickOut(cards) {
-    var animationTime = 750; // ms
     var cardCount = cards[0].length;
 
     return cards.transition()
-      .delay(staggeredDelay(animationTime, cardCount)) // stagger transitions over a second
-      .duration(animationTime)                         // transition over 1/2 a second
-      .ease('exp-in-out')                              // as if the user flicked it into the table
+      .delay(staggeredDelay(TRANSITION_TIME, cardCount)) // stagger transitions over a second
+      .duration(TRANSITION_TIME)                         // transition over 1/2 a second
+      .ease('exp-in-out')                                // as if the user flicked it into the table
     ;
   }
 
