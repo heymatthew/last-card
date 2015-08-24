@@ -6,8 +6,8 @@ RSpec.describe PickupCards do
   before { srand 1 }
 
   let(:game)     { Game.create! }
-  let(:optimus)  { User.create!(nickname: "optimus") }
-  let(:megatron) { User.create!(nickname: "megatron") }
+  let(:optimus)  { User.create!(email: "optimus") }
+  let(:megatron) { User.create!(email: "megatron") }
   let(:player1)  { optimus.players.create!(game: game) }
   let(:player2)  { megatron.players.create!(game: game) }
 
@@ -19,7 +19,7 @@ RSpec.describe PickupCards do
   end
 
   def hand
-    round.hands[player1.nickname]
+    round.hands[player1.email]
   end
 
   context "when game is over" # TODO

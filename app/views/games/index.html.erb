@@ -1,11 +1,15 @@
 <h2>Loby</h2>
-Games ready to start:
-<ul>
-  <% @games.each do |game| %>
-    <li>
-      <%= link_to "Join game #{game.id}", game_path(game) %>
-    </li>
-  <% end -%>
-</ul>
+Want to <%= link_to "start a new game", new_game_path %>?
 
-Or perhaps <%= link_to "start a new game", new_game_path %>
+<% if @games.any? %>
+  <p>
+    Or you could join one of these games...
+  </p>
+  <ul>
+    <% @games.each do |game| %>
+      <li>
+        <%= link_to "Join game #{game.id}", game_path(game) %>
+      </li>
+    <% end -%>
+  </ul>
+<% end %>

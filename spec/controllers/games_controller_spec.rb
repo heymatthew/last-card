@@ -5,8 +5,8 @@ RSpec.describe GamesController, type: :controller do
 
   describe "GET new" do
     before do
-      User.create!(nickname: "megatron")
-      User.create!(nickname: "optimus")
+      User.create!(email: "megatron@decepticons.com")
+      User.create!(email: "optimus@autobots.com")
     end
 
     it "creates a game after called" do
@@ -38,8 +38,8 @@ RSpec.describe GamesController, type: :controller do
 
     context "a game in progress" do
       let(:game)     { Game.create! }
-      let(:megatron) { User.create!(nickname: "megatron") }
-      let(:optimus)  { User.create!(nickname: "optimus") }
+      let(:megatron) { User.create!(email: "megatron@decepticons.com") }
+      let(:optimus)  { User.create!(email: "optimus@autobots.com") }
 
       before do
         game.players.create!(user: megatron)

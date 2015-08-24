@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805035705) do
+ActiveRecord::Schema.define(version: 20150824224020) do
 
   create_table "actions", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -46,10 +46,13 @@ ActiveRecord::Schema.define(version: 20150805035705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "game_id"
-    t.string   "nickname"
+    t.string   "email"
+    t.string   "firstname"
+    t.string   "name"
+    t.string   "image"
   end
 
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["game_id"], name: "index_users_on_game_id"
-  add_index "users", ["nickname"], name: "index_users_on_nickname", unique: true
 
 end

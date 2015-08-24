@@ -8,8 +8,8 @@ RSpec.describe Round do
   let(:game)   { Game.create! }
 
   before do
-    game.users.create!(nickname: "tintin")
-    game.users.create!(nickname: "snowy")
+    game.users.create!(email: "tintin")
+    game.users.create!(email: "snowy")
   end
 
   def round
@@ -17,7 +17,7 @@ RSpec.describe Round do
   end
 
   def hand
-    round.hands[player.nickname]
+    round.hands[player.email]
   end
 
   context "before game start" do
@@ -86,7 +86,7 @@ RSpec.describe Round do
       subject { player.play!(card) }
 
       it "removes cards from player's hand" do
-        expect { subject }.to change { round.hands[player.nickname].size }.by(-1)
+        expect { subject }.to change { round.hands[player.email].size }.by(-1)
       end
 
       it "only removes from one of the player's hands" do

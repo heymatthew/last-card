@@ -2,9 +2,15 @@ Rails.application.routes.draw do
   root "games#index"
   get 'about' => 'about#index'
 
+  get '/auth/:provider/callback', to: 'users#create'
+  get '/auth/failure' do
+    flash[:notice] = params[:message]
+    redirect '/'
+  end
+
   resources :games do
-    resources :rounds
     resources :pickups
+    resources :rounds
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

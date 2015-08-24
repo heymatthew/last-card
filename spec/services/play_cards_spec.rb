@@ -3,8 +3,8 @@ require_relative 'shared_examples'
 
 RSpec.describe PlayCards do
   let(:game)     { Game.create! }
-  let(:optimus)  { User.create!(nickname: "optimus") }
-  let(:megatron) { User.create!(nickname: "megatron") }
+  let(:optimus)  { User.create!(email: "optimus") }
+  let(:megatron) { User.create!(email: "megatron") }
   let(:player1)  { optimus.players.build }
   let(:player2)  { megatron.players.build }
 
@@ -13,7 +13,7 @@ RSpec.describe PlayCards do
   end
 
   def hand
-    round.hands[player1.nickname]
+    round.hands[player1.email]
   end
 
   let(:good_card) { hand.first }

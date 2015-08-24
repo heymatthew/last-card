@@ -9,8 +9,8 @@ RSpec.describe RoundsController, type: :controller do
 
   describe "GET index" do
     let(:game)     { Game.create! }
-    let(:megatron) { User.create(nickname: "megatron") }
-    let(:optimus)  { User.create(nickname: "optimus") }
+    let(:megatron) { User.create(email: "megatron") }
+    let(:optimus)  { User.create(email: "optimus") }
 
     before do
       game.players.create!(user: megatron)
