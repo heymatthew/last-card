@@ -24,11 +24,11 @@ that, but on computers. Awesome aye!
 
 &#9830; Build Instructions
 ----------------------------------------
-
-1. Clone this repo `git clone https://github.com/theflimflam/last-card`
-2. Grab dependencies `bundle install`
-3. Run tests with `rake`
-4. Start server with `rails s -p 80`
+1. Clone this repo `git clone https://github.com/theflimflam/last-card`.
+2. Grab dependencies `bundle install`.
+3. Run tests with `rake`.
+4. Setup [https://github.com/Yesware/omniauth-google omniauth google] strategy.
+5. Start server with `rails s -p 80`.
 
 &#9827; Contributing
 ----------------------------------------
@@ -53,6 +53,12 @@ Copyright (c) 2015 Powershop, distributed under the
 for details.
 
   [2]: https://en.wikipedia.org/wiki/MIT_License
+
+&#9830; Attribution
+----------------------------------------
+Playing cards by [Peter Tripp][3]
+
+  [3]: https://github.com/notpeter/Vector-Playing-Cards
 
 Kudos and thanks &#9829; &#9829; &#9829;
 ----------------------------------------
