@@ -5,8 +5,8 @@ RSpec.shared_examples "subject has pickup option" do
 end
 
 RSpec.describe GamePlan do
-  let(:user1)  { User.create!(nickname: "Mc_Bane") }
-  let(:user2)  { User.create!(nickname: "Rainier_Wolfcastle") }
+  let(:user1)  { User.create!(email: "Mc@Bane") }
+  let(:user2)  { User.create!(email: "Rainier@Wolfcastle") }
   let(:game)   { Game.create! }
   let(:round)  { Round.new(game) }
 

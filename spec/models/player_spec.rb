@@ -2,7 +2,7 @@ require 'rails_helper'
 require_relative 'shared_examples'
 
 RSpec.describe Player, type: :model do
-  let(:user)     { User.create!(nickname: "flipper") }
+  let(:user)     { User.create!(email: "flipper") }
   let(:game)     { Game.create! }
 
   let(:player) { user.players.create!(game: game) }

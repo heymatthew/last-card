@@ -22,13 +22,19 @@ that, but on computers. Awesome aye!
 * TODO arch Linux package??
 * TODO Gentoo portage thing
 
-&#9830; Build Instructions
-----------------------------------------
+Prerequsites:
+
+1. Setup [google oauth credentials][OAUTH]
+2. Export keys into environment variables `AUTH_GOOGLE_KEY` and `AUTH_GOOGLE_SECRET` where you intend to run rails
+
+Setup:
+
 1. Clone this repo `git clone https://github.com/theflimflam/last-card`.
 2. Grab dependencies `bundle install`.
 3. Run tests with `rake`.
-4. Setup [https://github.com/Yesware/omniauth-google omniauth google] strategy.
 5. Start server with `rails s -p 80`.
+
+  [OAUTH]: https://developers.google.com/identity/protocols/OAuth2
 
 &#9827; Contributing
 ----------------------------------------

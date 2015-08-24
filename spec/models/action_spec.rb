@@ -11,7 +11,7 @@ RSpec.describe Action, type: :model do
   let(:suit)   { Card::SUITS.first }
   let(:game)   { Game.create!     }
   let(:effect) { Action::PICKUP   }
-  let(:user)   { User.create!(nickname: "mctesterson") }
+  let(:user)   { User.create!(email: "mc@testers.on") }
   let(:player) { user.players.create!(game: game) }
 
   let(:action) do

@@ -15,8 +15,8 @@ class RoundsController < ApplicationController
   end
 
   def flattened_hands
-    @round.hands.map do |nickname, hand|
-      hand.map { |card| format_card(card, nickname) }
+    @round.hands.map do |email, hand|
+      hand.map { |card| format_card(card, email) }
     end
   end
 

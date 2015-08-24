@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Game, type: :model do
   let(:game) { Game.create! }
-  let(:user) { User.create!(nickname: "batman") }
+  let(:user) { User.create!(email: "batman") }
   let(:player1) { user.players.build }
   let(:player2) { user.players.build }
 

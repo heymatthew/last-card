@@ -20,9 +20,15 @@
       <%= link_to "About", about_path %>
     </nav>
 
-    <hr>
-
-    <%= yield %>
+    <% if @user %>
+      <%= yield %>
+    <% else %>
+      To play, please log in with
+      <a href="/auth/google_oauth2">
+        <img alt="Google plus" width="15px" height="15px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Google_plus_icon.svg/2000px-Google_plus_icon.svg.png">
+        Google
+      </a>
+    <% end %>
   </div>
 </body>
 </html>

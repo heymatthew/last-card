@@ -24,6 +24,8 @@ class GamesController < ApplicationController
   private
 
   def lookup_user
-    @user = User.first # TODO actually have a real user!
+    @user = User.find(session[:user_id])
+  rescue ActiveRecord::RecordNotFound
+    @user = nil
   end
 end
