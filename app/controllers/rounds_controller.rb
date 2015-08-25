@@ -33,6 +33,7 @@ class RoundsController < ApplicationController
       suit:     card.suit,
       rank:     card.rank,
       position: position,
+      url:      view_context.image_path(card.svg),
     }
   end
 end

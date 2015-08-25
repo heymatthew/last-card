@@ -21,11 +21,12 @@ $(document).ready(function() {
 
     // Render nerw cards with rectangles
     cards.enter()
-      .append('g').classed('card', true)
-      .append('rect')
+      .append('image').classed('card', true)
+        .attr('xlink:href', cardImageUrl)
         .attr('height', CARD_HEIGHT)
         .attr('width', CARD_WIDTH)
-        .attr('fill', randomColor)
+        .attr('x',0)
+        .attr('y',0)
     ;
 
     cards.attr('transform', positionDeck(cards));
@@ -54,6 +55,10 @@ $(document).ready(function() {
   }
   function keyedByCard(card) {
     return [card.rank, card.suit].join(',');
+  }
+
+  function cardImageUrl(card) {
+    return card.url;
   }
 
   function rotateCardTransform(rotation) {
@@ -133,7 +138,6 @@ $(document).ready(function() {
   }
 
   var svg = d3.select('#table')
-    .append('svg')
     .attr('height', '100%')
     .attr('width', '100%')
   ;

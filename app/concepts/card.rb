@@ -45,4 +45,9 @@ class Card < Struct.new(:rank, :suit)
   def playable_on?(that)
     wild? || rank == that.rank || suit == that.suit
   end
+
+  def svg
+    slug = to_s.downcase.gsub(/ /,'-')
+    "cards/#{slug}.svg"
+  end
 end

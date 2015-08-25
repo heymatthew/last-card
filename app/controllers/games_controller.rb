@@ -6,8 +6,8 @@ class GamesController < ApplicationController
   end
 
   def show
-    @player = player
     @game = game
+    @player = player
   end
 
   def new
@@ -17,11 +17,11 @@ class GamesController < ApplicationController
   private
 
   def player
-    game.players.find_or_create_by(user: @user)
+    @game.players.find_or_create_by(user: @user)
   end
 
   def game
-    @game ||= Game.find(params[:id])
+    Game.find(params[:id])
   end
 
   def lookup_user
