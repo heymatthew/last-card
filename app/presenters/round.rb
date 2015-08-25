@@ -57,8 +57,6 @@ class Round < Struct.new(:game)
   end
 
   def calculate_hands
-    return {} unless game.started?
-
     game.players.each.with_object({}) do |player, hands|
       pickups = player.pickups.map(&:card)
       plays = player.plays.map(&:card)
