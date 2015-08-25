@@ -26,7 +26,8 @@ RSpec.describe Round do
     end
 
     it "has no allocation to hands" do
-      expect(round.hands.keys).to be_empty
+      card_count = round.hands.values.map(&:count).sum
+      expect(card_count).to be 0
     end
 
     it "has no discard" do
