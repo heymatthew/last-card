@@ -25,8 +25,8 @@ class GamesController < ApplicationController
   end
 
   def lookup_user
-    @user ||= User.find(session[:user_id])
-  rescue ActiveRecord::RecordNotFound
-    @user = nil
+    if session[:user_id]
+      @user ||= User.find(session[:user_id])
+    end
   end
 end
