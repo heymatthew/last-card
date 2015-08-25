@@ -28,5 +28,7 @@ class GamesController < ApplicationController
     if session[:user_id]
       @user ||= User.find(session[:user_id])
     end
+  rescue ActiveRecord::RecordNotFound
+    @user = nil # so user isn't logged in after all
   end
 end
