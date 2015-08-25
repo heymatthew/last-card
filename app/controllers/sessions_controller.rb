@@ -1,5 +1,6 @@
-class UsersController < ApplicationController
+class SessionsController < ApplicationController
   def create
+    # attach user to a session
     session[:user_id] = user.id
     redirect_to "/"
   end

@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   root "games#index"
   get 'about' => 'about#index'
 
-  get '/auth/:provider/callback', to: 'users#create'
+  get '/auth/:provider/callback', to: 'sessions#create'
+
   get '/auth/failure' do
     flash[:notice] = params[:message]
     redirect '/'
