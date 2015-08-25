@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'about' => 'about#index'
 
   get '/auth/:provider/callback', to: 'sessions#create'
+  get '/logout', to: 'sessions#destroy'
 
   get '/auth/failure' do
     flash[:notice] = params[:message]
