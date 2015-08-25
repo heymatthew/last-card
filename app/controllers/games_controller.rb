@@ -5,23 +5,20 @@ class GamesController < ApplicationController
     @games = Game.where(pending: true)
   end
 
-  # TODO player joins
   def show
+    @player = get_player
     @game = Game.find(params[:id])
-    @player = @game.current_turn
-    @round = Round.new(@game)
-    @options = GamePlan.new(@player, @round).options
   end
 
   def new
-    game = Game.create!
-    game.players.create!(user: User.first)
-    game.players.create!(user: User.last)
-    StartGame.new(game).call or fail "Mega fail"
-    redirect_to game
+    redirect_to Game.create!
   end
 
   private
+
+  def get_player
+    Game.players.find_or_create_by(user: @user)
+  end
 
   def lookup_user
     @user = User.find(session[:user_id])
