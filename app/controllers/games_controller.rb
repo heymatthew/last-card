@@ -6,8 +6,8 @@ class GamesController < ApplicationController
   end
 
   def show
-    @player = get_player
-    @game = Game.find(params[:id])
+    @player = player
+    @game = game
   end
 
   def new
@@ -16,12 +16,16 @@ class GamesController < ApplicationController
 
   private
 
-  def get_player
-    Game.players.find_or_create_by(user: @user)
+  def player
+    game.players.find_or_create_by(user: @user)
+  end
+
+  def game
+    @game ||= Game.find(params[:id])
   end
 
   def lookup_user
-    @user = User.find(session[:user_id])
+    @user ||= User.find(session[:user_id])
   rescue ActiveRecord::RecordNotFound
     @user = nil
   end
