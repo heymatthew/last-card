@@ -5,8 +5,9 @@ RSpec.describe GamesController, type: :controller do
 
   describe "GET new" do
     before do
-      User.create!(email: "megatron@decepticons.com")
+      megatron = User.create!(email: "megatron@decepticons.com")
       User.create!(email: "optimus@autobots.com")
+      session[:user_id] = megatron.id
     end
 
     it "creates a game after called" do
@@ -44,6 +45,7 @@ RSpec.describe GamesController, type: :controller do
       before do
         game.players.create!(user: megatron)
         game.players.create!(user: optimus)
+        session[:user_id] = megatron.id
       end
 
       it "can find a game in progress" do
