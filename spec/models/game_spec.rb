@@ -65,9 +65,9 @@ RSpec.describe Game, type: :model do
         end
       end
 
-      describe "#current_turn" do
+      describe "#players_turn" do
         it "returns players" do
-          expect(game.current_turn).to be_instance_of Player
+          expect(game.players_turn).to be_instance_of Player
         end
       end
     end

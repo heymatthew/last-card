@@ -27,7 +27,7 @@ class Game < ActiveRecord::Base
     actions.pickup
   end
 
-  def current_turn
+  def players_turn
     turn = round_counter % players.count
     players[turn]
   end
