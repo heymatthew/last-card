@@ -18,7 +18,7 @@ class MaskedRound < Struct.new(:round, :player)
   private
 
   def masked_oponent_hands
-    oponent_hands.each.with_object({}) do |(oponent,hand), masked_hands|
+    oponent_hands.each.with_object({}) do |(oponent, hand), masked_hands|
       masked_hands[oponent] = hand.size
     end
   end
