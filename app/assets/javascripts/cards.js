@@ -29,9 +29,10 @@ $(document).ready(function() {
         .attr('y',0)
     ;
 
-    cards.attr('transform', positionDeck(cards));
+    //cards.attr('transform', positionDeck(cards));
+    cards.attr('transform', positionHand(cards));
 
-    everythingFlysAround(cards);
+    //everythingFlysAround(cards);
   }
 
   function everythingFlysAround(cards) {
