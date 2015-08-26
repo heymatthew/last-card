@@ -60,7 +60,7 @@ class Round < Struct.new(:game)
     game.players.each.with_object({}) do |player, hands|
       pickups = player.pickups.map(&:card)
       plays = player.plays.map(&:card)
-      hands[player.email] = Hand.new(pickups - plays)
+      hands[player.id] = Hand.new(pickups - plays)
     end
   end
 

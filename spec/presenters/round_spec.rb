@@ -17,7 +17,7 @@ RSpec.describe Round do
   end
 
   def hand
-    round.hands[player.email]
+    round.hands[player.id]
   end
 
   context "before game start" do
@@ -87,7 +87,7 @@ RSpec.describe Round do
       subject { player.play!(card) }
 
       it "removes cards from player's hand" do
-        expect { subject }.to change { round.hands[player.email].size }.by(-1)
+        expect { subject }.to change { round.hands[player.id].size }.by(-1)
       end
 
       it "only removes from one of the player's hands" do

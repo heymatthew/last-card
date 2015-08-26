@@ -13,7 +13,7 @@ RSpec.describe PlayCards do
   end
 
   def hand
-    round.hands[player1.email]
+    round.hands[player1.id]
   end
 
   let(:good_card) { hand.first }
