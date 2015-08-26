@@ -15,7 +15,6 @@ class PickupsController < ApplicationController
   private
 
   def pickup_params
-    #params.require(:pickup).permit(cards: [ :suit, :rank ])
     params.require(:pickup).permit(cards: [ :suit, :rank ])
   end
 end
