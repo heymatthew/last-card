@@ -2,6 +2,9 @@ class Action < ActiveRecord::Base
   PICKUP = 'pickup'
   PLAY = 'play'
 
+  # TODO shuffle?
+  # this may make it easier to find the last shuffle
+
   belongs_to :player
 
   composed_of :card, class_name: "Card", mapping: [%w(card_rank rank), %w(card_suit suit)]
