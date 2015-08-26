@@ -19,7 +19,7 @@ RSpec.describe PickupCards do
   end
 
   def hand
-    round.hands[player1.email]
+    round.hands[player1.id]
   end
 
   context "when game is over" # TODO

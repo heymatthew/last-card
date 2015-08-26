@@ -34,7 +34,7 @@ class GamePlan < Struct.new(:player, :round)
   end
 
   def hand
-    round.hands[player.email]
+    round.hands[player.id]
   end
 
   def top_card
