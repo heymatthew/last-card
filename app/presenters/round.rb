@@ -51,6 +51,11 @@ class Round < Struct.new(:game)
     pile + hands.values.flatten
   end
 
+  # Change to be cheeper
+  # 1. Find deck size from suffle trigger
+  # 2. Remove pickups
+  #   ...try make this work with scopes
+  #   ...do add indexes to make this fast
   def calculate_deck
     deck_cards = Deck::PLATONIC - cards_in_play
     Deck.new(deck_cards)
