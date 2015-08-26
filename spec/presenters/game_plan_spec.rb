@@ -10,7 +10,7 @@ RSpec.describe GamePlan do
   let(:game)   { Game.create! }
   let(:round)  { Round.new(game) }
 
-  let(:player) { game.current_turn }
+  let(:player) { game.players_turn }
   let(:oponent) { game.players.last }
 
   let(:pickup_two)   { Card.new('2','hearts') }
