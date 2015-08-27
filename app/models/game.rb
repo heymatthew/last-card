@@ -5,6 +5,7 @@ class Game < ActiveRecord::Base
 
   has_many :users, through: :players
   has_many :actions, through: :players
+  delegate :plays, :pickups, :shuffles, to: :actions
 
   validates :round_counter, numericality: { only_integer: true }
 
@@ -12,19 +13,11 @@ class Game < ActiveRecord::Base
   # we should end the game
 
   def ready?
-    users.size >= MINIMUM_PLAYERS
+    players.count >= MINIMUM_PLAYERS
   end
 
   def started?
     !pending
-  end
-
-  def plays
-    actions.play
-  end
-
-  def pickups
-    actions.pickup
   end
 
   def players_turn
