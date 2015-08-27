@@ -82,4 +82,21 @@ RSpec.describe Action, type: :model do
       end
     end
   end
+
+  context "shuffle effects" do
+    let(:effect) { Action::SHUFFLE }
+    let(:card_rank) { nil }
+    let(:card_suit) { nil }
+
+    context "without player" do
+      let(:player) { nil }
+      include_examples "invalid Action"
+    end
+
+    context "with player" do
+      it "can save" do
+        action.save!
+      end
+    end
+  end
 end

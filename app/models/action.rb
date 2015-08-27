@@ -1,6 +1,7 @@
 class Action < ActiveRecord::Base
   PICKUP = 'pickup'
   PLAY = 'play'
+  SHUFFLE = 'shuffle'
 
   belongs_to :player
 
@@ -8,11 +9,18 @@ class Action < ActiveRecord::Base
 
   scope :pickups,  -> { where(effect: PICKUP) }
   scope :plays,    -> { where(effect: PLAY) }
+  scope :shuffles, -> { where(effect: SHUFFLE) }
   scope :in_order, -> { order(:id) }
 
   validates :player, presence: true
-  validates :effect, inclusion: { in: [ PICKUP, PLAY ] }
+  validates :effect, inclusion: { in: [ PICKUP, PLAY, SHUFFLE ] }
 
-  validates :card_suit, inclusion: { in: Card::SUITS }
-  validates :card_rank, inclusion: { in: Card::RANKS }
+  validates :card_suit, inclusion: { in: Card::SUITS }, unless: :this_triggered_shuffle?
+  validates :card_rank, inclusion: { in: Card::RANKS }, unless: :this_triggered_shuffle?
+
+  private
+
+  def this_triggered_shuffle?
+    effect == SHUFFLE
+  end
 end
