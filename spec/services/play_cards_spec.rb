@@ -68,7 +68,7 @@ RSpec.describe PlayCards do
         end
 
         it "advances turn to the next player" do
-          expect { service.call }.to change { game.players_turn }
+          expect { service.call }.to change { game.current_player }
         end
       end
     end

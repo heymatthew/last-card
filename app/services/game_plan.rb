@@ -12,7 +12,7 @@ class GamePlan < Struct.new(:player, :round)
   private
 
   def players_turn?
-    round.game.players_turn == player
+    round.game.current_player == player
   end
 
   def strategy_defence
