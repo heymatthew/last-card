@@ -20,7 +20,7 @@ class Game < ActiveRecord::Base
     !pending
   end
 
-  def players_turn
+  def current_player
     turn = round_counter % players.count
     players[turn]
   end
